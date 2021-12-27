@@ -24,10 +24,10 @@ public struct BalanceResponse: Codable, Hashable {
     public var balance: Double
     /** Not included if retreiving SOL balance */
     public var integerBalance: Double?
-    /** Not included if retreiving SOL balance */
+    /** Not included if retreiving SOL balance. Sometimes not included if the balance of the token is '0'. */
     public var decimals: Double?
     public var network: Network
-    /** Not included if retreiving an SPL token balance */
+    /** Not included if retreiving an SPL token/NFT balance */
     public var unit: Unit?
 
     public init(balance: Double, integerBalance: Double? = nil, decimals: Double? = nil, network: Network, unit: Unit? = nil) {

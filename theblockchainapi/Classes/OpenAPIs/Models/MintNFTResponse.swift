@@ -12,22 +12,22 @@ import AnyCodable
 
 public struct MintNFTResponse: Codable, Hashable {
 
-    /** The task ID of the task launched to complete the request */
-    public var taskId: String?
+    /** The signature of the transaction. Just because this is returned does not mean it was successful.  To determine if the mint was successful, use this Gist: https://gist.github.com/joshwolff1/298e8251e43ff9b4815028683b1ca17d  */
+    public var transactionSignature: String?
 
-    public init(taskId: String? = nil) {
-        self.taskId = taskId
+    public init(transactionSignature: String? = nil) {
+        self.transactionSignature = transactionSignature
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
-        case taskId = "task_id"
+        case transactionSignature = "transaction_signature"
     }
 
     // Encodable protocol methods
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(taskId, forKey: .taskId)
+        try container.encodeIfPresent(transactionSignature, forKey: .transactionSignature)
     }
 }
 

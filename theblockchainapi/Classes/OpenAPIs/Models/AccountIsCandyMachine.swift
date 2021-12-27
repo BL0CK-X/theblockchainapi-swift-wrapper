@@ -12,14 +12,23 @@ import AnyCodable
 
 public struct AccountIsCandyMachine: Codable, Hashable {
 
+    public enum CandyMachineContractVersion: String, Codable, CaseIterable {
+        case v1 = "v1"
+        case v2 = "v2"
+        case magicEdenV1 = "magic-eden-v1"
+    }
     public var isCandyMachine: Bool
+    /** Whether or not this corresponds to candy machine v1, candy machine v2, or a Magic Eden candy machine. */
+    public var candyMachineContractVersion: CandyMachineContractVersion?
 
-    public init(isCandyMachine: Bool) {
+    public init(isCandyMachine: Bool, candyMachineContractVersion: CandyMachineContractVersion? = nil) {
         self.isCandyMachine = isCandyMachine
+        self.candyMachineContractVersion = candyMachineContractVersion
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case isCandyMachine = "is_candy_machine"
+        case candyMachineContractVersion = "candy_machine_contract_version"
     }
 
     // Encodable protocol methods
@@ -27,6 +36,7 @@ public struct AccountIsCandyMachine: Codable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(isCandyMachine, forKey: .isCandyMachine)
+        try container.encodeIfPresent(candyMachineContractVersion, forKey: .candyMachineContractVersion)
     }
 }
 

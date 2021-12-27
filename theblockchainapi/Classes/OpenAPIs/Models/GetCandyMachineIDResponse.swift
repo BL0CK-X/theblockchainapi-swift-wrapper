@@ -12,15 +12,24 @@ import AnyCodable
 
 public struct GetCandyMachineIDResponse: Codable, Hashable {
 
+    public enum CandyMachineContractVersion: String, Codable, CaseIterable {
+        case v1 = "v1"
+        case v2 = "v2"
+        case magicEdenV1 = "magic-eden-v1"
+    }
     /** The ID of the candy machine that minted the NFT */
     public var candyMachineId: String?
+    /** Whether or not this corresponds to candy machine v1, candy machine v2, or a Magic Eden candy machine. */
+    public var candyMachineContractVersion: CandyMachineContractVersion?
 
-    public init(candyMachineId: String? = nil) {
+    public init(candyMachineId: String? = nil, candyMachineContractVersion: CandyMachineContractVersion? = nil) {
         self.candyMachineId = candyMachineId
+        self.candyMachineContractVersion = candyMachineContractVersion
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case candyMachineId = "candy_machine_id"
+        case candyMachineContractVersion = "candy_machine_contract_version"
     }
 
     // Encodable protocol methods
@@ -28,6 +37,7 @@ public struct GetCandyMachineIDResponse: Codable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(candyMachineId, forKey: .candyMachineId)
+        try container.encodeIfPresent(candyMachineContractVersion, forKey: .candyMachineContractVersion)
     }
 }
 

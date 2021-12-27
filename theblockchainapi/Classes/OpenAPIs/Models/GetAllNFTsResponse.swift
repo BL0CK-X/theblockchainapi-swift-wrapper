@@ -12,17 +12,23 @@ import AnyCodable
 
 public struct GetAllNFTsResponse: Codable, Hashable {
 
+    /** The minted NFTs. Only filled in for `v1` candy machines. Left empty for `v2`. */
     public var mintedNfts: [GetAllNFTsResponseMintedNfts]?
+    /** The unminted NFTs. Only filled in for `v1` candy machines. Left empty for `v2`. */
     public var unmintedNfts: [GetAllNFTsResponseUnmintedNfts]?
+    /** The list of all NFTs. Filled in for both `v1` and `v2` NFTs. */
+    public var allNfts: [GetAllNFTsResponseUnmintedNfts]?
 
-    public init(mintedNfts: [GetAllNFTsResponseMintedNfts]? = nil, unmintedNfts: [GetAllNFTsResponseUnmintedNfts]? = nil) {
+    public init(mintedNfts: [GetAllNFTsResponseMintedNfts]? = nil, unmintedNfts: [GetAllNFTsResponseUnmintedNfts]? = nil, allNfts: [GetAllNFTsResponseUnmintedNfts]? = nil) {
         self.mintedNfts = mintedNfts
         self.unmintedNfts = unmintedNfts
+        self.allNfts = allNfts
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case mintedNfts = "minted_nfts"
         case unmintedNfts = "unminted_nfts"
+        case allNfts = "all_nfts"
     }
 
     // Encodable protocol methods
@@ -31,6 +37,7 @@ public struct GetAllNFTsResponse: Codable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(mintedNfts, forKey: .mintedNfts)
         try container.encodeIfPresent(unmintedNfts, forKey: .unmintedNfts)
+        try container.encodeIfPresent(allNfts, forKey: .allNfts)
     }
 }
 

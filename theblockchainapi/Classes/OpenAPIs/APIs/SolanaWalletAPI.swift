@@ -235,7 +235,7 @@ open class SolanaWalletAPI {
     /**
      Get wallet's balance in SOL or any SPL
      - POST /solana/wallet/balance
-     - <a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-wallet/get-wallet-balance\" target=\"_blank\">See examples (Python, JavaScript) [More examples coming soon]</a>.      See the balance of a wallet in SOL or any SPL token.  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
+     - <a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-wallet/get-wallet-balance\" target=\"_blank\">See examples (Python, JavaScript)</a>.      See the balance of a wallet in SOL or any SPL token.  To get the balance of an SPL token, supply the `mint_address` of the SPL token. The list of SPL tokens can be viewed <a href=\"https://raw.githubusercontent.com/solana-labs/token-list/main/src/tokens/solana.tokenlist.json\" target=\"_blank\">here</a>.  You can also use this endpoint to see whether or not a person owns an NFT. Just supply the `mint_address` of the NFT. A balance of \"1\" means the person owns the NFT, and a balance of \"0\" means the person does not own the NFT. This works in most cases, but we are aware of one edge case where a balance of \"0\" will show up for a person who is actually the owner of the NFT. We just recommend using the <a href=\"#operation/solanaGetNFTOwner\">getNFTOwner</a> endpoint and comparing that output to the expected address.  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
      - API Key:
        - type: apiKey APIKeyID 
        - name: APIKeyID
@@ -325,11 +325,12 @@ open class SolanaWalletAPI {
      
      - parameter network: (path) The network ID (devnet, mainnet-beta) 
      - parameter publicKey: (path) The public key of the account whose list of owned NFTs you want to get 
+     - parameter listTokensRequest: (body)  (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetTokensBelongingToWallet(network: String, publicKey: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [AnyCodable]?, _ error: Error?) -> Void)) {
-        solanaGetTokensBelongingToWalletWithRequestBuilder(network: network, publicKey: publicKey).execute(apiResponseQueue) { result in
+    open class func solanaGetTokensBelongingToWallet(network: String, publicKey: String, listTokensRequest: ListTokensRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [AnyCodable]?, _ error: Error?) -> Void)) {
+        solanaGetTokensBelongingToWalletWithRequestBuilder(network: network, publicKey: publicKey, listTokensRequest: listTokensRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -342,7 +343,7 @@ open class SolanaWalletAPI {
     /**
      Get address's tokens and respective balances
      - GET /solana/wallet/{network}/{public_key}/tokens
-     - <a href=\"\" target=\"_blank\">See examples (Python, JavaScript) [Coming Soon]</a>.      See the token holdings of a given public key address  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
+     - <a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-wallet/get-wallet-token-holdings\" target=\"_blank\">See examples (Python, JavaScript)</a>.      See the token holdings of a given public key address  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
      - API Key:
        - type: apiKey APIKeyID 
        - name: APIKeyID
@@ -351,9 +352,10 @@ open class SolanaWalletAPI {
        - name: APISecretKey
      - parameter network: (path) The network ID (devnet, mainnet-beta) 
      - parameter publicKey: (path) The public key of the account whose list of owned NFTs you want to get 
+     - parameter listTokensRequest: (body)  (optional)
      - returns: RequestBuilder<[AnyCodable]> 
      */
-    open class func solanaGetTokensBelongingToWalletWithRequestBuilder(network: String, publicKey: String) -> RequestBuilder<[AnyCodable]> {
+    open class func solanaGetTokensBelongingToWalletWithRequestBuilder(network: String, publicKey: String, listTokensRequest: ListTokensRequest? = nil) -> RequestBuilder<[AnyCodable]> {
         var localVariablePath = "/solana/wallet/{network}/{public_key}/tokens"
         let networkPreEscape = "\(APIHelper.mapValueToPathItem(network))"
         let networkPostEscape = networkPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -362,7 +364,7 @@ open class SolanaWalletAPI {
         let publicKeyPostEscape = publicKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{public_key}", with: publicKeyPostEscape, options: .literal, range: nil)
         let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: listTokensRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
@@ -398,7 +400,7 @@ open class SolanaWalletAPI {
     /**
      Transfer SOL, a token, or an NFT to another address
      - POST /solana/wallet/transfer
-     - <a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-wallet/transfer-sol\" target=\"_blank\">See transfer SOL example (Python, JavaScript)</a>.  <a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-wallet/transfer-nft\" target=\"_blank\">See transfer NFT example (can also be used for SPL token) (Python, JavaScript)</a>.  Transfer SOL, a token or an NFT to another address. If you're transferring an NFT, supply the `mint` (the address of the mint) for the `token_address`.  If you're transfering a token, supply the token address found on the explorer (e.g., see `SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt` for <a href=\"https://explorer.solana.com/address/SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt\" target=\"_blank\">Serum Token</a>) for the `token_address`. If you're transferring SOL, do not supply a value for `token_address`.  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
+     - <a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-wallet/transfer-sol\" target=\"_blank\">See transfer SOL example (Python, JavaScript)</a>.  <a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-wallet/transfer-nft\" target=\"_blank\">See transfer NFT example (can also be used for SPL token) (Python, JavaScript)</a>.  Transfer SOL, a token or an NFT to another address. If you're transferring an NFT, supply the `mint` (the address of the mint) for the `token_address`.  SENDER: Note that the wallet information (`secret_recovery_phrase`, `passphrase`, `derivation_path`) is used to authorize the sending of the tokens and identifies the source of the tokens.   RECEIVER: `recipient_address` identifies the receiver. This is entirely separate from the information used for the SENDER above. So, in this API call, there are two wallets involved, but only one (namely, the SENDER) is needed to authorize the transaction.  If you're transfering a token, supply the token address found on the explorer (e.g., see `SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt` for <a href=\"https://explorer.solana.com/address/SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt\" target=\"_blank\">Serum Token</a>) for the `token_address`. If you're transferring SOL, do not supply a value for `token_address`.  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
      - API Key:
        - type: apiKey APIKeyID 
        - name: APIKeyID

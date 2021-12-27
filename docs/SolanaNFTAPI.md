@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**solanaGetNFTMintFee**](SolanaNFTAPI.md#solanagetnftmintfee) | **GET** /solana/nft/mint/fee | Get the NFT mint fee
 [**solanaGetNFTOwner**](SolanaNFTAPI.md#solanagetnftowner) | **GET** /solana/nft/{network}/{mint_address}/owner | Get owner of an NFT
 [**solanaGetNFTsCandyMachineId**](SolanaNFTAPI.md#solanagetnftscandymachineid) | **POST** /solana/nft/candy_machine_id | Get the ID of the candy machine of an NFT 
+[**solanaSearchNFTs**](SolanaNFTAPI.md#solanasearchnfts) | **POST** /solana/nft/search | Search NFTs on Solana
 
 
 # **solanaCreateNFT**
@@ -18,7 +19,7 @@ Method | HTTP request | Description
 
 Create an NFT on Solana
 
-<a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-nft/create-an-nft\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Create a Metaplex NFT on Solana. Read more on this <a href=\"https://blog.theblockchainapi.com/2021/11/16/a-note-on-nfts.html\" target=\"_blank\">here</a>.  `Cost: 2 Credits` (<a href=\"#section/Pricing\">See Pricing</a>)
+<a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-nft/create-an-nft\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Create a Metaplex NFT on Solana. Read more on this <a href=\"https://blog.theblockchainapi.com/2021/11/16/a-note-on-nfts.html\" target=\"_blank\">here</a>.  To add attributes to the NFT, add them to a JSON file and upload that to Arweave/IPFS/Filecoin. The JSON file should follow this format: <a href=\"https://docs.metaplex.com/nft-standard\" target=\"_blank\">NFT Standard.</a> (See the \"URI JSON Schema\" section in that article). Then supply the link to the JSON file in `nft_url`. You don't need to use `nft_metadata`.  `Cost: 2 Credits` (<a href=\"#section/Pricing\">See Pricing</a>)
 
 ### Example
 ```swift
@@ -68,7 +69,7 @@ Name | Type | Description  | Notes
 
 Get an NFT's metadata
 
-<a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-nft/get-nft-metadata\" target=\"_blank\">See examples (Python, JavaScript)</a>.       Get the metadata of an NFT.  `Cost: 1 Credits` (<a href=\"#section/Pricing\">See Pricing</a>)
+<a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-nft/get-nft-metadata\" target=\"_blank\">See examples (Python, JavaScript)</a>.       Get the metadata of an NFT.  If you're looking for metadata such as attributes and others, you can retrieve them from the link in the URI field of the NFT metadata returned. See the example on the right. The URI is an Arweave URL. That contains the attributes and other information about the NFT. That URL is stored on the Solana blockchain.  `Cost: 1 Credits` (<a href=\"#section/Pricing\">See Pricing</a>)
 
 ### Example
 ```swift
@@ -249,6 +250,56 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetCandyMachineIDResponse**](GetCandyMachineIDResponse.md)
+
+### Authorization
+
+[APIKeyID](../README.md#APIKeyID), [APISecretKey](../README.md#APISecretKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **solanaSearchNFTs**
+```swift
+    open class func solanaSearchNFTs(nFTSearchRequest: NFTSearchRequest? = nil, completion: @escaping (_ data: NFTSearchResponse?, _ error: Error?) -> Void)
+```
+
+Search NFTs on Solana
+
+<a href=\"\" target=\"_blank\">See examples (Python, JavaScript) [Coming Soon]</a>.  With this endpoint, you can search for NFTs by their symbol, name of NFTs, uuid, configuration address, and update authority.  The output is a list of NFTs that match your query.  You can also provide multiple search clauses, such as the update authority (`update_authority=\"G17UmNGnMJ851x3M1JXocgpft1afcYedjPuFpo1ohhCk\"`) and symbol begins with \"Sol\" (`symbol=\"Sol\", symbol_search_method='begins_with'`).  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import theblockchainapi
+
+let nFTSearchRequest = NFTSearchRequest(updateAuthority: "updateAuthority_example", updateAuthoritySearchMethod: "updateAuthoritySearchMethod_example", mintAddress: "mintAddress_example", mintAddressSearchMethod: "mintAddressSearchMethod_example", name: "name_example", nameSearchMethod: "nameSearchMethod_example", uri: "uri_example", uriSearchMethod: "uriSearchMethod_example", symbol: "symbol_example", symbolSearchMethod: "symbolSearchMethod_example", network: "network_example") // NFTSearchRequest |  (optional)
+
+// Search NFTs on Solana
+SolanaNFTAPI.solanaSearchNFTs(nFTSearchRequest: nFTSearchRequest) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **nFTSearchRequest** | [**NFTSearchRequest**](NFTSearchRequest.md) |  | [optional] 
+
+### Return type
+
+[**NFTSearchResponse**](NFTSearchResponse.md)
 
 ### Authorization
 
