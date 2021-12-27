@@ -28,7 +28,6 @@ docs/GetCandyMetadataResponseCreators.md
 docs/GetFileResponse.md
 docs/GetPublicKeyRequest.md
 docs/ListNFTsResponse.md
-docs/ListTokensRequest.md
 docs/MintNFTErrorResponse.md
 docs/MintNFTRequest.md
 docs/MintNFTResponse.md
@@ -93,7 +92,6 @@ theblockchainapi/Classes/OpenAPIs/Models/GetCandyMetadataResponseCreators.swift
 theblockchainapi/Classes/OpenAPIs/Models/GetFileResponse.swift
 theblockchainapi/Classes/OpenAPIs/Models/GetPublicKeyRequest.swift
 theblockchainapi/Classes/OpenAPIs/Models/ListNFTsResponse.swift
-theblockchainapi/Classes/OpenAPIs/Models/ListTokensRequest.swift
 theblockchainapi/Classes/OpenAPIs/Models/MintNFTErrorResponse.swift
 theblockchainapi/Classes/OpenAPIs/Models/MintNFTRequest.swift
 theblockchainapi/Classes/OpenAPIs/Models/MintNFTResponse.swift

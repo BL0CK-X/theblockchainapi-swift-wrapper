@@ -316,7 +316,7 @@ Name | Type | Description  | Notes
 
 # **solanaGetTokensBelongingToWallet**
 ```swift
-    open class func solanaGetTokensBelongingToWallet(network: String, publicKey: String, listTokensRequest: ListTokensRequest? = nil, completion: @escaping (_ data: [AnyCodable]?, _ error: Error?) -> Void)
+    open class func solanaGetTokensBelongingToWallet(network: String, publicKey: String, includeNfts: Bool? = nil, includeZeroBalanceHoldings: Bool? = nil, completion: @escaping (_ data: [AnyCodable]?, _ error: Error?) -> Void)
 ```
 
 Get address's tokens and respective balances
@@ -330,10 +330,11 @@ import theblockchainapi
 
 let network = "network_example" // String | The network ID (devnet, mainnet-beta)
 let publicKey = "publicKey_example" // String | The public key of the account whose list of owned NFTs you want to get
-let listTokensRequest = ListTokensRequest(includeNfts: false, includeZeroBalanceHoldings: false) // ListTokensRequest |  (optional)
+let includeNfts = false // Bool | Whether or not to include NFTs in the response (optional) (default to false)
+let includeZeroBalanceHoldings = false // Bool | Whether or not to include holdings that have zero balance. This indicates that the wallet held this token or NFT in the past, but no longer holds it. (optional) (default to false)
 
 // Get address's tokens and respective balances
-SolanaWalletAPI.solanaGetTokensBelongingToWallet(network: network, publicKey: publicKey, listTokensRequest: listTokensRequest) { (response, error) in
+SolanaWalletAPI.solanaGetTokensBelongingToWallet(network: network, publicKey: publicKey, includeNfts: includeNfts, includeZeroBalanceHoldings: includeZeroBalanceHoldings) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -351,7 +352,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **network** | **String** | The network ID (devnet, mainnet-beta) | 
  **publicKey** | **String** | The public key of the account whose list of owned NFTs you want to get | 
- **listTokensRequest** | [**ListTokensRequest**](ListTokensRequest.md) |  | [optional] 
+ **includeNfts** | **Bool** | Whether or not to include NFTs in the response | [optional] [default to false]
+ **includeZeroBalanceHoldings** | **Bool** | Whether or not to include holdings that have zero balance. This indicates that the wallet held this token or NFT in the past, but no longer holds it. | [optional] [default to false]
 
 ### Return type
 
@@ -363,7 +365,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

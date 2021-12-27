@@ -325,12 +325,13 @@ open class SolanaWalletAPI {
      
      - parameter network: (path) The network ID (devnet, mainnet-beta) 
      - parameter publicKey: (path) The public key of the account whose list of owned NFTs you want to get 
-     - parameter listTokensRequest: (body)  (optional)
+     - parameter includeNfts: (query) Whether or not to include NFTs in the response (optional, default to false)
+     - parameter includeZeroBalanceHoldings: (query) Whether or not to include holdings that have zero balance. This indicates that the wallet held this token or NFT in the past, but no longer holds it. (optional, default to false)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetTokensBelongingToWallet(network: String, publicKey: String, listTokensRequest: ListTokensRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [AnyCodable]?, _ error: Error?) -> Void)) {
-        solanaGetTokensBelongingToWalletWithRequestBuilder(network: network, publicKey: publicKey, listTokensRequest: listTokensRequest).execute(apiResponseQueue) { result in
+    open class func solanaGetTokensBelongingToWallet(network: String, publicKey: String, includeNfts: Bool? = nil, includeZeroBalanceHoldings: Bool? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [AnyCodable]?, _ error: Error?) -> Void)) {
+        solanaGetTokensBelongingToWalletWithRequestBuilder(network: network, publicKey: publicKey, includeNfts: includeNfts, includeZeroBalanceHoldings: includeZeroBalanceHoldings).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -352,10 +353,11 @@ open class SolanaWalletAPI {
        - name: APISecretKey
      - parameter network: (path) The network ID (devnet, mainnet-beta) 
      - parameter publicKey: (path) The public key of the account whose list of owned NFTs you want to get 
-     - parameter listTokensRequest: (body)  (optional)
+     - parameter includeNfts: (query) Whether or not to include NFTs in the response (optional, default to false)
+     - parameter includeZeroBalanceHoldings: (query) Whether or not to include holdings that have zero balance. This indicates that the wallet held this token or NFT in the past, but no longer holds it. (optional, default to false)
      - returns: RequestBuilder<[AnyCodable]> 
      */
-    open class func solanaGetTokensBelongingToWalletWithRequestBuilder(network: String, publicKey: String, listTokensRequest: ListTokensRequest? = nil) -> RequestBuilder<[AnyCodable]> {
+    open class func solanaGetTokensBelongingToWalletWithRequestBuilder(network: String, publicKey: String, includeNfts: Bool? = nil, includeZeroBalanceHoldings: Bool? = nil) -> RequestBuilder<[AnyCodable]> {
         var localVariablePath = "/solana/wallet/{network}/{public_key}/tokens"
         let networkPreEscape = "\(APIHelper.mapValueToPathItem(network))"
         let networkPostEscape = networkPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -364,9 +366,13 @@ open class SolanaWalletAPI {
         let publicKeyPostEscape = publicKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{public_key}", with: publicKeyPostEscape, options: .literal, range: nil)
         let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
-        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: listTokensRequest)
+        let localVariableParameters: [String: Any]? = nil
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "include_nfts": includeNfts?.encodeToJSON(),
+            "include_zero_balance_holdings": includeZeroBalanceHoldings?.encodeToJSON(),
+        ])
 
         let localVariableNillableHeaders: [String: Any?] = [
             :
