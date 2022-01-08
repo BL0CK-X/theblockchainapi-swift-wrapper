@@ -20,12 +20,7 @@ public struct NFTMintRequest: Codable, Hashable {
         case devnet = "devnet"
         case mainnetBeta = "mainnet-beta"
     }
-    /** The twelve word phrase that can be used to derive many public key addresses. To derive a public key, you need a secret recovery phrase, a derivation path, and an optional passphrase. See our Security section <a href=\"#section/Security\">here</a>. */
-    public var secretRecoveryPhrase: String
-    /** Derivation paths are used to derive the public key from the secret recovery phrase. Only certain paths are accepted.  We use \"m/44/501/0/0\" by default, if it is not provided. This is the path that the Phantom and Sollet wallets use. If you provide the empty string \"\" as the value for the derivation path, then we will use the Solana CLI default value. The SolFlare recommended path is \"m/44/501/0\".  You can also arbitrarily increment the default path (\"m/44/501/0/0\") to generate more wallets (e.g., \"m/44/501/0/1\", \"m/44/501/0/2\", ...). This is how Phantom generates more wallets.  To learn more about derivation paths, check out <a href=\"https://learnmeabitcoin.com/technical/derivation-paths\" target=\"_blank\">this tutorial</a>. */
-    public var derivationPath: String? = "m/44/501/0/0"
-    /** PASSPHRASE != PASSWORD. This is NOT your Phantom password or any other password. It is an optional string you use when creating a wallet. This provides an additional layer of security because a hacker would need both the secret recovery phrase and the passphrase to access the output public key. By default, most wallet UI extensions do not use a passphrase. (You probably did not use a passphrase.) Limited to 500 characters.  */
-    public var passphrase: String? = ""
+    public var wallet: Wallet
     /** The name of the token. Limited to 32 characters. Stored on the blockchain. */
     public var nftName: String? = ""
     /** The symbol of the token. Limited to 10 characters. Stored on the blockchain. */
@@ -48,13 +43,13 @@ public struct NFTMintRequest: Codable, Hashable {
     public var creators: [String]?
     /** A JSON encoded string representing an array / list.  The share of the royalty that each creator gets. Valid values range from 0 to 100.  Sum of the values must equal 100.  Only integer value accepted. Length of the share list must match length of the list of creators.  */
     public var share: [Int]?
+    /** Assign ownership of the NFT to the public key address given by `mint_to_public_key`  */
+    public var mintToPublicKey: String? = "The public key of the wallet provided"
     /** This determines which network you choose to run the API calls on. We recommend first testing on the devnet, because minting an NFT costs a little above 0.01 SOL, which is about $1.60 at the time of this writing.  When you run on the mainnet-beta, each successful call will deduct approximately that much. When you run on the devnet, that amount is deducted from a simulated amount, so you are not paying with real SOL. To get SOL on the devnet,   airdrop SOL to this address using the CLI. Keep in mind that you can only do this every so often. If you are rate-limited, consider using a VPN and trying again, or just waiting. To get SOL on the mainnet-beta, you    must transfer real SOL to this account from another wallet (e.g., from another wallet you own, from an exchange, etc.). We hope to make this process easier in the future, and if you have any suggestions, please add them    as an issue on our <a href=\"https://github.com/BL0CK-X/the-blockchain-api\" target=\"_blank\">GitHub repository</a> for the API. To get a fee estimate, make a GET requests to the <a href=\"#tag/Solana-NFT/paths/~1solana~1nft~1mint~1fee/get\">v1/solana/nft/mint/fee endpoint</a> (details in sidebar).  */
     public var network: Network? = .devnet
 
-    public init(secretRecoveryPhrase: String, derivationPath: String? = "m/44/501/0/0", passphrase: String? = "", nftName: String? = "", nftSymbol: String? = "", nftDescription: String? = "", nftUrl: String? = "", nftMetadata: String? = "{}", nftUploadMethod: NftUploadMethod? = .s3, isMutable: Bool? = true, isMasterEdition: Bool? = true, sellerFeeBasisPoints: Double? = 0, creators: [String]? = nil, share: [Int]? = nil, network: Network? = .devnet) {
-        self.secretRecoveryPhrase = secretRecoveryPhrase
-        self.derivationPath = derivationPath
-        self.passphrase = passphrase
+    public init(wallet: Wallet, nftName: String? = "", nftSymbol: String? = "", nftDescription: String? = "", nftUrl: String? = "", nftMetadata: String? = "{}", nftUploadMethod: NftUploadMethod? = .s3, isMutable: Bool? = true, isMasterEdition: Bool? = true, sellerFeeBasisPoints: Double? = 0, creators: [String]? = nil, share: [Int]? = nil, mintToPublicKey: String? = "The public key of the wallet provided", network: Network? = .devnet) {
+        self.wallet = wallet
         self.nftName = nftName
         self.nftSymbol = nftSymbol
         self.nftDescription = nftDescription
@@ -66,13 +61,12 @@ public struct NFTMintRequest: Codable, Hashable {
         self.sellerFeeBasisPoints = sellerFeeBasisPoints
         self.creators = creators
         self.share = share
+        self.mintToPublicKey = mintToPublicKey
         self.network = network
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
-        case secretRecoveryPhrase = "secret_recovery_phrase"
-        case derivationPath = "derivation_path"
-        case passphrase
+        case wallet
         case nftName = "nft_name"
         case nftSymbol = "nft_symbol"
         case nftDescription = "nft_description"
@@ -84,6 +78,7 @@ public struct NFTMintRequest: Codable, Hashable {
         case sellerFeeBasisPoints = "seller_fee_basis_points"
         case creators
         case share
+        case mintToPublicKey = "mint_to_public_key"
         case network
     }
 
@@ -91,9 +86,7 @@ public struct NFTMintRequest: Codable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(secretRecoveryPhrase, forKey: .secretRecoveryPhrase)
-        try container.encodeIfPresent(derivationPath, forKey: .derivationPath)
-        try container.encodeIfPresent(passphrase, forKey: .passphrase)
+        try container.encode(wallet, forKey: .wallet)
         try container.encodeIfPresent(nftName, forKey: .nftName)
         try container.encodeIfPresent(nftSymbol, forKey: .nftSymbol)
         try container.encodeIfPresent(nftDescription, forKey: .nftDescription)
@@ -105,6 +98,7 @@ public struct NFTMintRequest: Codable, Hashable {
         try container.encodeIfPresent(sellerFeeBasisPoints, forKey: .sellerFeeBasisPoints)
         try container.encodeIfPresent(creators, forKey: .creators)
         try container.encodeIfPresent(share, forKey: .share)
+        try container.encodeIfPresent(mintToPublicKey, forKey: .mintToPublicKey)
         try container.encodeIfPresent(network, forKey: .network)
     }
 }

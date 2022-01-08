@@ -5,8 +5,10 @@ All URIs are relative to *https://api.theblockchainapi.com/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**solanaDeriveAssociatedTokenAccountAddress**](SolanaWalletAPI.md#solanaderiveassociatedtokenaccountaddress) | **GET** /solana/wallet/{public_key}/associated_token_account/{mint_address} | Derive an associated token account address
+[**solanaDerivePrivateKey**](SolanaWalletAPI.md#solanaderiveprivatekey) | **POST** /solana/wallet/private_key | Derive private key
 [**solanaDerivePublicKey**](SolanaWalletAPI.md#solanaderivepublickey) | **POST** /solana/wallet/public_key | Derive public key
-[**solanaGenerateSecretRecoveryPhrase**](SolanaWalletAPI.md#solanageneratesecretrecoveryphrase) | **POST** /solana/wallet/secret_recovery_phrase | Generate secret phrase
+[**solanaGeneratePrivateKey**](SolanaWalletAPI.md#solanagenerateprivatekey) | **POST** /solana/wallet/generate/private_key | Generate private key
+[**solanaGenerateSecretRecoveryPhrase**](SolanaWalletAPI.md#solanageneratesecretrecoveryphrase) | **POST** /solana/wallet/generate/secret_recovery_phrase | Generate secret phrase
 [**solanaGetAirdrop**](SolanaWalletAPI.md#solanagetairdrop) | **POST** /solana/wallet/airdrop | Get an airdrop on devnet
 [**solanaGetBalance**](SolanaWalletAPI.md#solanagetbalance) | **POST** /solana/wallet/balance | Get wallet&#39;s balance in SOL or any SPL
 [**solanaGetNFTsBelongingToWallet**](SolanaWalletAPI.md#solanagetnftsbelongingtowallet) | **GET** /solana/wallet/{network}/{public_key}/nfts | Get address&#39;s NFTs
@@ -66,6 +68,56 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **solanaDerivePrivateKey**
+```swift
+    open class func solanaDerivePrivateKey(getPublicKeyRequest: GetPublicKeyRequest, completion: @escaping (_ data: GeneratePrivateKey?, _ error: Error?) -> Void)
+```
+
+Derive private key
+
+<a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-wallet/derive-private-key\" target=\"_blank\">See examples (Python, JavaScript)</a>.      Returns a private key array and a base58-encoded private key given wallet authentication.  A wallet is defined by a public key. A public key is derived from a combination of seed phrase, derivation path, and passphrase. Changing any *one* of these three will change the public key output.  *You can generate a unique public key with each combination of secret recovery phrase, passphrase, and derivation path. Thus, with a single secret recovery phrase, you can generate many public keys. If you are just starting, just supply the secret recovery phrase you generated with the Solana Wallet Secret Recovery Phrase endpoint.*  *If you are trying to get a public key that already exists (e.g., created in the Phantom wallet), make sure you use the correct derivation path and passphrase. To read more about that, see the descriptions of those parameters below.*  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import theblockchainapi
+
+let getPublicKeyRequest = GetPublicKeyRequest(wallet: Wallet(secretRecoveryPhrase: "secretRecoveryPhrase_example", derivationPath: "derivationPath_example", passphrase: "passphrase_example", privateKey: "TODO", b58PrivateKey: "b58PrivateKey_example")) // GetPublicKeyRequest | 
+
+// Derive private key
+SolanaWalletAPI.solanaDerivePrivateKey(getPublicKeyRequest: getPublicKeyRequest) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getPublicKeyRequest** | [**GetPublicKeyRequest**](GetPublicKeyRequest.md) |  | 
+
+### Return type
+
+[**GeneratePrivateKey**](GeneratePrivateKey.md)
+
+### Authorization
+
+[APIKeyID](../README.md#APIKeyID), [APISecretKey](../README.md#APISecretKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **solanaDerivePublicKey**
 ```swift
     open class func solanaDerivePublicKey(getPublicKeyRequest: GetPublicKeyRequest, completion: @escaping (_ data: PublicKey?, _ error: Error?) -> Void)
@@ -73,14 +125,14 @@ Name | Type | Description  | Notes
 
 Derive public key
 
-<a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-wallet/derive-public-key\" target=\"_blank\">See examples (Python, JavaScript)</a>.      Returns a public key given a secret recovery phrase and optionally a passphrase and a derivation path.  A wallet is defined by a public key. A public key is derived from a combination of seed phrase, derivation path, and passphrase. Changing any *one* of these three will change the public key output.  *You can generate a unique public key with each combination of secret recovery phrase, passphrase, and derivation path. Thus, with a single secret recovery phrase, you can generate many public keys. If you are just starting, just supply the secret recovery phrase you generated with the Solana Wallet Secret Recovery Phrase endpoint.*  *If you are trying to get a public key that already exists (e.g., created in the Phantom wallet), make sure you use the correct derivation path and passphrase. To read more about that, see the descriptions of those parameters below.*  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
+<a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-wallet/derive-public-key\" target=\"_blank\">See examples (Python, JavaScript)</a>.      Returns a public key given wallet authentication.  A wallet is identified by a public key. A public key is derived from a combination of seed phrase, derivation path, and passphrase. Changing any *one* of these three will change the public key output.   It can also be derived from a private key.  *You can generate a unique public key with each combination of secret recovery phrase, passphrase, and derivation path; or from a private key. Thus, with a single secret recovery phrase, you can generate many public keys; however, with a private key, you can only generate one public key. If you are just starting, generate a <a href=\"#operation/solanaGenerateSecretRecoveryPhrase\">secret recovery phrase</a> or <a href=\"#operation/solanaGeneratePrivateKey\">private key</a>.  *If you are trying to get a public key that already exists (e.g., created in the Phantom wallet), make sure you use the correct derivation path and passphrase; or just use the private key. To read more about that, see the descriptions of those parameters below.*  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
 
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import theblockchainapi
 
-let getPublicKeyRequest = GetPublicKeyRequest(secretRecoveryPhrase: "secretRecoveryPhrase_example", derivationPath: "derivationPath_example", passphrase: "passphrase_example") // GetPublicKeyRequest | 
+let getPublicKeyRequest = GetPublicKeyRequest(wallet: Wallet(secretRecoveryPhrase: "secretRecoveryPhrase_example", derivationPath: "derivationPath_example", passphrase: "passphrase_example", privateKey: "TODO", b58PrivateKey: "b58PrivateKey_example")) // GetPublicKeyRequest | 
 
 // Derive public key
 SolanaWalletAPI.solanaDerivePublicKey(getPublicKeyRequest: getPublicKeyRequest) { (response, error) in
@@ -116,6 +168,52 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **solanaGeneratePrivateKey**
+```swift
+    open class func solanaGeneratePrivateKey(completion: @escaping (_ data: GeneratePrivateKey?, _ error: Error?) -> Void)
+```
+
+Generate private key
+
+<a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-wallet/generate-private-key\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Use this endpoint to securely and randomly generate a private key for a Solana wallet.  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import theblockchainapi
+
+
+// Generate private key
+SolanaWalletAPI.solanaGeneratePrivateKey() { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**GeneratePrivateKey**](GeneratePrivateKey.md)
+
+### Authorization
+
+[APIKeyID](../README.md#APIKeyID), [APISecretKey](../README.md#APISecretKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **solanaGenerateSecretRecoveryPhrase**
 ```swift
     open class func solanaGenerateSecretRecoveryPhrase(completion: @escaping (_ data: SecretPhrase?, _ error: Error?) -> Void)
@@ -123,7 +221,7 @@ Name | Type | Description  | Notes
 
 Generate secret phrase
 
-<a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-wallet/generate-secret-phrase\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Use this endpoint to securely and randomly generate a secret recovery phrase for a Solana wallet. Complete the wallet creation by using the endpoint below.  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
+<a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-wallet/generate-secret-phrase\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Use this endpoint to securely and randomly generate a secret recovery phrase for a Solana wallet.   `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
 
 ### Example
 ```swift
@@ -384,7 +482,7 @@ Transfer SOL, a token, or an NFT to another address
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import theblockchainapi
 
-let transferRequest = TransferRequest(recipientAddress: "recipientAddress_example", secretRecoveryPhrase: "secretRecoveryPhrase_example", derivationPath: "derivationPath_example", passphrase: "passphrase_example", tokenAddress: "tokenAddress_example", network: "network_example", amount: "amount_example") // TransferRequest |  (optional)
+let transferRequest = TransferRequest(recipientAddress: "recipientAddress_example", wallet: Wallet(secretRecoveryPhrase: "secretRecoveryPhrase_example", derivationPath: "derivationPath_example", passphrase: "passphrase_example", privateKey: "TODO", b58PrivateKey: "b58PrivateKey_example"), tokenAddress: "tokenAddress_example", network: "network_example", amount: "amount_example") // TransferRequest |  (optional)
 
 // Transfer SOL, a token, or an NFT to another address
 SolanaWalletAPI.solanaTransfer(transferRequest: transferRequest) { (response, error) in

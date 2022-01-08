@@ -12,41 +12,29 @@ import AnyCodable
 
 public struct Transaction: Codable, Hashable {
 
-    public enum Network: String, Codable, CaseIterable {
-        case devnet = "devnet"
-        case mainnetBeta = "mainnet-beta"
-    }
-    public var blockTime: Double?
-    public var meta: AnyCodable?
-    public var slot: Double?
-    public var transaction: AnyCodable?
-    public var network: Network? = .devnet
+    public var id: Double?
+    public var jsonrpc: String?
+    public var result: TransactionResult?
 
-    public init(blockTime: Double? = nil, meta: AnyCodable? = nil, slot: Double? = nil, transaction: AnyCodable? = nil, network: Network? = .devnet) {
-        self.blockTime = blockTime
-        self.meta = meta
-        self.slot = slot
-        self.transaction = transaction
-        self.network = network
+    public init(id: Double? = nil, jsonrpc: String? = nil, result: TransactionResult? = nil) {
+        self.id = id
+        self.jsonrpc = jsonrpc
+        self.result = result
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
-        case blockTime = "block_time"
-        case meta
-        case slot
-        case transaction
-        case network
+        case id
+        case jsonrpc
+        case result
     }
 
     // Encodable protocol methods
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(blockTime, forKey: .blockTime)
-        try container.encodeIfPresent(meta, forKey: .meta)
-        try container.encodeIfPresent(slot, forKey: .slot)
-        try container.encodeIfPresent(transaction, forKey: .transaction)
-        try container.encodeIfPresent(network, forKey: .network)
+        try container.encodeIfPresent(id, forKey: .id)
+        try container.encodeIfPresent(jsonrpc, forKey: .jsonrpc)
+        try container.encodeIfPresent(result, forKey: .result)
     }
 }
 

@@ -243,7 +243,7 @@ open class SolanaNFTAPI {
     /**
      Get the ID of the candy machine of an NFT 
      - POST /solana/nft/candy_machine_id
-     - <a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-nft/get-nft-candy-machine-id\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Get the candy machine ID from where the NFT came, if any. NFTs can also be minted without a candy machine.  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
+     - <a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-nft/get-nft-candy-machine-id\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Get the candy machine ID from where the NFT came, if any. NFTs can also be minted without a candy machine.  It's also possible that we return \"Not Found\" when the NFT actually did come from a version of a candy machine. We check for the most popular versions of candy machine, but it is possible that someone creates their own candy machine version and mints NFTs from it.  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
      - API Key:
        - type: apiKey APIKeyID 
        - name: APIKeyID
@@ -278,7 +278,7 @@ open class SolanaNFTAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaSearchNFTs(nFTSearchRequest: NFTSearchRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: NFTSearchResponse?, _ error: Error?) -> Void)) {
+    open class func solanaSearchNFTs(nFTSearchRequest: NFTSearchRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [NFTSearchResponse]?, _ error: Error?) -> Void)) {
         solanaSearchNFTsWithRequestBuilder(nFTSearchRequest: nFTSearchRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -292,7 +292,7 @@ open class SolanaNFTAPI {
     /**
      Search NFTs on Solana
      - POST /solana/nft/search
-     - <a href=\"\" target=\"_blank\">See examples (Python, JavaScript) [Coming Soon]</a>.  With this endpoint, you can search for NFTs by their symbol, name of NFTs, uuid, configuration address, and update authority.  The output is a list of NFTs that match your query.  You can also provide multiple search clauses, such as the update authority (`update_authority=\"G17UmNGnMJ851x3M1JXocgpft1afcYedjPuFpo1ohhCk\"`) and symbol begins with \"Sol\" (`symbol=\"Sol\", symbol_search_method='begins_with'`).  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
+     - <a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-nft/search-nfts\" target=\"_blank\">See examples (Python, JavaScript)</a>.  With this endpoint, you can search for NFTs by their symbol, name of NFTs, uuid, configuration address, and update authority.  The output is a list of NFTs that match your query.  You can also provide multiple search clauses, such as the update authority (`update_authority=\"G17UmNGnMJ851x3M1JXocgpft1afcYedjPuFpo1ohhCk\"`) and symbol begins with \"Sol\" (`symbol=\"Sol\", symbol_search_method='begins_with'`).  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
      - API Key:
        - type: apiKey APIKeyID 
        - name: APIKeyID
@@ -300,9 +300,9 @@ open class SolanaNFTAPI {
        - type: apiKey APISecretKey 
        - name: APISecretKey
      - parameter nFTSearchRequest: (body)  (optional)
-     - returns: RequestBuilder<NFTSearchResponse> 
+     - returns: RequestBuilder<[NFTSearchResponse]> 
      */
-    open class func solanaSearchNFTsWithRequestBuilder(nFTSearchRequest: NFTSearchRequest? = nil) -> RequestBuilder<NFTSearchResponse> {
+    open class func solanaSearchNFTsWithRequestBuilder(nFTSearchRequest: NFTSearchRequest? = nil) -> RequestBuilder<[NFTSearchResponse]> {
         let localVariablePath = "/solana/nft/search"
         let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: nFTSearchRequest)
@@ -315,7 +315,7 @@ open class SolanaNFTAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<NFTSearchResponse>.Type = theblockchainapiAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<[NFTSearchResponse]>.Type = theblockchainapiAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
