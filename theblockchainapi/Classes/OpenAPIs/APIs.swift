@@ -14,7 +14,7 @@ import Foundation
 public typealias theblockchainapi = theblockchainapiAPI
 
 open class theblockchainapiAPI {
-    public static var basePath = "https://api.theblockchainapi.com/v1"
+    public static var basePath = "https://api.blockchainapi.com/v1"
     public static var customHeaders: [String: String] = [:]
     public static var credential: URLCredential?
     public static var requestBuilderFactory: RequestBuilderFactory = URLSessionRequestBuilderFactory()
