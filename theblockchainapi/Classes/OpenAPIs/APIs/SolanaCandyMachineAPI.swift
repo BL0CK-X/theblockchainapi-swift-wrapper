@@ -62,14 +62,22 @@ open class SolanaCandyMachineAPI {
     }
 
     /**
+     * enum for parameter network
+     */
+    public enum Network_solanaGetAllNFTsFromCandyMachine: String, CaseIterable {
+        case devnet = "devnet"
+        case mainnetBeta = "mainnet-beta"
+    }
+
+    /**
      Get CM's NFTs  
      
-     - parameter network: (path) The network ID (devnet, mainnet-beta) 
+     - parameter network: (path) The network ID 
      - parameter candyMachineId: (path) The ID of the candy machine 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetAllNFTsFromCandyMachine(network: String, candyMachineId: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: GetAllNFTsResponse?, _ error: Error?) -> Void)) {
+    open class func solanaGetAllNFTsFromCandyMachine(network: Network_solanaGetAllNFTsFromCandyMachine, candyMachineId: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: GetAllNFTsResponse?, _ error: Error?) -> Void)) {
         solanaGetAllNFTsFromCandyMachineWithRequestBuilder(network: network, candyMachineId: candyMachineId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -90,13 +98,13 @@ open class SolanaCandyMachineAPI {
      - API Key:
        - type: apiKey APISecretKey 
        - name: APISecretKey
-     - parameter network: (path) The network ID (devnet, mainnet-beta) 
+     - parameter network: (path) The network ID 
      - parameter candyMachineId: (path) The ID of the candy machine 
      - returns: RequestBuilder<GetAllNFTsResponse> 
      */
-    open class func solanaGetAllNFTsFromCandyMachineWithRequestBuilder(network: String, candyMachineId: String) -> RequestBuilder<GetAllNFTsResponse> {
+    open class func solanaGetAllNFTsFromCandyMachineWithRequestBuilder(network: Network_solanaGetAllNFTsFromCandyMachine, candyMachineId: String) -> RequestBuilder<GetAllNFTsResponse> {
         var localVariablePath = "/solana/nft/candy_machine/{network}/{candy_machine_id}/nfts"
-        let networkPreEscape = "\(APIHelper.mapValueToPathItem(network))"
+        let networkPreEscape = "\(network.rawValue)"
         let networkPostEscape = networkPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{network}", with: networkPostEscape, options: .literal, range: nil)
         let candyMachineIdPreEscape = "\(APIHelper.mapValueToPathItem(candyMachineId))"
@@ -235,7 +243,7 @@ open class SolanaCandyMachineAPI {
     /**
      Mint from a CM
      - POST /solana/nft/candy_machine/mint
-     - <a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-candy-machine/mint-from-candy-machine\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Use this endpoint to mint an NFT from a metaplex candy machine as soon as it drops.  This only works for `v1` and `v2` candy machines, and does not work for candy machines of any other type such as Magic Eden candy machines.  In order to achieve speed, this endpoint sends the transaction without checking whether or not it confirmed. It could still fail, for example, because the candy machine ran out of available mints. You should check the status of the transaction using our <a href=\"#operation/solanaGetTransaction\">getTransaction</a> endpoint. <a href=\"https://gist.github.com/joshwolff1/298e8251e43ff9b4815028683b1ca17d\" target=\"_blank\">Here's an example</a> of how to do this.  Mint transactions for candy machines that have capatcha/Civic enabled will fail. There is a gatekeeper functionality where you must manually verify through Civic and captcha in order to mint from a candy machine. In this functionality, Civic signs the transaction. Therefore, if the gatekeeper functionality is enabled, our “Mint from candy machine” endpoint will fail because it is missing a signer. If it is not enabled, then our “Mint from candy machine” endpoint will succeed. One caveat is the attribute “expireOnUse”. If this is True, then you have to solve a captcha each time. In this case, the “Mint from candy machine” endpoint will fail. If this is False, then your first verification is sufficient for further mints. In which case, after verifying manually the first time, you can use our endpoint thereafter.   You can check if the gatekeeper functionality is enabled with this <a href=\"#operation/solanaGetCandyMachineMetadata\">endpoint</a>.  `Cost: 2 Credits` (<a href=\"#section/Pricing\">See Pricing</a>)
+     - <a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-candy-machine/mint-from-candy-machine\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Use this endpoint to mint an NFT from a metaplex candy machine as soon as it drops.  This only works for `v1` and `v2` candy machines, and does not work for candy machines of any other type such as Magic Eden candy machines.  In order to achieve speed, this endpoint sends the transaction without checking whether or not it confirmed. It could still fail, for example, because the candy machine ran out of available mints. You should check the status of the transaction using our <a href=\"#operation/solanaGetTransaction\">getTransaction</a> endpoint. <a href=\"https://gist.github.com/joshwolff1/298e8251e43ff9b4815028683b1ca17d\" target=\"_blank\">Here's an example</a> of how to do this.  Mint transactions for candy machines that have capatcha/Civic enabled will fail. There is a gatekeeper functionality where you must manually verify through Civic and captcha in order to mint from a candy machine. In this functionality, Civic signs the transaction. Therefore, if the gatekeeper functionality is enabled, our “Mint from candy machine” endpoint will fail because it is missing a signer. If it is not enabled, then our “Mint from candy machine” endpoint will succeed. One caveat is the attribute “expireOnUse”. If this is True, then you have to solve a captcha each time. In this case, the “Mint from candy machine” endpoint will fail. If this is False, then your first verification is sufficient for further mints. In which case, after verifying manually the first time, you can use our endpoint thereafter.   You can check if the gatekeeper functionality is enabled with this <a href=\"#operation/solanaGetCandyMachineMetadata\">endpoint</a>.   `Cost: 8 Credits`  Limited to $29/mo plans and above. (<a href=\"#section/Pricing\">See Pricing</a>)  (You are able to try on the `Free` plan as well, until you run out of credits.)
      - API Key:
        - type: apiKey APIKeyID 
        - name: APIKeyID

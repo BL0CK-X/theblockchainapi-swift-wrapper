@@ -33,7 +33,7 @@ open class SolanaNFTAPI {
     /**
      Create an NFT on Solana
      - POST /solana/nft
-     - <a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-nft/create-an-nft\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Create a Metaplex NFT on Solana. Read more on this <a href=\"https://blog.theblockchainapi.com/2021/11/16/a-note-on-nfts.html\" target=\"_blank\">here</a>.  To add attributes to the NFT, add them to a JSON file and upload that to Arweave/IPFS/Filecoin. The JSON file should follow this format: <a href=\"https://docs.metaplex.com/nft-standard\" target=\"_blank\">NFT Standard.</a> (See the \"URI JSON Schema\" section in that article). Then supply the link to the JSON file in `nft_url`. You don't need to use `nft_metadata`.  `Cost: 2 Credits` (<a href=\"#section/Pricing\">See Pricing</a>)
+     - <a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-nft/create-an-nft\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Create a Metaplex NFT on Solana.   Read more on this <a href=\"https://blog.blockchainapi.com/2021/11/16/a-note-on-nfts.html\" target=\"_blank\">here</a>.  Note: Please see <a href=\"https://blog.blockchainapi.com/2022/01/18/how-to-format-off-chain-nft-metadata.html\" target=\"_blank\">this article</a> to learn more about what `nft_upload_method` means and how storing the metadata of an NFT works.  If you're using `nft_upload_method = \"LINK\"`, then to add attributes to the NFT or an image, add them to a JSON file and upload that to Arweave/IPFS/Filecoin. See the JSON format <a href=\"https://blog.blockchainapi.com/2022/01/18/how-to-format-off-chain-nft-metadata.html\">here</a>.  Then supply the link to the JSON file in `nft_url`.   NOTE: Don't use `nft_metadata`. Values provided here do not do anything at the moment. We are fixing this soon.  `Cost: 2 Credits` (<a href=\"#section/Pricing\">See Pricing</a>)
      - API Key:
        - type: apiKey APIKeyID 
        - name: APIKeyID
@@ -62,14 +62,22 @@ open class SolanaNFTAPI {
     }
 
     /**
+     * enum for parameter network
+     */
+    public enum Network_solanaGetNFT: String, CaseIterable {
+        case devnet = "devnet"
+        case mainnetBeta = "mainnet-beta"
+    }
+
+    /**
      Get an NFT's metadata
      
-     - parameter network: (path) The network ID (devnet, mainnet-beta) 
+     - parameter network: (path) The network ID 
      - parameter mintAddress: (path) The mint address of the NFT 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetNFT(network: String, mintAddress: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: NFT?, _ error: Error?) -> Void)) {
+    open class func solanaGetNFT(network: Network_solanaGetNFT, mintAddress: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: NFT?, _ error: Error?) -> Void)) {
         solanaGetNFTWithRequestBuilder(network: network, mintAddress: mintAddress).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -90,13 +98,13 @@ open class SolanaNFTAPI {
      - API Key:
        - type: apiKey APISecretKey 
        - name: APISecretKey
-     - parameter network: (path) The network ID (devnet, mainnet-beta) 
+     - parameter network: (path) The network ID 
      - parameter mintAddress: (path) The mint address of the NFT 
      - returns: RequestBuilder<NFT> 
      */
-    open class func solanaGetNFTWithRequestBuilder(network: String, mintAddress: String) -> RequestBuilder<NFT> {
+    open class func solanaGetNFTWithRequestBuilder(network: Network_solanaGetNFT, mintAddress: String) -> RequestBuilder<NFT> {
         var localVariablePath = "/solana/nft/{network}/{mint_address}"
-        let networkPreEscape = "\(APIHelper.mapValueToPathItem(network))"
+        let networkPreEscape = "\(network.rawValue)"
         let networkPostEscape = networkPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{network}", with: networkPostEscape, options: .literal, range: nil)
         let mintAddressPreEscape = "\(APIHelper.mapValueToPathItem(mintAddress))"
@@ -166,14 +174,22 @@ open class SolanaNFTAPI {
     }
 
     /**
+     * enum for parameter network
+     */
+    public enum Network_solanaGetNFTOwner: String, CaseIterable {
+        case devnet = "devnet"
+        case mainnetBeta = "mainnet-beta"
+    }
+
+    /**
      Get owner of an NFT
      
-     - parameter network: (path) The network ID (devnet, mainnet-beta) 
+     - parameter network: (path) The network ID 
      - parameter mintAddress: (path) The mint address of the NFT 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetNFTOwner(network: String, mintAddress: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: NFTOwnerResponse?, _ error: Error?) -> Void)) {
+    open class func solanaGetNFTOwner(network: Network_solanaGetNFTOwner, mintAddress: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: NFTOwnerResponse?, _ error: Error?) -> Void)) {
         solanaGetNFTOwnerWithRequestBuilder(network: network, mintAddress: mintAddress).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -194,13 +210,13 @@ open class SolanaNFTAPI {
      - API Key:
        - type: apiKey APISecretKey 
        - name: APISecretKey
-     - parameter network: (path) The network ID (devnet, mainnet-beta) 
+     - parameter network: (path) The network ID 
      - parameter mintAddress: (path) The mint address of the NFT 
      - returns: RequestBuilder<NFTOwnerResponse> 
      */
-    open class func solanaGetNFTOwnerWithRequestBuilder(network: String, mintAddress: String) -> RequestBuilder<NFTOwnerResponse> {
+    open class func solanaGetNFTOwnerWithRequestBuilder(network: Network_solanaGetNFTOwner, mintAddress: String) -> RequestBuilder<NFTOwnerResponse> {
         var localVariablePath = "/solana/nft/{network}/{mint_address}/owner"
-        let networkPreEscape = "\(APIHelper.mapValueToPathItem(network))"
+        let networkPreEscape = "\(network.rawValue)"
         let networkPostEscape = networkPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{network}", with: networkPostEscape, options: .literal, range: nil)
         let mintAddressPreEscape = "\(APIHelper.mapValueToPathItem(mintAddress))"

@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 Create an NFT on Solana
 
-<a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-nft/create-an-nft\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Create a Metaplex NFT on Solana. Read more on this <a href=\"https://blog.theblockchainapi.com/2021/11/16/a-note-on-nfts.html\" target=\"_blank\">here</a>.  To add attributes to the NFT, add them to a JSON file and upload that to Arweave/IPFS/Filecoin. The JSON file should follow this format: <a href=\"https://docs.metaplex.com/nft-standard\" target=\"_blank\">NFT Standard.</a> (See the \"URI JSON Schema\" section in that article). Then supply the link to the JSON file in `nft_url`. You don't need to use `nft_metadata`.  `Cost: 2 Credits` (<a href=\"#section/Pricing\">See Pricing</a>)
+<a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-nft/create-an-nft\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Create a Metaplex NFT on Solana.   Read more on this <a href=\"https://blog.blockchainapi.com/2021/11/16/a-note-on-nfts.html\" target=\"_blank\">here</a>.  Note: Please see <a href=\"https://blog.blockchainapi.com/2022/01/18/how-to-format-off-chain-nft-metadata.html\" target=\"_blank\">this article</a> to learn more about what `nft_upload_method` means and how storing the metadata of an NFT works.  If you're using `nft_upload_method = \"LINK\"`, then to add attributes to the NFT or an image, add them to a JSON file and upload that to Arweave/IPFS/Filecoin. See the JSON format <a href=\"https://blog.blockchainapi.com/2022/01/18/how-to-format-off-chain-nft-metadata.html\">here</a>.  Then supply the link to the JSON file in `nft_url`.   NOTE: Don't use `nft_metadata`. Values provided here do not do anything at the moment. We are fixing this soon.  `Cost: 2 Credits` (<a href=\"#section/Pricing\">See Pricing</a>)
 
 ### Example
 ```swift
@@ -64,7 +64,7 @@ Name | Type | Description  | Notes
 
 # **solanaGetNFT**
 ```swift
-    open class func solanaGetNFT(network: String, mintAddress: String, completion: @escaping (_ data: NFT?, _ error: Error?) -> Void)
+    open class func solanaGetNFT(network: Network_solanaGetNFT, mintAddress: String, completion: @escaping (_ data: NFT?, _ error: Error?) -> Void)
 ```
 
 Get an NFT's metadata
@@ -76,7 +76,7 @@ Get an NFT's metadata
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import theblockchainapi
 
-let network = "network_example" // String | The network ID (devnet, mainnet-beta)
+let network = "network_example" // String | The network ID
 let mintAddress = "mintAddress_example" // String | The mint address of the NFT
 
 // Get an NFT's metadata
@@ -96,7 +96,7 @@ SolanaNFTAPI.solanaGetNFT(network: network, mintAddress: mintAddress) { (respons
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **network** | **String** | The network ID (devnet, mainnet-beta) | 
+ **network** | **String** | The network ID | 
  **mintAddress** | **String** | The mint address of the NFT | 
 
 ### Return type
@@ -162,7 +162,7 @@ This endpoint does not need any parameter.
 
 # **solanaGetNFTOwner**
 ```swift
-    open class func solanaGetNFTOwner(network: String, mintAddress: String, completion: @escaping (_ data: NFTOwnerResponse?, _ error: Error?) -> Void)
+    open class func solanaGetNFTOwner(network: Network_solanaGetNFTOwner, mintAddress: String, completion: @escaping (_ data: NFTOwnerResponse?, _ error: Error?) -> Void)
 ```
 
 Get owner of an NFT
@@ -174,7 +174,7 @@ Get owner of an NFT
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import theblockchainapi
 
-let network = "network_example" // String | The network ID (devnet, mainnet-beta)
+let network = "network_example" // String | The network ID
 let mintAddress = "mintAddress_example" // String | The mint address of the NFT
 
 // Get owner of an NFT
@@ -194,7 +194,7 @@ SolanaNFTAPI.solanaGetNFTOwner(network: network, mintAddress: mintAddress) { (re
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **network** | **String** | The network ID (devnet, mainnet-beta) | 
+ **network** | **String** | The network ID | 
  **mintAddress** | **String** | The mint address of the NFT | 
 
 ### Return type
