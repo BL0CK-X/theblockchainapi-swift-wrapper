@@ -14,13 +14,17 @@ public struct ListNFTsResponse: Codable, Hashable {
 
     /** A list of mint addresses represented by a string */
     public var nftsOwned: [String]?
+    /** A list of the dictionaries, where each dictionary is an NFT's metadata */
+    public var nftsMetadata: [NFT]?
 
-    public init(nftsOwned: [String]? = nil) {
+    public init(nftsOwned: [String]? = nil, nftsMetadata: [NFT]? = nil) {
         self.nftsOwned = nftsOwned
+        self.nftsMetadata = nftsMetadata
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case nftsOwned = "nfts_owned"
+        case nftsMetadata = "nfts_metadata"
     }
 
     // Encodable protocol methods
@@ -28,6 +32,7 @@ public struct ListNFTsResponse: Codable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(nftsOwned, forKey: .nftsOwned)
+        try container.encodeIfPresent(nftsMetadata, forKey: .nftsMetadata)
     }
 }
 

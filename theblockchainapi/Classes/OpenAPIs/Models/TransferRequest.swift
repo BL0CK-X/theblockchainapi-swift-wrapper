@@ -18,19 +18,27 @@ public struct TransferRequest: Codable, Hashable {
     }
     /** The public key address of the recipient to whom you want to send a token or NFT */
     public var recipientAddress: String
-    public var wallet: Wallet
+    public var wallet: Wallet?
     /** If you're transfering an NFT, supply the `mint` (the address of the mint) for the `token_address`. If you're transfering a token, supply the token address found on the explorer (e.g., see `SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt` for <a href=\"https://explorer.solana.com/address/SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt\" target=\"_blank\">Serum Token</a>) for the `token_address`. If you're transferring SOL, do not supply a value for `token_address`.  */
     public var tokenAddress: String?
     public var network: Network? = .devnet
     /** This value must be a string. What you provide here depends on if you are sending an NFT, an SPL token, or SOL.  - NFT: This must be '1'. - SPL Token: This must be an integer in string format. To convert from what you see on a wallet UI (e.g., 1 ATLAS, 1 USDC) to an integer value, you have to multiply that value by 10^<i>x</i> where <i>x</i> is the number of decimals. For example, to transfer 0.2 USDC, if USDC uses 6 decimals, then the amount is 0.2 * 10^6 = 200000. You can get the number of decimals for a given SPL token <a href=\"#operation/solanaGetSPLToken\">here</a>. - SOL: Supply this value denominated in SOL in a string format. This does not need to be an integer. For example, if you want to send 0.0005 SOL, then amount = \"0.0005\". */
     public var amount: String? = "1"
+    /** If `false`, we sign and submit the transaction (`wallet` is required in this case; do not provide a value for `sender_public_key`).  If `true`, we compile the transaction (either `wallet` or `sender_public_key` is required in this case; do not provide both).  */
+    public var returnCompiledTransaction: Bool? = false
+    /** To understand the purpose of `sender_public_key` first note the following: There are two ways you can complete a transfer transaction: (1) we complete it for you with your `wallet` information or (2) we return the raw instruction data that you can sign and submit yourself (no private keys required). When you provide your `wallet` authentication, we are able to determine your wallet's public key, which is the sender public key of the transaction. When you are not providing your `wallet` as authentication, we still need the `sender_public_key` to be able to return the compiled transaction. Thus, you provide `sender_public_key` only if you are not providing `wallet` authentication information and you are returning a compiled transaction. You will receive an error if you provide both `wallet` and `sender_public_key`. You will receive an error if you provide neither `wallet` nor `sender_public_key`.  */
+    public var senderPublicKey: String? = "null"
+    public var feePayerWallet: FeePayerWallet?
 
-    public init(recipientAddress: String, wallet: Wallet, tokenAddress: String? = nil, network: Network? = .devnet, amount: String? = "1") {
+    public init(recipientAddress: String, wallet: Wallet? = nil, tokenAddress: String? = nil, network: Network? = .devnet, amount: String? = "1", returnCompiledTransaction: Bool? = false, senderPublicKey: String? = "null", feePayerWallet: FeePayerWallet? = nil) {
         self.recipientAddress = recipientAddress
         self.wallet = wallet
         self.tokenAddress = tokenAddress
         self.network = network
         self.amount = amount
+        self.returnCompiledTransaction = returnCompiledTransaction
+        self.senderPublicKey = senderPublicKey
+        self.feePayerWallet = feePayerWallet
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -39,6 +47,9 @@ public struct TransferRequest: Codable, Hashable {
         case tokenAddress = "token_address"
         case network
         case amount
+        case returnCompiledTransaction = "return_compiled_transaction"
+        case senderPublicKey = "sender_public_key"
+        case feePayerWallet = "fee_payer_wallet"
     }
 
     // Encodable protocol methods
@@ -46,10 +57,13 @@ public struct TransferRequest: Codable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(recipientAddress, forKey: .recipientAddress)
-        try container.encode(wallet, forKey: .wallet)
+        try container.encodeIfPresent(wallet, forKey: .wallet)
         try container.encodeIfPresent(tokenAddress, forKey: .tokenAddress)
         try container.encodeIfPresent(network, forKey: .network)
         try container.encodeIfPresent(amount, forKey: .amount)
+        try container.encodeIfPresent(returnCompiledTransaction, forKey: .returnCompiledTransaction)
+        try container.encodeIfPresent(senderPublicKey, forKey: .senderPublicKey)
+        try container.encodeIfPresent(feePayerWallet, forKey: .feePayerWallet)
     }
 }
 

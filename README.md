@@ -79,7 +79,7 @@ Note: We have had a couple of individuals harrass and threaten us. These individ
 
 # Pricing
 
-<b>Each user receives 500 free credits.</b>
+<b>Each user receives 100 free credits. Each user can call endpoints that cost 0 credits up to 50 requests/min before being rate-limited.</b> Thereafter, they can upgrade to have a higher rate limit. The purpose of this is to act like a free trial -- not to function like a freemium model where one can stay on the free tier indefinitely.
 
 You can learn more about our pricing <a href=\"https://dashboard.blockchainapi.com/billing\" target=\"_blank\">here</a>. 
 
@@ -106,6 +106,8 @@ We also have auto-generated wrappers for the following languages:
 - <a href=\"https://github.com/BL0CK-X/theblockchainapi-php-wrapper\" target = \"_blank\">PHP</a>
 - <a href=\"https://github.com/BL0CK-X/theblockchainapi-swift-wrapper\" target = \"_blank\">Swift5</a>
 - <a href=\"https://github.com/BL0CK-X/theblockchainapi-typescript-wrapper\" target = \"_blank\">TypeScript</a>
+- <a href=\"https://github.com/BL0CK-X/theblockchainapi-csharp-wrapper\" target = \"_blank\">C#</a>
+- <a href=\"https://github.com/BL0CK-X/theblockchainapi-dart-wrapper\" target = \"_blank\">Dart</a>
 
 If you would like a different language as well, submit an issue <a href=\"https://github.com/BL0CK-X/theblockchainapi-wrappers/issues/new\" target=\"_blank\">here</a>.
 
@@ -134,7 +136,22 @@ All URIs are relative to *https://api.blockchainapi.com/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*EndpointAPI* | [**deleteEndpoint**](docs/EndpointAPI.md#deleteendpoint) | **POST** /endpoint/delete | Delete an endpoint 
+*EndpointAPI* | [**getEndpoint**](docs/EndpointAPI.md#getendpoint) | **POST** /endpoint/metadata | Get an endpoint&#39;s metadata 
+*EndpointAPI* | [**listEndpoints**](docs/EndpointAPI.md#listendpoints) | **GET** /endpoint/list | List all endpoints 
+*EndpointAPI* | [**setEndpoint**](docs/EndpointAPI.md#setendpoint) | **POST** /endpoint | Create / update an endpoint 
 *FileAPI* | [**uploadFile**](docs/FileAPI.md#uploadfile) | **POST** /file | Upload a file
+*ProjectAPI* | [**createProject**](docs/ProjectAPI.md#createproject) | **POST** /project | Create a project 
+*ProjectAPI* | [**createProjectVersion**](docs/ProjectAPI.md#createprojectversion) | **POST** /project/{project_id}/{version} | Create a new project version 
+*ProjectAPI* | [**deleteProject**](docs/ProjectAPI.md#deleteproject) | **DELETE** /project/{project_id} | Delete a project 
+*ProjectAPI* | [**deleteProjectVersion**](docs/ProjectAPI.md#deleteprojectversion) | **DELETE** /project/{project_id}/{version} | Delete a project version 
+*ProjectAPI* | [**getProject**](docs/ProjectAPI.md#getproject) | **GET** /project/{project_id} | Get a project&#39;s metadata 
+*ProjectAPI* | [**getProjectDeploymentStatus**](docs/ProjectAPI.md#getprojectdeploymentstatus) | **POST** /project/{project_id}/deploy/status | Get deployment status 
+*ProjectAPI* | [**getProjectDeploymentURL**](docs/ProjectAPI.md#getprojectdeploymenturl) | **POST** /project/{project_id}/deploy/url | Get the deployment URL 
+*ProjectAPI* | [**getProjectStats**](docs/ProjectAPI.md#getprojectstats) | **GET** /project/{project_id}/stats | Get a project&#39;s stats 
+*ProjectAPI* | [**listProjects**](docs/ProjectAPI.md#listprojects) | **GET** /project/list | List projects 
+*ProjectAPI* | [**updateProject**](docs/ProjectAPI.md#updateproject) | **POST** /project/{project_id} | Update a project 
+*ProjectAPI* | [**updateProjectDocumentation**](docs/ProjectAPI.md#updateprojectdocumentation) | **POST** /project/{project_id}/{version}/documentation | Update the project&#39;s documentation 
 *SolanaAccountAPI* | [**solanaGetAccount**](docs/SolanaAccountAPI.md#solanagetaccount) | **GET** /solana/account/{network}/{public_key} | Get the details of an account on Solana
 *SolanaAccountAPI* | [**solanaGetAccountIsCandyMachine**](docs/SolanaAccountAPI.md#solanagetaccountiscandymachine) | **GET** /solana/account/{network}/{public_key}/is_candy_machine | Get if account is candy machine
 *SolanaAccountAPI* | [**solanaGetAccountIsNFT**](docs/SolanaAccountAPI.md#solanagetaccountisnft) | **GET** /solana/account/{network}/{public_key}/is_nft | Get if account is NFT
@@ -153,6 +170,9 @@ Class | Method | HTTP request | Description
 *SolanaNFTMarketplacesAPI* | [**solanaBuyNFT**](docs/SolanaNFTMarketplacesAPI.md#solanabuynft) | **POST** /solana/nft/marketplaces/{exchange}/buy/{network}/{mint_address} | Buy
 *SolanaNFTMarketplacesAPI* | [**solanaDelistNFT**](docs/SolanaNFTMarketplacesAPI.md#solanadelistnft) | **POST** /solana/nft/marketplaces/{exchange}/delist/{network}/{mint_address} | Delist
 *SolanaNFTMarketplacesAPI* | [**solanaGetNFTListing**](docs/SolanaNFTMarketplacesAPI.md#solanagetnftlisting) | **GET** /solana/nft/marketplaces/listing/{network}/{mint_address} | Get NFT Listing
+*SolanaNFTMarketplacesAPI* | [**solanaGetNFTMarketplaceAnalytics**](docs/SolanaNFTMarketplacesAPI.md#solanagetnftmarketplaceanalytics) | **POST** /solana/nft/marketplaces/analytics | Get NFT Analytics
+*SolanaNFTMarketplacesAPI* | [**solanaGetNFTMarketplaceMarketShare**](docs/SolanaNFTMarketplacesAPI.md#solanagetnftmarketplacemarketshare) | **GET** /solana/nft/marketplaces/analytics/market_share | Get Marketplace Market Share
+*SolanaNFTMarketplacesAPI* | [**solanaGetNFTMarketplaceRecentTransactions**](docs/SolanaNFTMarketplacesAPI.md#solanagetnftmarketplacerecenttransactions) | **GET** /solana/nft/marketplaces/analytics/recent_transactions | Get Recent NFT Transactions
 *SolanaNFTMarketplacesAPI* | [**solanaListNFT**](docs/SolanaNFTMarketplacesAPI.md#solanalistnft) | **POST** /solana/nft/marketplaces/{exchange}/list/{network}/{mint_address} | List
 *SolanaSPLTokenAPI* | [**solanaGetSPLToken**](docs/SolanaSPLTokenAPI.md#solanagetspltoken) | **GET** /solana/spl-token/{network}/{public_key} | Get SPL token metadata
 *SolanaTransactionAPI* | [**solanaGetTransaction**](docs/SolanaTransactionAPI.md#solanagettransaction) | **GET** /solana/transaction/{network}/{tx_signature} | Get the details of a transaction made on Solana
@@ -165,6 +185,7 @@ Class | Method | HTTP request | Description
 *SolanaWalletAPI* | [**solanaGetBalance**](docs/SolanaWalletAPI.md#solanagetbalance) | **POST** /solana/wallet/balance | Get wallet&#39;s balance in SOL or any SPL
 *SolanaWalletAPI* | [**solanaGetNFTsBelongingToWallet**](docs/SolanaWalletAPI.md#solanagetnftsbelongingtowallet) | **GET** /solana/wallet/{network}/{public_key}/nfts | Get address&#39;s NFTs
 *SolanaWalletAPI* | [**solanaGetTokensBelongingToWallet**](docs/SolanaWalletAPI.md#solanagettokensbelongingtowallet) | **GET** /solana/wallet/{network}/{public_key}/tokens | Get address&#39;s tokens and respective balances
+*SolanaWalletAPI* | [**solanaGetWalletTransactions**](docs/SolanaWalletAPI.md#solanagetwallettransactions) | **GET** /solana/wallet/{network}/{public_key}/transactions | Get address&#39;s associated transaction signatures
 *SolanaWalletAPI* | [**solanaTransfer**](docs/SolanaWalletAPI.md#solanatransfer) | **POST** /solana/wallet/transfer | Transfer SOL, a token, or an NFT to another address
 
 
@@ -187,6 +208,10 @@ Class | Method | HTTP request | Description
  - [CreateTestCandyMachineResponse](docs/CreateTestCandyMachineResponse.md)
  - [DelistRequest](docs/DelistRequest.md)
  - [DelistResponse](docs/DelistResponse.md)
+ - [DoubleTransferResponse](docs/DoubleTransferResponse.md)
+ - [Endpoint](docs/Endpoint.md)
+ - [EndpointReference](docs/EndpointReference.md)
+ - [FeePayerWallet](docs/FeePayerWallet.md)
  - [GeneratePrivateKey](docs/GeneratePrivateKey.md)
  - [GetAllNFTsResponse](docs/GetAllNFTsResponse.md)
  - [GetAllNFTsResponseMintedNfts](docs/GetAllNFTsResponseMintedNfts.md)
@@ -201,6 +226,7 @@ Class | Method | HTTP request | Description
  - [GetNFTListingResponse](docs/GetNFTListingResponse.md)
  - [GetPublicKeyRequest](docs/GetPublicKeyRequest.md)
  - [GetSPLTokenResponse](docs/GetSPLTokenResponse.md)
+ - [Group](docs/Group.md)
  - [ListNFTsResponse](docs/ListNFTsResponse.md)
  - [ListRequest](docs/ListRequest.md)
  - [ListResponse](docs/ListResponse.md)
@@ -208,6 +234,9 @@ Class | Method | HTTP request | Description
  - [MintNFTRequest](docs/MintNFTRequest.md)
  - [MintNFTResponse](docs/MintNFTResponse.md)
  - [NFT](docs/NFT.md)
+ - [NFTAnalyticsRequest](docs/NFTAnalyticsRequest.md)
+ - [NFTAnalyticsResponse](docs/NFTAnalyticsResponse.md)
+ - [NFTAnalyticsResponseTransactionHistory](docs/NFTAnalyticsResponseTransactionHistory.md)
  - [NFTData](docs/NFTData.md)
  - [NFTMintErrorResponse](docs/NFTMintErrorResponse.md)
  - [NFTMintFee](docs/NFTMintFee.md)
@@ -215,14 +244,21 @@ Class | Method | HTTP request | Description
  - [NFTOwnerResponse](docs/NFTOwnerResponse.md)
  - [NFTSearchRequest](docs/NFTSearchRequest.md)
  - [NFTSearchResponse](docs/NFTSearchResponse.md)
+ - [NFTTransaction](docs/NFTTransaction.md)
+ - [ParameterSpecification](docs/ParameterSpecification.md)
  - [PrivateKey](docs/PrivateKey.md)
+ - [Project](docs/Project.md)
+ - [ProjectCreateRequest](docs/ProjectCreateRequest.md)
+ - [ProjectDeploymentURL](docs/ProjectDeploymentURL.md)
  - [PublicKey](docs/PublicKey.md)
  - [SecretPhrase](docs/SecretPhrase.md)
  - [SecretRecoveryPhrase](docs/SecretRecoveryPhrase.md)
+ - [StatItem](docs/StatItem.md)
  - [Transaction](docs/Transaction.md)
  - [TransactionResult](docs/TransactionResult.md)
  - [TransferRequest](docs/TransferRequest.md)
  - [TransferResponse](docs/TransferResponse.md)
+ - [TransferResponseCompiled](docs/TransferResponseCompiled.md)
  - [UploadFileRequest](docs/UploadFileRequest.md)
  - [Wallet](docs/Wallet.md)
 
