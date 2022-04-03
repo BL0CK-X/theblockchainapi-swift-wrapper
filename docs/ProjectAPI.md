@@ -69,7 +69,7 @@ Name | Type | Description  | Notes
 
 # **createProjectVersion**
 ```swift
-    open class func createProjectVersion(UNKNOWN_PARAMETER_NAME: , UNKNOWN_PARAMETER_NAME2: , completion: @escaping (_ data: Project?, _ error: Error?) -> Void)
+    open class func createProjectVersion(projectId: String, version: String, completion: @escaping (_ data: Project?, _ error: Error?) -> Void)
 ```
 
 Create a new project version 
@@ -81,11 +81,11 @@ A complete example and walkthrough of the program can be found <a href=\"https:/
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import theblockchainapi
 
-let UNKNOWN_PARAMETER_NAME = TODO //  | The ID of the project. Created and returned when a project is created.
-let UNKNOWN_PARAMETER_NAME2 = TODO //  | The version of the project.
+let projectId = "projectId_example" // String | The ID of the project. Created and returned when a project is created.
+let version = "version_example" // String | The version of the project.
 
 // Create a new project version 
-ProjectAPI.createProjectVersion(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2: UNKNOWN_PARAMETER_NAME2) { (response, error) in
+ProjectAPI.createProjectVersion(projectId: projectId, version: version) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -101,8 +101,8 @@ ProjectAPI.createProjectVersion(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME, 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **UNKNOWN_PARAMETER_NAME** | [****](.md) | The ID of the project. Created and returned when a project is created. | 
- **UNKNOWN_PARAMETER_NAME2** | [****](.md) | The version of the project. | 
+ **projectId** | **String** | The ID of the project. Created and returned when a project is created. | 
+ **version** | **String** | The version of the project. | 
 
 ### Return type
 
@@ -121,7 +121,7 @@ Name | Type | Description  | Notes
 
 # **deleteProject**
 ```swift
-    open class func deleteProject(UNKNOWN_PARAMETER_NAME: , completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func deleteProject(projectId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
 ```
 
 Delete a project 
@@ -133,10 +133,10 @@ A complete example and walkthrough of the program can be found <a href=\"https:/
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import theblockchainapi
 
-let UNKNOWN_PARAMETER_NAME = TODO //  | The ID of the project. Created and returned when a project is created.
+let projectId = "projectId_example" // String | The ID of the project. Created and returned when a project is created.
 
 // Delete a project 
-ProjectAPI.deleteProject(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME) { (response, error) in
+ProjectAPI.deleteProject(projectId: projectId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -152,7 +152,7 @@ ProjectAPI.deleteProject(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME) { (resp
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **UNKNOWN_PARAMETER_NAME** | [****](.md) | The ID of the project. Created and returned when a project is created. | 
+ **projectId** | **String** | The ID of the project. Created and returned when a project is created. | 
 
 ### Return type
 
@@ -171,7 +171,7 @@ Void (empty response body)
 
 # **deleteProjectVersion**
 ```swift
-    open class func deleteProjectVersion(UNKNOWN_PARAMETER_NAME: , UNKNOWN_PARAMETER_NAME2: , completion: @escaping (_ data: Project?, _ error: Error?) -> Void)
+    open class func deleteProjectVersion(projectId: String, version: String, completion: @escaping (_ data: Project?, _ error: Error?) -> Void)
 ```
 
 Delete a project version 
@@ -183,11 +183,11 @@ A complete example and walkthrough of the program can be found <a href=\"https:/
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import theblockchainapi
 
-let UNKNOWN_PARAMETER_NAME = TODO //  | The ID of the project. Created and returned when a project is created.
-let UNKNOWN_PARAMETER_NAME2 = TODO //  | The version of the project.
+let projectId = "projectId_example" // String | The ID of the project. Created and returned when a project is created.
+let version = "version_example" // String | The version of the project.
 
 // Delete a project version 
-ProjectAPI.deleteProjectVersion(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2: UNKNOWN_PARAMETER_NAME2) { (response, error) in
+ProjectAPI.deleteProjectVersion(projectId: projectId, version: version) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -203,8 +203,8 @@ ProjectAPI.deleteProjectVersion(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME, 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **UNKNOWN_PARAMETER_NAME** | [****](.md) | The ID of the project. Created and returned when a project is created. | 
- **UNKNOWN_PARAMETER_NAME2** | [****](.md) | The version of the project. | 
+ **projectId** | **String** | The ID of the project. Created and returned when a project is created. | 
+ **version** | **String** | The version of the project. | 
 
 ### Return type
 
@@ -223,7 +223,7 @@ Name | Type | Description  | Notes
 
 # **getProject**
 ```swift
-    open class func getProject(UNKNOWN_PARAMETER_NAME: , completion: @escaping (_ data: Project?, _ error: Error?) -> Void)
+    open class func getProject(projectId: String, completion: @escaping (_ data: Project?, _ error: Error?) -> Void)
 ```
 
 Get a project's metadata 
@@ -235,10 +235,10 @@ A complete example and walkthrough of the program can be found <a href=\"https:/
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import theblockchainapi
 
-let UNKNOWN_PARAMETER_NAME = TODO //  | The ID of the project. Created and returned when a project is created.
+let projectId = "projectId_example" // String | The ID of the project. Created and returned when a project is created.
 
 // Get a project's metadata 
-ProjectAPI.getProject(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME) { (response, error) in
+ProjectAPI.getProject(projectId: projectId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -254,7 +254,7 @@ ProjectAPI.getProject(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME) { (respons
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **UNKNOWN_PARAMETER_NAME** | [****](.md) | The ID of the project. Created and returned when a project is created. | 
+ **projectId** | **String** | The ID of the project. Created and returned when a project is created. | 
 
 ### Return type
 
@@ -273,7 +273,7 @@ Name | Type | Description  | Notes
 
 # **getProjectDeploymentStatus**
 ```swift
-    open class func getProjectDeploymentStatus(UNKNOWN_PARAMETER_NAME: , completion: @escaping (_ data: AnyCodable?, _ error: Error?) -> Void)
+    open class func getProjectDeploymentStatus(projectId: String, completion: @escaping (_ data: AnyCodable?, _ error: Error?) -> Void)
 ```
 
 Get deployment status 
@@ -285,10 +285,10 @@ A complete example and walkthrough of the program can be found <a href=\"https:/
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import theblockchainapi
 
-let UNKNOWN_PARAMETER_NAME = TODO //  | The ID of the project. Created and returned when a project is created.
+let projectId = "projectId_example" // String | The ID of the project. Created and returned when a project is created.
 
 // Get deployment status 
-ProjectAPI.getProjectDeploymentStatus(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME) { (response, error) in
+ProjectAPI.getProjectDeploymentStatus(projectId: projectId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -304,7 +304,7 @@ ProjectAPI.getProjectDeploymentStatus(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **UNKNOWN_PARAMETER_NAME** | [****](.md) | The ID of the project. Created and returned when a project is created. | 
+ **projectId** | **String** | The ID of the project. Created and returned when a project is created. | 
 
 ### Return type
 
@@ -323,7 +323,7 @@ Name | Type | Description  | Notes
 
 # **getProjectDeploymentURL**
 ```swift
-    open class func getProjectDeploymentURL(UNKNOWN_PARAMETER_NAME: , UNKNOWN_BASE_TYPE: UNKNOWN_BASE_TYPE? = nil, completion: @escaping (_ data: ProjectDeploymentURL?, _ error: Error?) -> Void)
+    open class func getProjectDeploymentURL(projectId: String, inlineObject: InlineObject? = nil, completion: @escaping (_ data: ProjectDeploymentURL?, _ error: Error?) -> Void)
 ```
 
 Get the deployment URL 
@@ -335,11 +335,11 @@ A complete example and walkthrough of the program can be found <a href=\"https:/
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import theblockchainapi
 
-let UNKNOWN_PARAMETER_NAME = TODO //  | The ID of the project. Created and returned when a project is created.
-let UNKNOWN_BASE_TYPE = TODO // UNKNOWN_BASE_TYPE |  (optional)
+let projectId = "projectId_example" // String | The ID of the project. Created and returned when a project is created.
+let inlineObject = inline_object(platform: "platform_example") // InlineObject |  (optional)
 
 // Get the deployment URL 
-ProjectAPI.getProjectDeploymentURL(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME, UNKNOWN_BASE_TYPE: UNKNOWN_BASE_TYPE) { (response, error) in
+ProjectAPI.getProjectDeploymentURL(projectId: projectId, inlineObject: inlineObject) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -355,8 +355,8 @@ ProjectAPI.getProjectDeploymentURL(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAM
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **UNKNOWN_PARAMETER_NAME** | [****](.md) | The ID of the project. Created and returned when a project is created. | 
- **UNKNOWN_BASE_TYPE** | [**UNKNOWN_BASE_TYPE**](UNKNOWN_BASE_TYPE.md) |  | [optional] 
+ **projectId** | **String** | The ID of the project. Created and returned when a project is created. | 
+ **inlineObject** | [**InlineObject**](InlineObject.md) |  | [optional] 
 
 ### Return type
 
@@ -375,7 +375,7 @@ Name | Type | Description  | Notes
 
 # **getProjectStats**
 ```swift
-    open class func getProjectStats(UNKNOWN_PARAMETER_NAME: , completion: @escaping (_ data: [StatItem]?, _ error: Error?) -> Void)
+    open class func getProjectStats(projectId: String, completion: @escaping (_ data: [StatItem]?, _ error: Error?) -> Void)
 ```
 
 Get a project's stats 
@@ -387,10 +387,10 @@ A complete example and walkthrough of the program can be found <a href=\"https:/
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import theblockchainapi
 
-let UNKNOWN_PARAMETER_NAME = TODO //  | The ID of the project. Created and returned when a project is created.
+let projectId = "projectId_example" // String | The ID of the project. Created and returned when a project is created.
 
 // Get a project's stats 
-ProjectAPI.getProjectStats(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME) { (response, error) in
+ProjectAPI.getProjectStats(projectId: projectId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -406,7 +406,7 @@ ProjectAPI.getProjectStats(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME) { (re
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **UNKNOWN_PARAMETER_NAME** | [****](.md) | The ID of the project. Created and returned when a project is created. | 
+ **projectId** | **String** | The ID of the project. Created and returned when a project is created. | 
 
 ### Return type
 
@@ -471,7 +471,7 @@ This endpoint does not need any parameter.
 
 # **updateProject**
 ```swift
-    open class func updateProject(UNKNOWN_PARAMETER_NAME: , projectCreateRequest: ProjectCreateRequest? = nil, completion: @escaping (_ data: Project?, _ error: Error?) -> Void)
+    open class func updateProject(projectId: String, projectCreateRequest: ProjectCreateRequest? = nil, completion: @escaping (_ data: Project?, _ error: Error?) -> Void)
 ```
 
 Update a project 
@@ -483,11 +483,11 @@ A complete example and walkthrough of the program can be found <a href=\"https:/
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import theblockchainapi
 
-let UNKNOWN_PARAMETER_NAME = TODO //  | The ID of the project. Created and returned when a project is created.
+let projectId = "projectId_example" // String | The ID of the project. Created and returned when a project is created.
 let projectCreateRequest = ProjectCreateRequest(projectName: "projectName_example", projectDescription: "projectDescription_example", contactEmail: "contactEmail_example", groups: [Group(sectionName: "sectionName_example", groupName: "groupName_example", groupDescription: "groupDescription_example")]) // ProjectCreateRequest |  (optional)
 
 // Update a project 
-ProjectAPI.updateProject(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME, projectCreateRequest: projectCreateRequest) { (response, error) in
+ProjectAPI.updateProject(projectId: projectId, projectCreateRequest: projectCreateRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -503,7 +503,7 @@ ProjectAPI.updateProject(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME, project
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **UNKNOWN_PARAMETER_NAME** | [****](.md) | The ID of the project. Created and returned when a project is created. | 
+ **projectId** | **String** | The ID of the project. Created and returned when a project is created. | 
  **projectCreateRequest** | [**ProjectCreateRequest**](ProjectCreateRequest.md) |  | [optional] 
 
 ### Return type
@@ -523,7 +523,7 @@ Name | Type | Description  | Notes
 
 # **updateProjectDocumentation**
 ```swift
-    open class func updateProjectDocumentation(UNKNOWN_PARAMETER_NAME: , UNKNOWN_PARAMETER_NAME2: , completion: @escaping (_ data: Project?, _ error: Error?) -> Void)
+    open class func updateProjectDocumentation(projectId: String, version: String, completion: @escaping (_ data: Project?, _ error: Error?) -> Void)
 ```
 
 Update the project's documentation 
@@ -535,11 +535,11 @@ A complete example and walkthrough of the program can be found <a href=\"https:/
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import theblockchainapi
 
-let UNKNOWN_PARAMETER_NAME = TODO //  | The ID of the project. Created and returned when a project is created.
-let UNKNOWN_PARAMETER_NAME2 = TODO //  | The version of the project.
+let projectId = "projectId_example" // String | The ID of the project. Created and returned when a project is created.
+let version = "version_example" // String | The version of the project.
 
 // Update the project's documentation 
-ProjectAPI.updateProjectDocumentation(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2: UNKNOWN_PARAMETER_NAME2) { (response, error) in
+ProjectAPI.updateProjectDocumentation(projectId: projectId, version: version) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -555,8 +555,8 @@ ProjectAPI.updateProjectDocumentation(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **UNKNOWN_PARAMETER_NAME** | [****](.md) | The ID of the project. Created and returned when a project is created. | 
- **UNKNOWN_PARAMETER_NAME2** | [****](.md) | The version of the project. | 
+ **projectId** | **String** | The ID of the project. Created and returned when a project is created. | 
+ **version** | **String** | The version of the project. | 
 
 ### Return type
 

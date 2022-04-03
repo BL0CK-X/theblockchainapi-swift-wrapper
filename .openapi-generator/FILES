@@ -40,6 +40,7 @@ docs/GetNFTListingResponse.md
 docs/GetPublicKeyRequest.md
 docs/GetSPLTokenResponse.md
 docs/Group.md
+docs/InlineObject.md
 docs/ListNFTsResponse.md
 docs/ListRequest.md
 docs/ListResponse.md
@@ -139,6 +140,7 @@ theblockchainapi/Classes/OpenAPIs/Models/GetNFTListingResponse.swift
 theblockchainapi/Classes/OpenAPIs/Models/GetPublicKeyRequest.swift
 theblockchainapi/Classes/OpenAPIs/Models/GetSPLTokenResponse.swift
 theblockchainapi/Classes/OpenAPIs/Models/Group.swift
+theblockchainapi/Classes/OpenAPIs/Models/InlineObject.swift
 theblockchainapi/Classes/OpenAPIs/Models/ListNFTsResponse.swift
 theblockchainapi/Classes/OpenAPIs/Models/ListRequest.swift
 theblockchainapi/Classes/OpenAPIs/Models/ListResponse.swift

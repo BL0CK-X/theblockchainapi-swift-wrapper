@@ -64,13 +64,13 @@ open class ProjectAPI {
     /**
      Create a new project version 
      
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
-     - parameter UNKNOWN_PARAMETER_NAME2: (path) The version of the project. 
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter version: (path) The version of the project. 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createProjectVersion(UNKNOWN_PARAMETER_NAME: , UNKNOWN_PARAMETER_NAME2: , apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) {
-        createProjectVersionWithRequestBuilder(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2: UNKNOWN_PARAMETER_NAME2).execute(apiResponseQueue) { result in
+    open class func createProjectVersion(projectId: String, version: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) {
+        createProjectVersionWithRequestBuilder(projectId: projectId, version: version).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -90,18 +90,18 @@ open class ProjectAPI {
      - API Key:
        - type: apiKey APISecretKey 
        - name: APISecretKey
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
-     - parameter UNKNOWN_PARAMETER_NAME2: (path) The version of the project. 
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter version: (path) The version of the project. 
      - returns: RequestBuilder<Project> 
      */
-    open class func createProjectVersionWithRequestBuilder(UNKNOWN_PARAMETER_NAME: , UNKNOWN_PARAMETER_NAME2: ) -> RequestBuilder<Project> {
+    open class func createProjectVersionWithRequestBuilder(projectId: String, version: String) -> RequestBuilder<Project> {
         var localVariablePath = "/project/{project_id}/{version}"
-        let UNKNOWN_PARAMETER_NAMEPreEscape = "\(APIHelper.mapValueToPathItem(UNKNOWN_PARAMETER_NAME))"
-        let UNKNOWN_PARAMETER_NAMEPostEscape = UNKNOWN_PARAMETER_NAMEPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: UNKNOWN_PARAMETER_NAMEPostEscape, options: .literal, range: nil)
-        let UNKNOWN_PARAMETER_NAME2PreEscape = "\(APIHelper.mapValueToPathItem(UNKNOWN_PARAMETER_NAME2))"
-        let UNKNOWN_PARAMETER_NAME2PostEscape = UNKNOWN_PARAMETER_NAME2PreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{version}", with: UNKNOWN_PARAMETER_NAME2PostEscape, options: .literal, range: nil)
+        let projectIdPreEscape = "\(APIHelper.mapValueToPathItem(projectId))"
+        let projectIdPostEscape = projectIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: projectIdPostEscape, options: .literal, range: nil)
+        let versionPreEscape = "\(APIHelper.mapValueToPathItem(version))"
+        let versionPostEscape = versionPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{version}", with: versionPostEscape, options: .literal, range: nil)
         let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
@@ -121,12 +121,12 @@ open class ProjectAPI {
     /**
      Delete a project 
      
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteProject(UNKNOWN_PARAMETER_NAME: , apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
-        deleteProjectWithRequestBuilder(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME).execute(apiResponseQueue) { result in
+    open class func deleteProject(projectId: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
+        deleteProjectWithRequestBuilder(projectId: projectId).execute(apiResponseQueue) { result in
             switch result {
             case .success:
                 completion((), nil)
@@ -146,14 +146,14 @@ open class ProjectAPI {
      - API Key:
        - type: apiKey APISecretKey 
        - name: APISecretKey
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
      - returns: RequestBuilder<Void> 
      */
-    open class func deleteProjectWithRequestBuilder(UNKNOWN_PARAMETER_NAME: ) -> RequestBuilder<Void> {
+    open class func deleteProjectWithRequestBuilder(projectId: String) -> RequestBuilder<Void> {
         var localVariablePath = "/project/{project_id}"
-        let UNKNOWN_PARAMETER_NAMEPreEscape = "\(APIHelper.mapValueToPathItem(UNKNOWN_PARAMETER_NAME))"
-        let UNKNOWN_PARAMETER_NAMEPostEscape = UNKNOWN_PARAMETER_NAMEPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: UNKNOWN_PARAMETER_NAMEPostEscape, options: .literal, range: nil)
+        let projectIdPreEscape = "\(APIHelper.mapValueToPathItem(projectId))"
+        let projectIdPostEscape = projectIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: projectIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
@@ -173,13 +173,13 @@ open class ProjectAPI {
     /**
      Delete a project version 
      
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
-     - parameter UNKNOWN_PARAMETER_NAME2: (path) The version of the project. 
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter version: (path) The version of the project. 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteProjectVersion(UNKNOWN_PARAMETER_NAME: , UNKNOWN_PARAMETER_NAME2: , apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) {
-        deleteProjectVersionWithRequestBuilder(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2: UNKNOWN_PARAMETER_NAME2).execute(apiResponseQueue) { result in
+    open class func deleteProjectVersion(projectId: String, version: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) {
+        deleteProjectVersionWithRequestBuilder(projectId: projectId, version: version).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -199,18 +199,18 @@ open class ProjectAPI {
      - API Key:
        - type: apiKey APISecretKey 
        - name: APISecretKey
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
-     - parameter UNKNOWN_PARAMETER_NAME2: (path) The version of the project. 
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter version: (path) The version of the project. 
      - returns: RequestBuilder<Project> 
      */
-    open class func deleteProjectVersionWithRequestBuilder(UNKNOWN_PARAMETER_NAME: , UNKNOWN_PARAMETER_NAME2: ) -> RequestBuilder<Project> {
+    open class func deleteProjectVersionWithRequestBuilder(projectId: String, version: String) -> RequestBuilder<Project> {
         var localVariablePath = "/project/{project_id}/{version}"
-        let UNKNOWN_PARAMETER_NAMEPreEscape = "\(APIHelper.mapValueToPathItem(UNKNOWN_PARAMETER_NAME))"
-        let UNKNOWN_PARAMETER_NAMEPostEscape = UNKNOWN_PARAMETER_NAMEPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: UNKNOWN_PARAMETER_NAMEPostEscape, options: .literal, range: nil)
-        let UNKNOWN_PARAMETER_NAME2PreEscape = "\(APIHelper.mapValueToPathItem(UNKNOWN_PARAMETER_NAME2))"
-        let UNKNOWN_PARAMETER_NAME2PostEscape = UNKNOWN_PARAMETER_NAME2PreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{version}", with: UNKNOWN_PARAMETER_NAME2PostEscape, options: .literal, range: nil)
+        let projectIdPreEscape = "\(APIHelper.mapValueToPathItem(projectId))"
+        let projectIdPostEscape = projectIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: projectIdPostEscape, options: .literal, range: nil)
+        let versionPreEscape = "\(APIHelper.mapValueToPathItem(version))"
+        let versionPostEscape = versionPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{version}", with: versionPostEscape, options: .literal, range: nil)
         let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
@@ -230,12 +230,12 @@ open class ProjectAPI {
     /**
      Get a project's metadata 
      
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getProject(UNKNOWN_PARAMETER_NAME: , apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) {
-        getProjectWithRequestBuilder(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME).execute(apiResponseQueue) { result in
+    open class func getProject(projectId: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) {
+        getProjectWithRequestBuilder(projectId: projectId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -255,14 +255,14 @@ open class ProjectAPI {
      - API Key:
        - type: apiKey APISecretKey 
        - name: APISecretKey
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
      - returns: RequestBuilder<Project> 
      */
-    open class func getProjectWithRequestBuilder(UNKNOWN_PARAMETER_NAME: ) -> RequestBuilder<Project> {
+    open class func getProjectWithRequestBuilder(projectId: String) -> RequestBuilder<Project> {
         var localVariablePath = "/project/{project_id}"
-        let UNKNOWN_PARAMETER_NAMEPreEscape = "\(APIHelper.mapValueToPathItem(UNKNOWN_PARAMETER_NAME))"
-        let UNKNOWN_PARAMETER_NAMEPostEscape = UNKNOWN_PARAMETER_NAMEPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: UNKNOWN_PARAMETER_NAMEPostEscape, options: .literal, range: nil)
+        let projectIdPreEscape = "\(APIHelper.mapValueToPathItem(projectId))"
+        let projectIdPostEscape = projectIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: projectIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
@@ -282,12 +282,12 @@ open class ProjectAPI {
     /**
      Get deployment status 
      
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getProjectDeploymentStatus(UNKNOWN_PARAMETER_NAME: , apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) {
-        getProjectDeploymentStatusWithRequestBuilder(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME).execute(apiResponseQueue) { result in
+    open class func getProjectDeploymentStatus(projectId: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) {
+        getProjectDeploymentStatusWithRequestBuilder(projectId: projectId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -307,14 +307,14 @@ open class ProjectAPI {
      - API Key:
        - type: apiKey APISecretKey 
        - name: APISecretKey
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
      - returns: RequestBuilder<AnyCodable> 
      */
-    open class func getProjectDeploymentStatusWithRequestBuilder(UNKNOWN_PARAMETER_NAME: ) -> RequestBuilder<AnyCodable> {
+    open class func getProjectDeploymentStatusWithRequestBuilder(projectId: String) -> RequestBuilder<AnyCodable> {
         var localVariablePath = "/project/{project_id}/deploy/status"
-        let UNKNOWN_PARAMETER_NAMEPreEscape = "\(APIHelper.mapValueToPathItem(UNKNOWN_PARAMETER_NAME))"
-        let UNKNOWN_PARAMETER_NAMEPostEscape = UNKNOWN_PARAMETER_NAMEPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: UNKNOWN_PARAMETER_NAMEPostEscape, options: .literal, range: nil)
+        let projectIdPreEscape = "\(APIHelper.mapValueToPathItem(projectId))"
+        let projectIdPostEscape = projectIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: projectIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
@@ -334,13 +334,13 @@ open class ProjectAPI {
     /**
      Get the deployment URL 
      
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
-     - parameter UNKNOWN_BASE_TYPE: (body)  (optional)
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter inlineObject: (body)  (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getProjectDeploymentURL(UNKNOWN_PARAMETER_NAME: , UNKNOWN_BASE_TYPE: UNKNOWN_BASE_TYPE? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: ProjectDeploymentURL?, _ error: Error?) -> Void)) {
-        getProjectDeploymentURLWithRequestBuilder(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME, UNKNOWN_BASE_TYPE: UNKNOWN_BASE_TYPE).execute(apiResponseQueue) { result in
+    open class func getProjectDeploymentURL(projectId: String, inlineObject: InlineObject? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: ProjectDeploymentURL?, _ error: Error?) -> Void)) {
+        getProjectDeploymentURLWithRequestBuilder(projectId: projectId, inlineObject: inlineObject).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -360,17 +360,17 @@ open class ProjectAPI {
      - API Key:
        - type: apiKey APISecretKey 
        - name: APISecretKey
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
-     - parameter UNKNOWN_BASE_TYPE: (body)  (optional)
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter inlineObject: (body)  (optional)
      - returns: RequestBuilder<ProjectDeploymentURL> 
      */
-    open class func getProjectDeploymentURLWithRequestBuilder(UNKNOWN_PARAMETER_NAME: , UNKNOWN_BASE_TYPE: UNKNOWN_BASE_TYPE? = nil) -> RequestBuilder<ProjectDeploymentURL> {
+    open class func getProjectDeploymentURLWithRequestBuilder(projectId: String, inlineObject: InlineObject? = nil) -> RequestBuilder<ProjectDeploymentURL> {
         var localVariablePath = "/project/{project_id}/deploy/url"
-        let UNKNOWN_PARAMETER_NAMEPreEscape = "\(APIHelper.mapValueToPathItem(UNKNOWN_PARAMETER_NAME))"
-        let UNKNOWN_PARAMETER_NAMEPostEscape = UNKNOWN_PARAMETER_NAMEPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: UNKNOWN_PARAMETER_NAMEPostEscape, options: .literal, range: nil)
+        let projectIdPreEscape = "\(APIHelper.mapValueToPathItem(projectId))"
+        let projectIdPostEscape = projectIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: projectIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
-        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: UNKNOWN_BASE_TYPE)
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: inlineObject)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
@@ -388,12 +388,12 @@ open class ProjectAPI {
     /**
      Get a project's stats 
      
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getProjectStats(UNKNOWN_PARAMETER_NAME: , apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [StatItem]?, _ error: Error?) -> Void)) {
-        getProjectStatsWithRequestBuilder(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME).execute(apiResponseQueue) { result in
+    open class func getProjectStats(projectId: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [StatItem]?, _ error: Error?) -> Void)) {
+        getProjectStatsWithRequestBuilder(projectId: projectId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -413,14 +413,14 @@ open class ProjectAPI {
      - API Key:
        - type: apiKey APISecretKey 
        - name: APISecretKey
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
      - returns: RequestBuilder<[StatItem]> 
      */
-    open class func getProjectStatsWithRequestBuilder(UNKNOWN_PARAMETER_NAME: ) -> RequestBuilder<[StatItem]> {
+    open class func getProjectStatsWithRequestBuilder(projectId: String) -> RequestBuilder<[StatItem]> {
         var localVariablePath = "/project/{project_id}/stats"
-        let UNKNOWN_PARAMETER_NAMEPreEscape = "\(APIHelper.mapValueToPathItem(UNKNOWN_PARAMETER_NAME))"
-        let UNKNOWN_PARAMETER_NAMEPostEscape = UNKNOWN_PARAMETER_NAMEPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: UNKNOWN_PARAMETER_NAMEPostEscape, options: .literal, range: nil)
+        let projectIdPreEscape = "\(APIHelper.mapValueToPathItem(projectId))"
+        let projectIdPostEscape = projectIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: projectIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
@@ -487,13 +487,13 @@ open class ProjectAPI {
     /**
      Update a project 
      
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
      - parameter projectCreateRequest: (body)  (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateProject(UNKNOWN_PARAMETER_NAME: , projectCreateRequest: ProjectCreateRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) {
-        updateProjectWithRequestBuilder(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME, projectCreateRequest: projectCreateRequest).execute(apiResponseQueue) { result in
+    open class func updateProject(projectId: String, projectCreateRequest: ProjectCreateRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) {
+        updateProjectWithRequestBuilder(projectId: projectId, projectCreateRequest: projectCreateRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -513,15 +513,15 @@ open class ProjectAPI {
      - API Key:
        - type: apiKey APISecretKey 
        - name: APISecretKey
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
      - parameter projectCreateRequest: (body)  (optional)
      - returns: RequestBuilder<Project> 
      */
-    open class func updateProjectWithRequestBuilder(UNKNOWN_PARAMETER_NAME: , projectCreateRequest: ProjectCreateRequest? = nil) -> RequestBuilder<Project> {
+    open class func updateProjectWithRequestBuilder(projectId: String, projectCreateRequest: ProjectCreateRequest? = nil) -> RequestBuilder<Project> {
         var localVariablePath = "/project/{project_id}"
-        let UNKNOWN_PARAMETER_NAMEPreEscape = "\(APIHelper.mapValueToPathItem(UNKNOWN_PARAMETER_NAME))"
-        let UNKNOWN_PARAMETER_NAMEPostEscape = UNKNOWN_PARAMETER_NAMEPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: UNKNOWN_PARAMETER_NAMEPostEscape, options: .literal, range: nil)
+        let projectIdPreEscape = "\(APIHelper.mapValueToPathItem(projectId))"
+        let projectIdPostEscape = projectIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: projectIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: projectCreateRequest)
 
@@ -541,13 +541,13 @@ open class ProjectAPI {
     /**
      Update the project's documentation 
      
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
-     - parameter UNKNOWN_PARAMETER_NAME2: (path) The version of the project. 
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter version: (path) The version of the project. 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateProjectDocumentation(UNKNOWN_PARAMETER_NAME: , UNKNOWN_PARAMETER_NAME2: , apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) {
-        updateProjectDocumentationWithRequestBuilder(UNKNOWN_PARAMETER_NAME: UNKNOWN_PARAMETER_NAME, UNKNOWN_PARAMETER_NAME2: UNKNOWN_PARAMETER_NAME2).execute(apiResponseQueue) { result in
+    open class func updateProjectDocumentation(projectId: String, version: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) {
+        updateProjectDocumentationWithRequestBuilder(projectId: projectId, version: version).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -567,18 +567,18 @@ open class ProjectAPI {
      - API Key:
        - type: apiKey APISecretKey 
        - name: APISecretKey
-     - parameter UNKNOWN_PARAMETER_NAME: (path) The ID of the project. Created and returned when a project is created. 
-     - parameter UNKNOWN_PARAMETER_NAME2: (path) The version of the project. 
+     - parameter projectId: (path) The ID of the project. Created and returned when a project is created. 
+     - parameter version: (path) The version of the project. 
      - returns: RequestBuilder<Project> 
      */
-    open class func updateProjectDocumentationWithRequestBuilder(UNKNOWN_PARAMETER_NAME: , UNKNOWN_PARAMETER_NAME2: ) -> RequestBuilder<Project> {
+    open class func updateProjectDocumentationWithRequestBuilder(projectId: String, version: String) -> RequestBuilder<Project> {
         var localVariablePath = "/project/{project_id}/{version}/documentation"
-        let UNKNOWN_PARAMETER_NAMEPreEscape = "\(APIHelper.mapValueToPathItem(UNKNOWN_PARAMETER_NAME))"
-        let UNKNOWN_PARAMETER_NAMEPostEscape = UNKNOWN_PARAMETER_NAMEPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: UNKNOWN_PARAMETER_NAMEPostEscape, options: .literal, range: nil)
-        let UNKNOWN_PARAMETER_NAME2PreEscape = "\(APIHelper.mapValueToPathItem(UNKNOWN_PARAMETER_NAME2))"
-        let UNKNOWN_PARAMETER_NAME2PostEscape = UNKNOWN_PARAMETER_NAME2PreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{version}", with: UNKNOWN_PARAMETER_NAME2PostEscape, options: .literal, range: nil)
+        let projectIdPreEscape = "\(APIHelper.mapValueToPathItem(projectId))"
+        let projectIdPostEscape = projectIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{project_id}", with: projectIdPostEscape, options: .literal, range: nil)
+        let versionPreEscape = "\(APIHelper.mapValueToPathItem(version))"
+        let versionPostEscape = versionPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{version}", with: versionPostEscape, options: .literal, range: nil)
         let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
