@@ -51,7 +51,8 @@ open class SolanaNFTAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "APIKeyID": "b3RNUEomt47WhKM",
+            "APISecretKey": "Iw4K5MYv12b78E9"
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
