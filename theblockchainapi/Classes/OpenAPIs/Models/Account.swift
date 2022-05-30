@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct Account: Codable, Hashable {
+public struct Account: Codable, JSONEncodable, Hashable {
 
     public var context: AccountContext?
     public var value: AccountValue?

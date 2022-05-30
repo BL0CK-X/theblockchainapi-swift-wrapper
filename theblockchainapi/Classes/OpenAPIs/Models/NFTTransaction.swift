@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct NFTTransaction: Codable, Hashable {
+public struct NFTTransaction: Codable, JSONEncodable, Hashable {
 
     public enum Exchange: String, Codable, CaseIterable {
         case solsea = "solsea"
@@ -26,7 +26,7 @@ public struct NFTTransaction: Codable, Hashable {
         case alphaArt = "Alpha Art"
         case digitalEyes = "Digital Eyes"
         case solanart = "Solanart"
-        case exchangeArt = "Exchange.art"
+        case exchangePeriodArt = "Exchange.art"
     }
     public enum Operation: String, Codable, CaseIterable {
         case buy = "buy"

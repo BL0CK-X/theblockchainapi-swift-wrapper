@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct NFTMintFee: Codable, Hashable {
+public struct NFTMintFee: Codable, JSONEncodable, Hashable {
 
     /** The estimate of the total fee for minting an NFT on Solana */
     public var nftMintFeeEstimateLamports: Double?

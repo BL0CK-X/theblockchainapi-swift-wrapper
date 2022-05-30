@@ -140,7 +140,8 @@ Class | Method | HTTP request | Description
 *EndpointAPI* | [**getEndpoint**](docs/EndpointAPI.md#getendpoint) | **POST** /endpoint/metadata | Get an endpoint&#39;s metadata 
 *EndpointAPI* | [**listEndpoints**](docs/EndpointAPI.md#listendpoints) | **GET** /endpoint/list | List all endpoints 
 *EndpointAPI* | [**setEndpoint**](docs/EndpointAPI.md#setendpoint) | **POST** /endpoint | Create / update an endpoint 
-*FileAPI* | [**uploadFile**](docs/FileAPI.md#uploadfile) | **POST** /file | Upload a file
+*NameServiceAPI* | [**getBlockchainIdentifierFromName**](docs/NameServiceAPI.md#getblockchainidentifierfromname) | **POST** /{blockchain}/{network}/name_service/name_to_blockchain_identifier | Get the identifier
+*NameServiceAPI* | [**getNameForBlockchainIdentifier**](docs/NameServiceAPI.md#getnameforblockchainidentifier) | **POST** /{blockchain}/{network}/name_service/blockchain_identifier_to_name | Get the name
 *ProjectAPI* | [**createProject**](docs/ProjectAPI.md#createproject) | **POST** /project | Create a project 
 *ProjectAPI* | [**createProjectVersion**](docs/ProjectAPI.md#createprojectversion) | **POST** /project/{project_id}/{version} | Create a new project version 
 *ProjectAPI* | [**deleteProject**](docs/ProjectAPI.md#deleteproject) | **DELETE** /project/{project_id} | Delete a project 
@@ -170,9 +171,6 @@ Class | Method | HTTP request | Description
 *SolanaNFTMarketplacesAPI* | [**solanaBuyNFT**](docs/SolanaNFTMarketplacesAPI.md#solanabuynft) | **POST** /solana/nft/marketplaces/{exchange}/buy/{network}/{mint_address} | Buy
 *SolanaNFTMarketplacesAPI* | [**solanaDelistNFT**](docs/SolanaNFTMarketplacesAPI.md#solanadelistnft) | **POST** /solana/nft/marketplaces/{exchange}/delist/{network}/{mint_address} | Delist
 *SolanaNFTMarketplacesAPI* | [**solanaGetNFTListing**](docs/SolanaNFTMarketplacesAPI.md#solanagetnftlisting) | **GET** /solana/nft/marketplaces/listing/{network}/{mint_address} | Get NFT Listing
-*SolanaNFTMarketplacesAPI* | [**solanaGetNFTMarketplaceAnalytics**](docs/SolanaNFTMarketplacesAPI.md#solanagetnftmarketplaceanalytics) | **POST** /solana/nft/marketplaces/analytics | Get NFT Analytics
-*SolanaNFTMarketplacesAPI* | [**solanaGetNFTMarketplaceMarketShare**](docs/SolanaNFTMarketplacesAPI.md#solanagetnftmarketplacemarketshare) | **GET** /solana/nft/marketplaces/analytics/market_share | Get Marketplace Market Share
-*SolanaNFTMarketplacesAPI* | [**solanaGetNFTMarketplaceRecentTransactions**](docs/SolanaNFTMarketplacesAPI.md#solanagetnftmarketplacerecenttransactions) | **GET** /solana/nft/marketplaces/analytics/recent_transactions | Get Recent NFT Transactions
 *SolanaNFTMarketplacesAPI* | [**solanaListNFT**](docs/SolanaNFTMarketplacesAPI.md#solanalistnft) | **POST** /solana/nft/marketplaces/{exchange}/list/{network}/{mint_address} | List
 *SolanaSPLTokenAPI* | [**solanaGetSPLToken**](docs/SolanaSPLTokenAPI.md#solanagetspltoken) | **GET** /solana/spl-token/{network}/{public_key} | Get SPL token metadata
 *SolanaTransactionAPI* | [**solanaGetTransaction**](docs/SolanaTransactionAPI.md#solanagettransaction) | **GET** /solana/transaction/{network}/{tx_signature} | Get the details of a transaction made on Solana
@@ -187,6 +185,16 @@ Class | Method | HTTP request | Description
 *SolanaWalletAPI* | [**solanaGetTokensBelongingToWallet**](docs/SolanaWalletAPI.md#solanagettokensbelongingtowallet) | **GET** /solana/wallet/{network}/{public_key}/tokens | Get address&#39;s tokens and respective balances
 *SolanaWalletAPI* | [**solanaGetWalletTransactions**](docs/SolanaWalletAPI.md#solanagetwallettransactions) | **GET** /solana/wallet/{network}/{public_key}/transactions | Get address&#39;s associated transaction signatures
 *SolanaWalletAPI* | [**solanaTransfer**](docs/SolanaWalletAPI.md#solanatransfer) | **POST** /solana/wallet/transfer | Transfer SOL, a token, or an NFT to another address
+*TokenAPI* | [**getTokenMetadata**](docs/TokenAPI.md#gettokenmetadata) | **GET** /{blockchain}/{network}/token/{token_blockchain_identifier} | Get a token&#39;s metadata
+*TokenAPI* | [**listAllTokens**](docs/TokenAPI.md#listalltokens) | **POST** /{blockchain}/{network}/all_tokens | List all tokens
+*TransactionAPI* | [**getTransaction**](docs/TransactionAPI.md#gettransaction) | **GET** /{blockchain}/transaction/{network}/{transaction_blockchain_identifier} | Get the details of a transaction made on a blockchain
+*WalletAPI* | [**derivePrivateKey**](docs/WalletAPI.md#deriveprivatekey) | **POST** /{blockchain}/wallet/private_key | Derive private key
+*WalletAPI* | [**deriveWalletIdentifier**](docs/WalletAPI.md#derivewalletidentifier) | **POST** /{blockchain}/wallet/identifier | Derive wallet identifier
+*WalletAPI* | [**generatePrivateKey**](docs/WalletAPI.md#generateprivatekey) | **POST** /{blockchain}/wallet/generate/private_key | Generate private key
+*WalletAPI* | [**generateSeedPhrase**](docs/WalletAPI.md#generateseedphrase) | **POST** /{blockchain}/wallet/generate/secret_recovery_phrase | Generate seed phrase
+*WalletAPI* | [**getAirdrop**](docs/WalletAPI.md#getairdrop) | **POST** /{blockchain}/wallet/airdrop | Get an airdrop
+*WalletAPI* | [**getBalance**](docs/WalletAPI.md#getbalance) | **POST** /{blockchain}/wallet/balance | Get wallet&#39;s balance of X
+*WalletAPI* | [**transfer**](docs/WalletAPI.md#transfer) | **POST** /{blockchain}/wallet/transfer | Transfer crypto, a token, or an NFT to another wallet
 
 
 ## Documentation For Models
@@ -198,7 +206,10 @@ Class | Method | HTTP request | Description
  - [AccountIsNFT](docs/AccountIsNFT.md)
  - [AccountValue](docs/AccountValue.md)
  - [AirdropRequest](docs/AirdropRequest.md)
+ - [AvalancheCChainPublicAddress](docs/AvalancheCChainPublicAddress.md)
+ - [AvalancheXPChainPublicAddress](docs/AvalancheXPChainPublicAddress.md)
  - [B58PrivateKey](docs/B58PrivateKey.md)
+ - [BSCPublicAddress](docs/BSCPublicAddress.md)
  - [BalanceRequest](docs/BalanceRequest.md)
  - [BalanceResponse](docs/BalanceResponse.md)
  - [BuyRequest](docs/BuyRequest.md)
@@ -211,8 +222,27 @@ Class | Method | HTTP request | Description
  - [DoubleTransferResponse](docs/DoubleTransferResponse.md)
  - [Endpoint](docs/Endpoint.md)
  - [EndpointReference](docs/EndpointReference.md)
+ - [EthereumPublicAddress](docs/EthereumPublicAddress.md)
+ - [EthereumTransaction](docs/EthereumTransaction.md)
+ - [EthereumTransactionCompiledResponse](docs/EthereumTransactionCompiledResponse.md)
+ - [EthereumTransactionMadeResponse](docs/EthereumTransactionMadeResponse.md)
  - [FeePayerWallet](docs/FeePayerWallet.md)
+ - [GeneralAirdropRequest](docs/GeneralAirdropRequest.md)
+ - [GeneralB58PrivateKey](docs/GeneralB58PrivateKey.md)
+ - [GeneralBalanceRequest](docs/GeneralBalanceRequest.md)
+ - [GeneralBalanceResponse](docs/GeneralBalanceResponse.md)
+ - [GeneralFeePayerWallet](docs/GeneralFeePayerWallet.md)
+ - [GeneralGeneratePrivateKeyResponse](docs/GeneralGeneratePrivateKeyResponse.md)
+ - [GeneralPrivateKey](docs/GeneralPrivateKey.md)
+ - [GeneralSecretPhrase](docs/GeneralSecretPhrase.md)
+ - [GeneralSecretRecoveryPhrase](docs/GeneralSecretRecoveryPhrase.md)
+ - [GeneralTransaction](docs/GeneralTransaction.md)
+ - [GeneralTransactionMadeResponse](docs/GeneralTransactionMadeResponse.md)
+ - [GeneralTransactionResponse](docs/GeneralTransactionResponse.md)
+ - [GeneralTransferRequest](docs/GeneralTransferRequest.md)
+ - [GeneralWallet](docs/GeneralWallet.md)
  - [GeneratePrivateKey](docs/GeneratePrivateKey.md)
+ - [GenerateSeedPhraseRequest](docs/GenerateSeedPhraseRequest.md)
  - [GetAllNFTsResponse](docs/GetAllNFTsResponse.md)
  - [GetAllNFTsResponseMintedNfts](docs/GetAllNFTsResponseMintedNfts.md)
  - [GetAllNFTsResponseUnmintedNfts](docs/GetAllNFTsResponseUnmintedNfts.md)
@@ -222,12 +252,14 @@ Class | Method | HTTP request | Description
  - [GetCandyMetadataRequest](docs/GetCandyMetadataRequest.md)
  - [GetCandyMetadataResponse](docs/GetCandyMetadataResponse.md)
  - [GetCandyMetadataResponseCreators](docs/GetCandyMetadataResponseCreators.md)
- - [GetFileResponse](docs/GetFileResponse.md)
  - [GetNFTListingResponse](docs/GetNFTListingResponse.md)
  - [GetPublicKeyRequest](docs/GetPublicKeyRequest.md)
  - [GetSPLTokenResponse](docs/GetSPLTokenResponse.md)
  - [Group](docs/Group.md)
+ - [HexPrivateKey](docs/HexPrivateKey.md)
  - [InlineObject](docs/InlineObject.md)
+ - [InputBlockchainIdentifier](docs/InputBlockchainIdentifier.md)
+ - [InputName](docs/InputName.md)
  - [ListNFTsResponse](docs/ListNFTsResponse.md)
  - [ListRequest](docs/ListRequest.md)
  - [ListResponse](docs/ListResponse.md)
@@ -235,9 +267,7 @@ Class | Method | HTTP request | Description
  - [MintNFTRequest](docs/MintNFTRequest.md)
  - [MintNFTResponse](docs/MintNFTResponse.md)
  - [NFT](docs/NFT.md)
- - [NFTAnalyticsRequest](docs/NFTAnalyticsRequest.md)
- - [NFTAnalyticsResponse](docs/NFTAnalyticsResponse.md)
- - [NFTAnalyticsResponseTransactionHistory](docs/NFTAnalyticsResponseTransactionHistory.md)
+ - [NFTCollection](docs/NFTCollection.md)
  - [NFTData](docs/NFTData.md)
  - [NFTMintErrorResponse](docs/NFTMintErrorResponse.md)
  - [NFTMintFee](docs/NFTMintFee.md)
@@ -245,7 +275,7 @@ Class | Method | HTTP request | Description
  - [NFTOwnerResponse](docs/NFTOwnerResponse.md)
  - [NFTSearchRequest](docs/NFTSearchRequest.md)
  - [NFTSearchResponse](docs/NFTSearchResponse.md)
- - [NFTTransaction](docs/NFTTransaction.md)
+ - [NearPublicKey](docs/NearPublicKey.md)
  - [ParameterSpecification](docs/ParameterSpecification.md)
  - [PrivateKey](docs/PrivateKey.md)
  - [Project](docs/Project.md)
@@ -254,14 +284,20 @@ Class | Method | HTTP request | Description
  - [PublicKey](docs/PublicKey.md)
  - [SecretPhrase](docs/SecretPhrase.md)
  - [SecretRecoveryPhrase](docs/SecretRecoveryPhrase.md)
+ - [SolanaPublicKey](docs/SolanaPublicKey.md)
+ - [SolanaTransaction](docs/SolanaTransaction.md)
+ - [SolanaTransactionCompiledResponse](docs/SolanaTransactionCompiledResponse.md)
+ - [SolanaTransactionMadeResponse](docs/SolanaTransactionMadeResponse.md)
  - [StatItem](docs/StatItem.md)
+ - [SupplyWalletRequest](docs/SupplyWalletRequest.md)
+ - [TokenMetadataResponse](docs/TokenMetadataResponse.md)
  - [Transaction](docs/Transaction.md)
  - [TransactionResult](docs/TransactionResult.md)
  - [TransferRequest](docs/TransferRequest.md)
  - [TransferResponse](docs/TransferResponse.md)
  - [TransferResponseCompiled](docs/TransferResponseCompiled.md)
- - [UploadFileRequest](docs/UploadFileRequest.md)
  - [Wallet](docs/Wallet.md)
+ - [WalletIdentifiers](docs/WalletIdentifiers.md)
 
 
 ## Documentation For Authorization

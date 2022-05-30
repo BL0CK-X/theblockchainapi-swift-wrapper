@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct CreateTestCandyMachineResponse: Codable, Hashable {
+public struct CreateTestCandyMachineResponse: Codable, JSONEncodable, Hashable {
 
     /** The ID of the candy machine created */
     public var candyMachineId: String

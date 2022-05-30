@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct ListNFTsResponse: Codable, Hashable {
+public struct ListNFTsResponse: Codable, JSONEncodable, Hashable {
 
     /** A list of mint addresses represented by a string */
     public var nftsOwned: [String]?

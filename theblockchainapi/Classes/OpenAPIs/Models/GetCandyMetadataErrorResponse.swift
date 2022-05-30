@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct GetCandyMetadataErrorResponse: Codable, Hashable {
+public struct GetCandyMetadataErrorResponse: Codable, JSONEncodable, Hashable {
 
     public var error: String?
 

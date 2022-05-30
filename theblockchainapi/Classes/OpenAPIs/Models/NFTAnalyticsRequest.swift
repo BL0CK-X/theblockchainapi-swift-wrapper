@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct NFTAnalyticsRequest: Codable, Hashable {
+public struct NFTAnalyticsRequest: Codable, JSONEncodable, Hashable {
 
     /** The list of mint addresses. Each address must be a valid public key. */
     public var mintAddresses: [String]

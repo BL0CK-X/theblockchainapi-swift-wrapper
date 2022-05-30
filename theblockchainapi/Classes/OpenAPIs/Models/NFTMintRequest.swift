@@ -10,29 +10,33 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct NFTMintRequest: Codable, Hashable {
+public struct NFTMintRequest: Codable, JSONEncodable, Hashable {
 
-    public enum NftUploadMethod: String, Codable, CaseIterable {
+    public enum UploadMethod: String, Codable, CaseIterable {
         case s3 = "S3"
-        case link = "LINK"
+        case uri = "URI"
     }
     public enum Network: String, Codable, CaseIterable {
         case devnet = "devnet"
         case mainnetBeta = "mainnet-beta"
     }
-    public var wallet: Wallet
+    public var wallet: Wallet?
+    /** If `true`, the transaction to mint the NFT will not be submitted or signed. It will be returned to you in a raw form that you can then sign with a wallet (e.g., Phantom) or code. No `wallet` authentication information is required (thus, you do you have to supply a seed phrase or private key). See a Python example [here](https://github.com/BL0CK-X/blockchain-api/blob/main/third-party-api-examples/me-buy-sell.py). If `false` (the default option), then `wallet` is required. We sign and submit the transaction for you, which uses your wallet to mint the NFT. No further action is required on your part, and the NFT is minted. Read more on security [here](#section/Security).  */
+    public var returnCompiledTransaction: Bool? = false
     /** The name of the token. Limited to 32 characters. Stored on the blockchain. */
-    public var nftName: String? = ""
+    public var name: String? = ""
     /** The symbol of the token. Limited to 10 characters. Stored on the blockchain. */
-    public var nftSymbol: String? = ""
-    /** The description of the token. Limited to 2000 characters. Not stored on the blockchain.  This is stored in S3 in a bucket we own, and the link to that file is stored on the blockchain.  If you provide your own link, the link is also stored in that S3 file, which is publicly accessible. However, if you choose the NFT upload method \"LINK\" instead of \"S3\", then we upload the link you  provide for nft_url directly to the blockchain, and S3 is not used at all. Thus, when you provide the \"LINK\" option, the value nft_description is ignored and not used. The Metaplex API does not provide functionality to store any data about your NFT besides a URL.  */
-    public var nftDescription: String? = ""
-    /** The URL you provided. Limited to 200 characters. This does not need to be a valid URL. Whether or not this is  stored on the blockchain depends on which upload method you choose. If you choose LINK, then this is stored on the  blockchain directly. If you choose S3, then this link is embedded in a public S3 text file that also contains the metadata, the name,  the symbol, and the description of the NFT.  */
-    public var nftUrl: String? = ""
-    /** Any data you provide. Must be a string and properly encoded json. Will be viewable on S3. Limited to 2000 bytes. Not stored on the blockchain.  This is stored in S3 in a bucket we own, and the link to that file is stored on the blockchain.  If you provide your own link, the link is also stored in that S3 file, which is publicly accessible. However, if you choose the NFT upload method \"LINK\" instead of \"S3\", then we upload the link you  provide for nft_url directly to the blockchain, and S3 is not used at all. Thus, when you provide the \"LINK\" option, the value nft_metadata is ignored and not used. The Metaplex API does not provide functionality to store any data about your NFT besides a URL.  */
-    public var nftMetadata: String? = "{}"
-    /** When you choose S3, all of the nft_description, nft_name, nft_symbol, nft_metadata, and nft_url are put into a json dictionary and uploaded to S3 as a text file.  This is uploaded to an AWS S3 bucket we own, and is an option we provide at no charge. The S3 link to this file is stored on the NFT on the blockchain.   When you choose LINK, the nft_url you provide is stored on the blockchain, and the nft_metadata and nft_description are ignored and not stored anywhere. S3 is then NOT used.  */
-    public var nftUploadMethod: NftUploadMethod? = .s3
+    public var symbol: String? = ""
+    /** The description of the NFT. Limited to 2000 characters. Not stored on the blockchain.         If you are providing your own `uri` (see above), then you do not need to provide this.  If you are not providing your own `uri` and you do not provide this, then there wills simply be no description.  Only provide a value for `description` if the `upload_method` is set to `S3` (see the description for `upload_method` above). */
+    public var description: String? = ""
+    /** When you choose `S3`, all of the `name`, `description`, `symbol`, `uri_metadata`, and `image_url` are put into a JSON dictionary and uploaded to S3 as a JSON file.  This is uploaded to an AWS S3 bucket we own, and is an option we provide at no charge. The S3 link to this file is stored in the NFT's account on the blockchain. Learn more  <a href=\"https://blockchainapi.com/2022/01/18/how-to-format-off-chain-nft-metadata.html\" target=\"_blank\">here</a>.  When you choose `URI`, the `uri` you provide is stored on the blockchain, and the `uri_metadata`, `description`, and `image_url` are ignored and not stored anywhere. `S3` is NOT involved in this case.   An example of a `uri` you would provide is an Arweave URL, like this: `https://arweave.net/_Y8tETU3FbAFZSM1wXNeWPweWwrW9K6oSF1SYi_bH9A`. */
+    public var uploadMethod: UploadMethod? = .s3
+    /** The `uri` you provide is stored on the blockchain, and the `uri_metadata`, `description`, and `image_url` are ignored and not stored anywhere. `S3` is NOT involved in this case.   Read more <a href=\"https://blockchainapi.com/2022/01/18/how-to-format-off-chain-nft-metadata.html\" target=\"_blank\">here</a>.  An example of a `uri` you would provide is an Arweave URL, like this: `https://arweave.net/_Y8tETU3FbAFZSM1wXNeWPweWwrW9K6oSF1SYi_bH9A`.  Only provide a value for `uri` if the `upload_method` is set to `URI` (see the description for `upload_method` above). */
+    public var uri: String? = ""
+    /** The URL of the image of the NFT.         If you are providing your own `uri` (see above), then you do not need to provide this.  If you are not providing your own `uri` and you do not provide this, then there wills simply be no image.  Only provide a value for `image_url` if the `upload_method` is set to `S3` (see the description for `upload_method` above). */
+    public var imageUrl: String? = ""
+    /** The off-chain metadata.        If you are providing your own `uri` (see above), then you do not need to provide this.  If you are not providing your own `uri` and you do not provide this, then there wills simply be no image.  Only provide a value for `uri_metadata` if the `upload_method` is set to `S3` (see the description for `upload_method` above).  Learn more about how to format this metadata <a href=\"https://blockchainapi.com/2022/01/18/how-to-format-off-chain-nft-metadata.html\" target=\"_blank\">here</a>. */
+    public var uriMetadata: AnyCodable?
     /** Indicates whether or not the NFT created is mutable. If mutable, the NFT can be updated later. Once set to immutable, the NFT is unable to be changed.  */
     public var isMutable: Bool? = true
     /** Whether or not the NFT is a master edition NFT. Saves about 0.001 SOL in transaction costs when set to false.  */
@@ -41,21 +45,23 @@ public struct NFTMintRequest: Codable, Hashable {
     public var sellerFeeBasisPoints: Double? = 0
     /** A JSON encoded string representing an array / list.  The designated creators of the NFT. Length of the creator list must match length of the list of share.  Valid lengths of the list range from 1 to 5. Each item in the list must be a valid public key address.    Only the public key corresponding to the seed phrase provided will be marked as verified. Any other creators supplied will be marked as unverified.  */
     public var creators: [String]?
-    /** A JSON encoded string representing an array / list.  The share of the royalty that each creator gets. Valid values range from 0 to 100.  Sum of the values must equal 100.  Only integer value accepted. Length of the share list must match length of the list of creators.  */
+    /** A JSON encoded string representing an array / list.  The share of the royalty that each creator gets. Valid values range from 0 to 100. Sum of the values must equal 100.  Only integer value accepted. Length of the share list must match length of the list of creators.  */
     public var share: [Int]?
     /** Assign ownership of the NFT to the public key address given by `mint_to_public_key`  */
     public var mintToPublicKey: String? = "The public key of the wallet provided"
     /** This determines which network you choose to run the API calls on. We recommend first testing on the devnet, because minting an NFT costs a little above 0.01 SOL, which is about $1.60 at the time of this writing.  When you run on the mainnet-beta, each successful call will deduct approximately that much. When you run on the devnet, that amount is deducted from a simulated amount, so you are not paying with real SOL. To get SOL on the devnet,   airdrop SOL to this address using the CLI. Keep in mind that you can only do this every so often. If you are rate-limited, consider using a VPN and trying again, or just waiting. To get SOL on the mainnet-beta, you    must transfer real SOL to this account from another wallet (e.g., from another wallet you own, from an exchange, etc.). We hope to make this process easier in the future, and if you have any suggestions, please add them    as an issue on our <a href=\"https://github.com/BL0CK-X/the-blockchain-api\" target=\"_blank\">GitHub repository</a> for the API. To get a fee estimate, make a GET requests to the <a href=\"#tag/Solana-NFT/paths/~1solana~1nft~1mint~1fee/get\">v1/solana/nft/mint/fee endpoint</a> (details in sidebar).  */
     public var network: Network? = .devnet
 
-    public init(wallet: Wallet, nftName: String? = "", nftSymbol: String? = "", nftDescription: String? = "", nftUrl: String? = "", nftMetadata: String? = "{}", nftUploadMethod: NftUploadMethod? = .s3, isMutable: Bool? = true, isMasterEdition: Bool? = true, sellerFeeBasisPoints: Double? = 0, creators: [String]? = nil, share: [Int]? = nil, mintToPublicKey: String? = "The public key of the wallet provided", network: Network? = .devnet) {
+    public init(wallet: Wallet? = nil, returnCompiledTransaction: Bool? = false, name: String? = "", symbol: String? = "", description: String? = "", uploadMethod: UploadMethod? = .s3, uri: String? = "", imageUrl: String? = "", uriMetadata: AnyCodable? = nil, isMutable: Bool? = true, isMasterEdition: Bool? = true, sellerFeeBasisPoints: Double? = 0, creators: [String]? = nil, share: [Int]? = nil, mintToPublicKey: String? = "The public key of the wallet provided", network: Network? = .devnet) {
         self.wallet = wallet
-        self.nftName = nftName
-        self.nftSymbol = nftSymbol
-        self.nftDescription = nftDescription
-        self.nftUrl = nftUrl
-        self.nftMetadata = nftMetadata
-        self.nftUploadMethod = nftUploadMethod
+        self.returnCompiledTransaction = returnCompiledTransaction
+        self.name = name
+        self.symbol = symbol
+        self.description = description
+        self.uploadMethod = uploadMethod
+        self.uri = uri
+        self.imageUrl = imageUrl
+        self.uriMetadata = uriMetadata
         self.isMutable = isMutable
         self.isMasterEdition = isMasterEdition
         self.sellerFeeBasisPoints = sellerFeeBasisPoints
@@ -67,12 +73,14 @@ public struct NFTMintRequest: Codable, Hashable {
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case wallet
-        case nftName = "nft_name"
-        case nftSymbol = "nft_symbol"
-        case nftDescription = "nft_description"
-        case nftUrl = "nft_url"
-        case nftMetadata = "nft_metadata"
-        case nftUploadMethod = "nft_upload_method"
+        case returnCompiledTransaction = "return_compiled_transaction"
+        case name
+        case symbol
+        case description
+        case uploadMethod = "upload_method"
+        case uri
+        case imageUrl = "image_url"
+        case uriMetadata = "uri_metadata"
         case isMutable = "is_mutable"
         case isMasterEdition = "is_master_edition"
         case sellerFeeBasisPoints = "seller_fee_basis_points"
@@ -86,13 +94,15 @@ public struct NFTMintRequest: Codable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(wallet, forKey: .wallet)
-        try container.encodeIfPresent(nftName, forKey: .nftName)
-        try container.encodeIfPresent(nftSymbol, forKey: .nftSymbol)
-        try container.encodeIfPresent(nftDescription, forKey: .nftDescription)
-        try container.encodeIfPresent(nftUrl, forKey: .nftUrl)
-        try container.encodeIfPresent(nftMetadata, forKey: .nftMetadata)
-        try container.encodeIfPresent(nftUploadMethod, forKey: .nftUploadMethod)
+        try container.encodeIfPresent(wallet, forKey: .wallet)
+        try container.encodeIfPresent(returnCompiledTransaction, forKey: .returnCompiledTransaction)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(symbol, forKey: .symbol)
+        try container.encodeIfPresent(description, forKey: .description)
+        try container.encodeIfPresent(uploadMethod, forKey: .uploadMethod)
+        try container.encodeIfPresent(uri, forKey: .uri)
+        try container.encodeIfPresent(imageUrl, forKey: .imageUrl)
+        try container.encodeIfPresent(uriMetadata, forKey: .uriMetadata)
         try container.encodeIfPresent(isMutable, forKey: .isMutable)
         try container.encodeIfPresent(isMasterEdition, forKey: .isMasterEdition)
         try container.encodeIfPresent(sellerFeeBasisPoints, forKey: .sellerFeeBasisPoints)

@@ -20,8 +20,9 @@ open class SolanaSPLTokenAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetSPLToken(publicKey: String, network: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: GetSPLTokenResponse?, _ error: Error?) -> Void)) {
-        solanaGetSPLTokenWithRequestBuilder(publicKey: publicKey, network: network).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGetSPLToken(publicKey: String, network: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: GetSPLTokenResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetSPLTokenWithRequestBuilder(publicKey: publicKey, network: network).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)

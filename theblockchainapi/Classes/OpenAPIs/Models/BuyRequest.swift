@@ -10,19 +10,27 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct BuyRequest: Codable, Hashable {
+public struct BuyRequest: Codable, JSONEncodable, Hashable {
 
     public var wallet: Wallet
+    /** Whether or not to skip the provided checks (e.g., Is this NFT not listed? Is this NFT listed for a different price than you set?) and proceed with the transaction.  */
+    public var skipChecks: Bool? = false
+    /** The public key of the seller. Only required if providing `skip_checks`. Otherwise, don't provide it.  */
+    public var sellerPublicKey: String? = "null"
     /** The number of lamports you are expecting to purchase the NFT for. We check the price of the NFT before  purchasing it to ensure that it matches your expectation. There are 1e9 (1 billion) Lamports in a SOL.  */
     public var nftPrice: Double
 
-    public init(wallet: Wallet, nftPrice: Double) {
+    public init(wallet: Wallet, skipChecks: Bool? = false, sellerPublicKey: String? = "null", nftPrice: Double) {
         self.wallet = wallet
+        self.skipChecks = skipChecks
+        self.sellerPublicKey = sellerPublicKey
         self.nftPrice = nftPrice
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case wallet
+        case skipChecks = "skip_checks"
+        case sellerPublicKey = "seller_public_key"
         case nftPrice = "nft_price"
     }
 
@@ -31,6 +39,8 @@ public struct BuyRequest: Codable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(wallet, forKey: .wallet)
+        try container.encodeIfPresent(skipChecks, forKey: .skipChecks)
+        try container.encodeIfPresent(sellerPublicKey, forKey: .sellerPublicKey)
         try container.encode(nftPrice, forKey: .nftPrice)
     }
 }

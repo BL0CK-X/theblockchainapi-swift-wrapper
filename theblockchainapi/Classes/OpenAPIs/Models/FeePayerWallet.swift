@@ -11,7 +11,7 @@ import AnyCodable
 #endif
 
 /** If you do NOT provide a wallet here, the fee payer of the transaction will be the &#x60;wallet&#x60; you provide or the &#x60;sender_public_key&#x60;.        If you do provide a wallet, then the &#x60;fee_payer_wallet&#x60; will pay the fees of the transaction and any costs associated with creating a new associated token account (only if necessary; approx. 0.002 SOL when necessary). A new account is necessary if you are sending an NFT or SPL token to a user that has not received the same NFT or one of the SPL tokens before (thus, a new associated token account is needed). */
-public enum FeePayerWallet: Codable {
+public enum FeePayerWallet: Codable, JSONEncodable, Hashable {
     case typeB58PrivateKey(B58PrivateKey)
     case typePrivateKey(PrivateKey)
     case typeSecretRecoveryPhrase(SecretRecoveryPhrase)

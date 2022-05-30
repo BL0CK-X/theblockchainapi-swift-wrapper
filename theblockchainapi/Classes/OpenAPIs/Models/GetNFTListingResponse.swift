@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct GetNFTListingResponse: Codable, Hashable {
+public struct GetNFTListingResponse: Codable, JSONEncodable, Hashable {
 
     public enum Exchange: String, Codable, CaseIterable {
         case solsea = "solsea"

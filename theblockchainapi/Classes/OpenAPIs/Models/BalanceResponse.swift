@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct BalanceResponse: Codable, Hashable {
+public struct BalanceResponse: Codable, JSONEncodable, Hashable {
 
     public enum Network: String, Codable, CaseIterable {
         case devnet = "devnet"

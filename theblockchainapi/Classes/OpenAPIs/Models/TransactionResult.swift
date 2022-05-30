@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct TransactionResult: Codable, Hashable {
+public struct TransactionResult: Codable, JSONEncodable, Hashable {
 
     public var blockTime: Double?
     public var meta: AnyCodable?

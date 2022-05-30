@@ -19,8 +19,9 @@ open class EndpointAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteEndpoint(endpointReference: EndpointReference? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
-        deleteEndpointWithRequestBuilder(endpointReference: endpointReference).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func deleteEndpoint(endpointReference: EndpointReference? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
+        return deleteEndpointWithRequestBuilder(endpointReference: endpointReference).execute(apiResponseQueue) { result in
             switch result {
             case .success:
                 completion((), nil)
@@ -68,8 +69,9 @@ open class EndpointAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEndpoint(endpointReference: EndpointReference? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Endpoint?, _ error: Error?) -> Void)) {
-        getEndpointWithRequestBuilder(endpointReference: endpointReference).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func getEndpoint(endpointReference: EndpointReference? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Endpoint?, _ error: Error?) -> Void)) -> RequestTask {
+        return getEndpointWithRequestBuilder(endpointReference: endpointReference).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -116,8 +118,9 @@ open class EndpointAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func listEndpoints(apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [Endpoint]?, _ error: Error?) -> Void)) {
-        listEndpointsWithRequestBuilder().execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func listEndpoints(apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [Endpoint]?, _ error: Error?) -> Void)) -> RequestTask {
+        return listEndpointsWithRequestBuilder().execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -164,8 +167,9 @@ open class EndpointAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func setEndpoint(endpoint: Endpoint? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Endpoint?, _ error: Error?) -> Void)) {
-        setEndpointWithRequestBuilder(endpoint: endpoint).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func setEndpoint(endpoint: Endpoint? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Endpoint?, _ error: Error?) -> Void)) -> RequestTask {
+        return setEndpointWithRequestBuilder(endpoint: endpoint).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)

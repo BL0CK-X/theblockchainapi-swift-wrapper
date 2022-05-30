@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct DelistResponse: Codable, Hashable {
+public struct DelistResponse: Codable, JSONEncodable, Hashable {
 
     /** The signature of the `delist` transaction  */
     public var transactionSignature: String?

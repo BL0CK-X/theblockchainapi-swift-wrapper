@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct GetAllNFTsResponseUnmintedNfts: Codable, Hashable {
+public struct GetAllNFTsResponseUnmintedNfts: Codable, JSONEncodable, Hashable {
 
     /** The name of the unminted NFT */
     public var name: String?

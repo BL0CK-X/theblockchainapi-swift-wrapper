@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct GetCandyMetadataRequest: Codable, Hashable {
+public struct GetCandyMetadataRequest: Codable, JSONEncodable, Hashable {
 
     public enum Network: String, Codable, CaseIterable {
         case devnet = "devnet"

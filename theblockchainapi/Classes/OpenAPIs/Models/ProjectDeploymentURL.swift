@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct ProjectDeploymentURL: Codable, Hashable {
+public struct ProjectDeploymentURL: Codable, JSONEncodable, Hashable {
 
     /** The URL of the bucket where you will upload your binary  */
     public var url: String?

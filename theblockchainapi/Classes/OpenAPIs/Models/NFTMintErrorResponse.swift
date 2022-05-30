@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct NFTMintErrorResponse: Codable, Hashable {
+public struct NFTMintErrorResponse: Codable, JSONEncodable, Hashable {
 
     public var error: String?
 

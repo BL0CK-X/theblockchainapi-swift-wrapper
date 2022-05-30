@@ -11,7 +11,7 @@ import AnyCodable
 #endif
 
 /** You can change any of these parameters after creating the project. None of these parameters are required.  */
-public struct ProjectCreateRequest: Codable, Hashable {
+public struct ProjectCreateRequest: Codable, JSONEncodable, Hashable {
 
     /** The name of the mini-API. This will be shown at the top of the mini-API's documentation.  */
     public var projectName: String?

@@ -24,7 +24,6 @@ open class SolanaNFTMarketplacesAPI {
      * enum for parameter exchange
      */
     public enum Exchange_solanaBuyNFT: String, CaseIterable {
-        case solsea = "solsea"
         case magicEden = "magic-eden"
     }
 
@@ -38,8 +37,9 @@ open class SolanaNFTMarketplacesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaBuyNFT(network: Network_solanaBuyNFT, exchange: Exchange_solanaBuyNFT, mintAddress: String, buyRequest: BuyRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: BuyResponse?, _ error: Error?) -> Void)) {
-        solanaBuyNFTWithRequestBuilder(network: network, exchange: exchange, mintAddress: mintAddress, buyRequest: buyRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaBuyNFT(network: Network_solanaBuyNFT, exchange: Exchange_solanaBuyNFT, mintAddress: String, buyRequest: BuyRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: BuyResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaBuyNFTWithRequestBuilder(network: network, exchange: exchange, mintAddress: mintAddress, buyRequest: buyRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -52,7 +52,7 @@ open class SolanaNFTMarketplacesAPI {
     /**
      Buy
      - POST /solana/nft/marketplaces/{exchange}/buy/{network}/{mint_address}
-     - <a href=\"https://github.com/BL0CK-X/blockchain-api/tree/main/examples/solana-nft-marketplaces/buy-nft\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Buy an NFT on a Solana Exchange.  Exchanges supported: SolSea, Magic Edennpm  `Cost: 25 Credits`, `Cost: 3 Credits on Devnet` (<a href=\"#section/Pricing\">See Pricing</a>)
+     - <a href=\"https://github.com/BL0CK-X/blockchain-api/tree/main/examples/solana-nft-marketplaces/buy-nft\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Buy an NFT on a Solana Exchange.  Exchanges supported: SolSea, Magic Eden  `Cost: 25 Credits`, `Cost: 3 Credits on Devnet` (<a href=\"#section/Pricing\">See Pricing</a>)
      - API Key:
        - type: apiKey APIKeyID 
        - name: APIKeyID
@@ -104,7 +104,6 @@ open class SolanaNFTMarketplacesAPI {
      * enum for parameter exchange
      */
     public enum Exchange_solanaDelistNFT: String, CaseIterable {
-        case solsea = "solsea"
         case magicEden = "magic-eden"
     }
 
@@ -118,8 +117,9 @@ open class SolanaNFTMarketplacesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaDelistNFT(network: Network_solanaDelistNFT, exchange: Exchange_solanaDelistNFT, mintAddress: String, delistRequest: DelistRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: DelistResponse?, _ error: Error?) -> Void)) {
-        solanaDelistNFTWithRequestBuilder(network: network, exchange: exchange, mintAddress: mintAddress, delistRequest: delistRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaDelistNFT(network: Network_solanaDelistNFT, exchange: Exchange_solanaDelistNFT, mintAddress: String, delistRequest: DelistRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: DelistResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaDelistNFTWithRequestBuilder(network: network, exchange: exchange, mintAddress: mintAddress, delistRequest: delistRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -188,8 +188,9 @@ open class SolanaNFTMarketplacesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetNFTListing(network: Network_solanaGetNFTListing, mintAddress: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: GetNFTListingResponse?, _ error: Error?) -> Void)) {
-        solanaGetNFTListingWithRequestBuilder(network: network, mintAddress: mintAddress).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGetNFTListing(network: Network_solanaGetNFTListing, mintAddress: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: GetNFTListingResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetNFTListingWithRequestBuilder(network: network, mintAddress: mintAddress).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -238,149 +239,6 @@ open class SolanaNFTMarketplacesAPI {
     }
 
     /**
-     Get NFT Analytics
-     
-     - parameter nFTAnalyticsRequest: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
-     */
-    open class func solanaGetNFTMarketplaceAnalytics(nFTAnalyticsRequest: NFTAnalyticsRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: NFTAnalyticsResponse?, _ error: Error?) -> Void)) {
-        solanaGetNFTMarketplaceAnalyticsWithRequestBuilder(nFTAnalyticsRequest: nFTAnalyticsRequest).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
-    }
-
-    /**
-     Get NFT Analytics
-     - POST /solana/nft/marketplaces/analytics
-     - <a href=\"https://github.com/BL0CK-X/blockchain-api/tree/main/examples/solana-nft-marketplaces/analytics\" target=\"_blank\">See examples (Python, JavaScript)</a>.  A collection is a list of NFTs.  Any collection can thus be defined as a list of mint addresses.  This endpoint takes in a list of mint addresses (effectively, a collection), a start time (optional), and an end time (optional) and outputs the floor for that period, the volume for that period, and the transaction history for each NFT in the list (buy, list, delist, update price) for that period.  We are currently compiling a dictionary of collection names to list of mint addresses for public use. Please contribute <a href=\"https://github.com/BL0CK-X/solana-nft-collection-mint-addresses\" target=\"_blank\">here</a>.  Currently scans the following Solana NFT martketplaces: SolSea, Magic Eden, Solanart, Alpha Art, Digital Eyes, Exchange.art  `Cost: 15 Credits`, (<a href=\"#section/Pricing\">See Pricing</a>)
-     - API Key:
-       - type: apiKey APIKeyID 
-       - name: APIKeyID
-     - API Key:
-       - type: apiKey APISecretKey 
-       - name: APISecretKey
-     - parameter nFTAnalyticsRequest: (body)  (optional)
-     - returns: RequestBuilder<NFTAnalyticsResponse> 
-     */
-    open class func solanaGetNFTMarketplaceAnalyticsWithRequestBuilder(nFTAnalyticsRequest: NFTAnalyticsRequest? = nil) -> RequestBuilder<NFTAnalyticsResponse> {
-        let localVariablePath = "/solana/nft/marketplaces/analytics"
-        let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
-        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: nFTAnalyticsRequest)
-
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
-
-        let localVariableNillableHeaders: [String: Any?] = [
-            :
-        ]
-
-        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
-
-        let localVariableRequestBuilder: RequestBuilder<NFTAnalyticsResponse>.Type = theblockchainapiAPI.requestBuilderFactory.getBuilder()
-
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
-    }
-
-    /**
-     Get Marketplace Market Share
-     
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
-     */
-    open class func solanaGetNFTMarketplaceMarketShare(apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) {
-        solanaGetNFTMarketplaceMarketShareWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
-    }
-
-    /**
-     Get Marketplace Market Share
-     - GET /solana/nft/marketplaces/analytics/market_share
-     - <a href=\"https://github.com/BL0CK-X/blockchain-api/tree/main/examples/solana-nft-marketplaces/market-share\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Get the Marketplace listing of a Solana NFT.  Currently checks for the following Solana NFT martketplaces: SolSea, Magic Eden, Solanart, Alpha Art, Digital Eyes, Exchange.art  `Cost: 3 Credits`, (<a href=\"#section/Pricing\">See Pricing</a>)
-     - API Key:
-       - type: apiKey APIKeyID 
-       - name: APIKeyID
-     - API Key:
-       - type: apiKey APISecretKey 
-       - name: APISecretKey
-     - returns: RequestBuilder<AnyCodable> 
-     */
-    open class func solanaGetNFTMarketplaceMarketShareWithRequestBuilder() -> RequestBuilder<AnyCodable> {
-        let localVariablePath = "/solana/nft/marketplaces/analytics/market_share"
-        let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
-
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
-
-        let localVariableNillableHeaders: [String: Any?] = [
-            :
-        ]
-
-        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
-
-        let localVariableRequestBuilder: RequestBuilder<AnyCodable>.Type = theblockchainapiAPI.requestBuilderFactory.getBuilder()
-
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
-    }
-
-    /**
-     Get Recent NFT Transactions
-     
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
-     */
-    open class func solanaGetNFTMarketplaceRecentTransactions(apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [NFTTransaction]?, _ error: Error?) -> Void)) {
-        solanaGetNFTMarketplaceRecentTransactionsWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
-    }
-
-    /**
-     Get Recent NFT Transactions
-     - GET /solana/nft/marketplaces/analytics/recent_transactions
-     - <a href=\"https://github.com/BL0CK-X/blockchain-api/tree/main/examples/solana-nft-marketplaces/recent-transactions\" target=\"_blank\">See examples (Python, JavaScript)</a>.  Get all NFT transactions across all major marketplaces in the last 30 minutes.  Currently checks for the following Solana NFT martketplaces: SolSea, Magic Eden, Solanart, Alpha Art, Digital Eyes, Exchange.art  `Cost: 15 Credits`, (<a href=\"#section/Pricing\">See Pricing</a>)
-     - API Key:
-       - type: apiKey APIKeyID 
-       - name: APIKeyID
-     - API Key:
-       - type: apiKey APISecretKey 
-       - name: APISecretKey
-     - returns: RequestBuilder<[NFTTransaction]> 
-     */
-    open class func solanaGetNFTMarketplaceRecentTransactionsWithRequestBuilder() -> RequestBuilder<[NFTTransaction]> {
-        let localVariablePath = "/solana/nft/marketplaces/analytics/recent_transactions"
-        let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
-
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
-
-        let localVariableNillableHeaders: [String: Any?] = [
-            :
-        ]
-
-        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
-
-        let localVariableRequestBuilder: RequestBuilder<[NFTTransaction]>.Type = theblockchainapiAPI.requestBuilderFactory.getBuilder()
-
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
-    }
-
-    /**
      * enum for parameter network
      */
     public enum Network_solanaListNFT: String, CaseIterable {
@@ -392,7 +250,6 @@ open class SolanaNFTMarketplacesAPI {
      * enum for parameter exchange
      */
     public enum Exchange_solanaListNFT: String, CaseIterable {
-        case solsea = "solsea"
         case magicEden = "magic-eden"
     }
 
@@ -406,8 +263,9 @@ open class SolanaNFTMarketplacesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaListNFT(network: Network_solanaListNFT, exchange: Exchange_solanaListNFT, mintAddress: String, listRequest: ListRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: ListResponse?, _ error: Error?) -> Void)) {
-        solanaListNFTWithRequestBuilder(network: network, exchange: exchange, mintAddress: mintAddress, listRequest: listRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaListNFT(network: Network_solanaListNFT, exchange: Exchange_solanaListNFT, mintAddress: String, listRequest: ListRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: ListResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaListNFTWithRequestBuilder(network: network, exchange: exchange, mintAddress: mintAddress, listRequest: listRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)

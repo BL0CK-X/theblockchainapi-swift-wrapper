@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct StatItem: Codable, Hashable {
+public struct StatItem: Codable, JSONEncodable, Hashable {
 
     /** The anonymous ID of the user who called your endpoint  */
     public var uid: String?

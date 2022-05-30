@@ -19,8 +19,9 @@ open class SolanaCandyMachineAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaCreateTestCandyMachine(createTestCandyMachineRequest: CreateTestCandyMachineRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: CreateTestCandyMachineResponse?, _ error: Error?) -> Void)) {
-        solanaCreateTestCandyMachineWithRequestBuilder(createTestCandyMachineRequest: createTestCandyMachineRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaCreateTestCandyMachine(createTestCandyMachineRequest: CreateTestCandyMachineRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: CreateTestCandyMachineResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaCreateTestCandyMachineWithRequestBuilder(createTestCandyMachineRequest: createTestCandyMachineRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -77,8 +78,9 @@ open class SolanaCandyMachineAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetAllNFTsFromCandyMachine(network: Network_solanaGetAllNFTsFromCandyMachine, candyMachineId: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: GetAllNFTsResponse?, _ error: Error?) -> Void)) {
-        solanaGetAllNFTsFromCandyMachineWithRequestBuilder(network: network, candyMachineId: candyMachineId).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGetAllNFTsFromCandyMachine(network: Network_solanaGetAllNFTsFromCandyMachine, candyMachineId: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: GetAllNFTsResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetAllNFTsFromCandyMachineWithRequestBuilder(network: network, candyMachineId: candyMachineId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -133,8 +135,9 @@ open class SolanaCandyMachineAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetCandyMachineMetadata(getCandyMetadataRequest: GetCandyMetadataRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: GetCandyMetadataResponse?, _ error: Error?) -> Void)) {
-        solanaGetCandyMachineMetadataWithRequestBuilder(getCandyMetadataRequest: getCandyMetadataRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGetCandyMachineMetadata(getCandyMetadataRequest: GetCandyMetadataRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: GetCandyMetadataResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetCandyMachineMetadataWithRequestBuilder(getCandyMetadataRequest: getCandyMetadataRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -181,8 +184,9 @@ open class SolanaCandyMachineAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaListAllCandyMachines(apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) {
-        solanaListAllCandyMachinesWithRequestBuilder().execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaListAllCandyMachines(apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaListAllCandyMachinesWithRequestBuilder().execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -229,8 +233,9 @@ open class SolanaCandyMachineAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaMintFromCandyMachine(mintNFTRequest: MintNFTRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: MintNFTResponse?, _ error: Error?) -> Void)) {
-        solanaMintFromCandyMachineWithRequestBuilder(mintNFTRequest: mintNFTRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaMintFromCandyMachine(mintNFTRequest: MintNFTRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: MintNFTResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaMintFromCandyMachineWithRequestBuilder(mintNFTRequest: mintNFTRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -278,8 +283,9 @@ open class SolanaCandyMachineAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaSearchCandyMachines(candyMachineSearchRequest: CandyMachineSearchRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [String]?, _ error: Error?) -> Void)) {
-        solanaSearchCandyMachinesWithRequestBuilder(candyMachineSearchRequest: candyMachineSearchRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaSearchCandyMachines(candyMachineSearchRequest: CandyMachineSearchRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [String]?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaSearchCandyMachinesWithRequestBuilder(candyMachineSearchRequest: candyMachineSearchRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)

@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct GetCandyMetadataResponseCreators: Codable, Hashable {
+public struct GetCandyMetadataResponseCreators: Codable, JSONEncodable, Hashable {
 
     /** The public key of a creator */
     public var address: String?

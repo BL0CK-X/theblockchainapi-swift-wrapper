@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct TransferResponseCompiled: Codable, Hashable {
+public struct TransferResponseCompiled: Codable, JSONEncodable, Hashable {
 
     /** A base58 encoded byte array in string representation. Really easy to submit to Phantom. See <a href=\"https://github.com/BL0CK-X/blockchain-api/blob/main/examples/tutorials/phantom_tutorials/transfer_solana.html\" target=\"_blank\">here</a> for an example on how to submit it to a Phantom wallet for signing. */
     public var b58CompiledTransaction: String?

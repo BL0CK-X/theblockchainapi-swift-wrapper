@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct Transaction: Codable, Hashable {
+public struct Transaction: Codable, JSONEncodable, Hashable {
 
     public var id: Double?
     public var jsonrpc: String?

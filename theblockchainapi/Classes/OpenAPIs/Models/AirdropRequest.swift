@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct AirdropRequest: Codable, Hashable {
+public struct AirdropRequest: Codable, JSONEncodable, Hashable {
 
     /** The address to which to send the airdrop of 0.015 SOL */
     public var recipientAddress: String

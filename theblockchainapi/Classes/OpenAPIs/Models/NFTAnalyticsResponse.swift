@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct NFTAnalyticsResponse: Codable, Hashable {
+public struct NFTAnalyticsResponse: Codable, JSONEncodable, Hashable {
 
     /** The start time used in the API request.  */
     public var startTime: AnyCodable?

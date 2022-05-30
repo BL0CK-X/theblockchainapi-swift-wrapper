@@ -11,7 +11,7 @@ import AnyCodable
 #endif
 
 /** A group is a group of endpoints.  */
-public struct Group: Codable, Hashable {
+public struct Group: Codable, JSONEncodable, Hashable {
 
     /** The name of the section under which this group is listed. A section contains several groups.  */
     public var sectionName: String?

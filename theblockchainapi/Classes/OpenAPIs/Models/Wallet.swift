@@ -11,7 +11,7 @@ import AnyCodable
 #endif
 
 /** The wallet authentication information used to sign and submit the transaction.  Click the &#x60;&gt;&#x60; arrow next to \&quot;wallet\&quot; on the left to see more details. See our Security section &lt;a href&#x3D;\&quot;#section/Security\&quot;&gt;here&lt;/a&gt;.  */
-public enum Wallet: Codable {
+public enum Wallet: Codable, JSONEncodable, Hashable {
     case typeB58PrivateKey(B58PrivateKey)
     case typePrivateKey(PrivateKey)
     case typeSecretRecoveryPhrase(SecretRecoveryPhrase)

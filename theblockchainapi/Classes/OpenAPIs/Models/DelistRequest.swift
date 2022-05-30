@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct DelistRequest: Codable, Hashable {
+public struct DelistRequest: Codable, JSONEncodable, Hashable {
 
     public var wallet: Wallet
 

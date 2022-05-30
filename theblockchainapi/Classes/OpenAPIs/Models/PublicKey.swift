@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct PublicKey: Codable, Hashable {
+public struct PublicKey: Codable, JSONEncodable, Hashable {
 
     public var publicKey: String
 

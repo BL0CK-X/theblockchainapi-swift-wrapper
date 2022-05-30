@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct GetCandyMachineIDResponse: Codable, Hashable {
+public struct GetCandyMachineIDResponse: Codable, JSONEncodable, Hashable {
 
     public enum CandyMachineContractVersion: String, Codable, CaseIterable {
         case v1 = "v1"

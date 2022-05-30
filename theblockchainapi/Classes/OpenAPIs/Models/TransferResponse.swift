@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct TransferResponse: Codable, Hashable {
+public struct TransferResponse: Codable, JSONEncodable, Hashable {
 
     /** The signature of the transaction */
     public var transactionSignature: String?

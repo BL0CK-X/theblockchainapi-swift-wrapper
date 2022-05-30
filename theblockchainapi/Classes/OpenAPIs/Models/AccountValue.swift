@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct AccountValue: Codable, Hashable {
+public struct AccountValue: Codable, JSONEncodable, Hashable {
 
     /** More info about the account. What are included depends on the type of account. See examples. */
     public var data: AnyCodable?

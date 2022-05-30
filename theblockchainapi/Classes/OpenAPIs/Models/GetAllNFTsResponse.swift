@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct GetAllNFTsResponse: Codable, Hashable {
+public struct GetAllNFTsResponse: Codable, JSONEncodable, Hashable {
 
     /** The minted NFTs. Only filled in for `v1` candy machines. Left empty for `v2`. */
     public var mintedNfts: [GetAllNFTsResponseMintedNfts]?

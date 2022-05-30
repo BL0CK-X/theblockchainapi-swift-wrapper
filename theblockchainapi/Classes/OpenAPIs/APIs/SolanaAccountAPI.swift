@@ -20,8 +20,9 @@ open class SolanaAccountAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetAccount(network: String, publicKey: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Account?, _ error: Error?) -> Void)) {
-        solanaGetAccountWithRequestBuilder(network: network, publicKey: publicKey).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGetAccount(network: String, publicKey: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Account?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetAccountWithRequestBuilder(network: network, publicKey: publicKey).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -77,8 +78,9 @@ open class SolanaAccountAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetAccountIsCandyMachine(network: String, publicKey: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: AccountIsCandyMachine?, _ error: Error?) -> Void)) {
-        solanaGetAccountIsCandyMachineWithRequestBuilder(network: network, publicKey: publicKey).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGetAccountIsCandyMachine(network: String, publicKey: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: AccountIsCandyMachine?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetAccountIsCandyMachineWithRequestBuilder(network: network, publicKey: publicKey).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -134,8 +136,9 @@ open class SolanaAccountAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetAccountIsNFT(network: String, publicKey: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: AccountIsNFT?, _ error: Error?) -> Void)) {
-        solanaGetAccountIsNFTWithRequestBuilder(network: network, publicKey: publicKey).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGetAccountIsNFT(network: String, publicKey: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: AccountIsNFT?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetAccountIsNFTWithRequestBuilder(network: network, publicKey: publicKey).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)

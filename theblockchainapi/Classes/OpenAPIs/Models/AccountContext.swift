@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct AccountContext: Codable, Hashable {
+public struct AccountContext: Codable, JSONEncodable, Hashable {
 
     public var slot: Double?
 

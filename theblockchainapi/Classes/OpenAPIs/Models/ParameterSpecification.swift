@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct ParameterSpecification: Codable, Hashable {
+public struct ParameterSpecification: Codable, JSONEncodable, Hashable {
 
     public enum ModelType: String, Codable, CaseIterable {
         case string = "string"

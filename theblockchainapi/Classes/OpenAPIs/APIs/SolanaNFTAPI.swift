@@ -19,8 +19,9 @@ open class SolanaNFTAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaCreateNFT(nFTMintRequest: NFTMintRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: NFT?, _ error: Error?) -> Void)) {
-        solanaCreateNFTWithRequestBuilder(nFTMintRequest: nFTMintRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaCreateNFT(nFTMintRequest: NFTMintRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: NFT?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaCreateNFTWithRequestBuilder(nFTMintRequest: nFTMintRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -77,8 +78,9 @@ open class SolanaNFTAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetNFT(network: Network_solanaGetNFT, mintAddress: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: NFT?, _ error: Error?) -> Void)) {
-        solanaGetNFTWithRequestBuilder(network: network, mintAddress: mintAddress).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGetNFT(network: Network_solanaGetNFT, mintAddress: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: NFT?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetNFTWithRequestBuilder(network: network, mintAddress: mintAddress).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -132,8 +134,9 @@ open class SolanaNFTAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetNFTMintFee(apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: NFTMintFee?, _ error: Error?) -> Void)) {
-        solanaGetNFTMintFeeWithRequestBuilder().execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGetNFTMintFee(apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: NFTMintFee?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetNFTMintFeeWithRequestBuilder().execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -189,8 +192,9 @@ open class SolanaNFTAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetNFTOwner(network: Network_solanaGetNFTOwner, mintAddress: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: NFTOwnerResponse?, _ error: Error?) -> Void)) {
-        solanaGetNFTOwnerWithRequestBuilder(network: network, mintAddress: mintAddress).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGetNFTOwner(network: Network_solanaGetNFTOwner, mintAddress: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: NFTOwnerResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetNFTOwnerWithRequestBuilder(network: network, mintAddress: mintAddress).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -245,8 +249,9 @@ open class SolanaNFTAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetNFTsCandyMachineId(getCandyMachineIDRequest: GetCandyMachineIDRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: GetCandyMachineIDResponse?, _ error: Error?) -> Void)) {
-        solanaGetNFTsCandyMachineIdWithRequestBuilder(getCandyMachineIDRequest: getCandyMachineIDRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGetNFTsCandyMachineId(getCandyMachineIDRequest: GetCandyMachineIDRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: GetCandyMachineIDResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetNFTsCandyMachineIdWithRequestBuilder(getCandyMachineIDRequest: getCandyMachineIDRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -294,8 +299,9 @@ open class SolanaNFTAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaSearchNFTs(nFTSearchRequest: NFTSearchRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [NFTSearchResponse]?, _ error: Error?) -> Void)) {
-        solanaSearchNFTsWithRequestBuilder(nFTSearchRequest: nFTSearchRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaSearchNFTs(nFTSearchRequest: NFTSearchRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [NFTSearchResponse]?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaSearchNFTsWithRequestBuilder(nFTSearchRequest: nFTSearchRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)

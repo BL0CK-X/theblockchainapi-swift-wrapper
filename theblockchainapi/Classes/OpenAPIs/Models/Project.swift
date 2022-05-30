@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct Project: Codable, Hashable {
+public struct Project: Codable, JSONEncodable, Hashable {
 
     /** The ID of the project. This is auto-generated upon project creation and cannot currently be changed.  */
     public var projectId: String?

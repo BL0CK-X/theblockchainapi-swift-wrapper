@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct MintNFTRequest: Codable, Hashable {
+public struct MintNFTRequest: Codable, JSONEncodable, Hashable {
 
     public enum Network: String, Codable, CaseIterable {
         case devnet = "devnet"

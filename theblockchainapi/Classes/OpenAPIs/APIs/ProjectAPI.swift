@@ -19,8 +19,9 @@ open class ProjectAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createProject(projectCreateRequest: ProjectCreateRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) {
-        createProjectWithRequestBuilder(projectCreateRequest: projectCreateRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func createProject(projectCreateRequest: ProjectCreateRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) -> RequestTask {
+        return createProjectWithRequestBuilder(projectCreateRequest: projectCreateRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -69,8 +70,9 @@ open class ProjectAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createProjectVersion(projectId: String, version: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) {
-        createProjectVersionWithRequestBuilder(projectId: projectId, version: version).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func createProjectVersion(projectId: String, version: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) -> RequestTask {
+        return createProjectVersionWithRequestBuilder(projectId: projectId, version: version).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -125,8 +127,9 @@ open class ProjectAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteProject(projectId: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) {
-        deleteProjectWithRequestBuilder(projectId: projectId).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func deleteProject(projectId: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
+        return deleteProjectWithRequestBuilder(projectId: projectId).execute(apiResponseQueue) { result in
             switch result {
             case .success:
                 completion((), nil)
@@ -178,8 +181,9 @@ open class ProjectAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteProjectVersion(projectId: String, version: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) {
-        deleteProjectVersionWithRequestBuilder(projectId: projectId, version: version).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func deleteProjectVersion(projectId: String, version: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) -> RequestTask {
+        return deleteProjectVersionWithRequestBuilder(projectId: projectId, version: version).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -234,8 +238,9 @@ open class ProjectAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getProject(projectId: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) {
-        getProjectWithRequestBuilder(projectId: projectId).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func getProject(projectId: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) -> RequestTask {
+        return getProjectWithRequestBuilder(projectId: projectId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -286,8 +291,9 @@ open class ProjectAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getProjectDeploymentStatus(projectId: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) {
-        getProjectDeploymentStatusWithRequestBuilder(projectId: projectId).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func getProjectDeploymentStatus(projectId: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> RequestTask {
+        return getProjectDeploymentStatusWithRequestBuilder(projectId: projectId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -339,8 +345,9 @@ open class ProjectAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getProjectDeploymentURL(projectId: String, inlineObject: InlineObject? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: ProjectDeploymentURL?, _ error: Error?) -> Void)) {
-        getProjectDeploymentURLWithRequestBuilder(projectId: projectId, inlineObject: inlineObject).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func getProjectDeploymentURL(projectId: String, inlineObject: InlineObject? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: ProjectDeploymentURL?, _ error: Error?) -> Void)) -> RequestTask {
+        return getProjectDeploymentURLWithRequestBuilder(projectId: projectId, inlineObject: inlineObject).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -392,8 +399,9 @@ open class ProjectAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getProjectStats(projectId: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [StatItem]?, _ error: Error?) -> Void)) {
-        getProjectStatsWithRequestBuilder(projectId: projectId).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func getProjectStats(projectId: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [StatItem]?, _ error: Error?) -> Void)) -> RequestTask {
+        return getProjectStatsWithRequestBuilder(projectId: projectId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -443,8 +451,9 @@ open class ProjectAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func listProjects(apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [Project]?, _ error: Error?) -> Void)) {
-        listProjectsWithRequestBuilder().execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func listProjects(apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [Project]?, _ error: Error?) -> Void)) -> RequestTask {
+        return listProjectsWithRequestBuilder().execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -492,8 +501,9 @@ open class ProjectAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateProject(projectId: String, projectCreateRequest: ProjectCreateRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) {
-        updateProjectWithRequestBuilder(projectId: projectId, projectCreateRequest: projectCreateRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func updateProject(projectId: String, projectCreateRequest: ProjectCreateRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) -> RequestTask {
+        return updateProjectWithRequestBuilder(projectId: projectId, projectCreateRequest: projectCreateRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -546,8 +556,9 @@ open class ProjectAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateProjectDocumentation(projectId: String, version: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) {
-        updateProjectDocumentationWithRequestBuilder(projectId: projectId, version: version).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func updateProjectDocumentation(projectId: String, version: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) -> RequestTask {
+        return updateProjectDocumentationWithRequestBuilder(projectId: projectId, version: version).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)

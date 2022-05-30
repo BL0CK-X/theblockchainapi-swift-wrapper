@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct AccountIsNFT: Codable, Hashable {
+public struct AccountIsNFT: Codable, JSONEncodable, Hashable {
 
     public var isNft: Bool
 

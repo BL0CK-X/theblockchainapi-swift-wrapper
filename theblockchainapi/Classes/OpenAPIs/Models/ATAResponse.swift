@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct ATAResponse: Codable, Hashable {
+public struct ATAResponse: Codable, JSONEncodable, Hashable {
 
     /** The associated token address */
     public var associatedTokenAddress: String

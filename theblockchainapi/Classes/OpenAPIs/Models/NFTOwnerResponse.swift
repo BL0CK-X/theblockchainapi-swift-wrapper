@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct NFTOwnerResponse: Codable, Hashable {
+public struct NFTOwnerResponse: Codable, JSONEncodable, Hashable {
 
     /** The public key address of the wallet that has ownership over the provided NFT */
     public var nftOwner: String

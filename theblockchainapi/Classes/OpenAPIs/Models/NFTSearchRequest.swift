@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct NFTSearchRequest: Codable, Hashable {
+public struct NFTSearchRequest: Codable, JSONEncodable, Hashable {
 
     public enum UpdateAuthoritySearchMethod: String, Codable, CaseIterable {
         case exactMatch = "exact_match"

@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct CandyMachineSearchRequest: Codable, Hashable {
+public struct CandyMachineSearchRequest: Codable, JSONEncodable, Hashable {
 
     public enum UpdateAuthoritySearchMethod: String, Codable, CaseIterable {
         case exactMatch = "exact_match"

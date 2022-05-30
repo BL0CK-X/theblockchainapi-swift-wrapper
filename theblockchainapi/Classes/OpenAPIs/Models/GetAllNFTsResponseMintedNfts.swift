@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct GetAllNFTsResponseMintedNfts: Codable, Hashable {
+public struct GetAllNFTsResponseMintedNfts: Codable, JSONEncodable, Hashable {
 
     public var nftMetadata: NFT?
     /** Use this to verify the NFT */

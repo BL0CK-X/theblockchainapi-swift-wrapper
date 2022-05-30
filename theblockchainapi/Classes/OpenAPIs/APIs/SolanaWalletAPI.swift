@@ -20,8 +20,9 @@ open class SolanaWalletAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaDeriveAssociatedTokenAccountAddress(publicKey: String, mintAddress: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: ATAResponse?, _ error: Error?) -> Void)) {
-        solanaDeriveAssociatedTokenAccountAddressWithRequestBuilder(publicKey: publicKey, mintAddress: mintAddress).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaDeriveAssociatedTokenAccountAddress(publicKey: String, mintAddress: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: ATAResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaDeriveAssociatedTokenAccountAddressWithRequestBuilder(publicKey: publicKey, mintAddress: mintAddress).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -76,8 +77,9 @@ open class SolanaWalletAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaDerivePrivateKey(getPublicKeyRequest: GetPublicKeyRequest, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: GeneratePrivateKey?, _ error: Error?) -> Void)) {
-        solanaDerivePrivateKeyWithRequestBuilder(getPublicKeyRequest: getPublicKeyRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaDerivePrivateKey(getPublicKeyRequest: GetPublicKeyRequest, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: GeneratePrivateKey?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaDerivePrivateKeyWithRequestBuilder(getPublicKeyRequest: getPublicKeyRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -125,8 +127,9 @@ open class SolanaWalletAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaDerivePublicKey(getPublicKeyRequest: GetPublicKeyRequest, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: PublicKey?, _ error: Error?) -> Void)) {
-        solanaDerivePublicKeyWithRequestBuilder(getPublicKeyRequest: getPublicKeyRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaDerivePublicKey(getPublicKeyRequest: GetPublicKeyRequest, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: PublicKey?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaDerivePublicKeyWithRequestBuilder(getPublicKeyRequest: getPublicKeyRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -173,8 +176,9 @@ open class SolanaWalletAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGeneratePrivateKey(apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: GeneratePrivateKey?, _ error: Error?) -> Void)) {
-        solanaGeneratePrivateKeyWithRequestBuilder().execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGeneratePrivateKey(apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: GeneratePrivateKey?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGeneratePrivateKeyWithRequestBuilder().execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -220,8 +224,9 @@ open class SolanaWalletAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGenerateSecretRecoveryPhrase(apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: SecretPhrase?, _ error: Error?) -> Void)) {
-        solanaGenerateSecretRecoveryPhraseWithRequestBuilder().execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGenerateSecretRecoveryPhrase(apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: SecretPhrase?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGenerateSecretRecoveryPhraseWithRequestBuilder().execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -268,8 +273,9 @@ open class SolanaWalletAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetAirdrop(airdropRequest: AirdropRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: TransferResponse?, _ error: Error?) -> Void)) {
-        solanaGetAirdropWithRequestBuilder(airdropRequest: airdropRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGetAirdrop(airdropRequest: AirdropRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: TransferResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetAirdropWithRequestBuilder(airdropRequest: airdropRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -317,8 +323,9 @@ open class SolanaWalletAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetBalance(balanceRequest: BalanceRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: BalanceResponse?, _ error: Error?) -> Void)) {
-        solanaGetBalanceWithRequestBuilder(balanceRequest: balanceRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGetBalance(balanceRequest: BalanceRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: BalanceResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetBalanceWithRequestBuilder(balanceRequest: balanceRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -367,8 +374,9 @@ open class SolanaWalletAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetNFTsBelongingToWallet(network: String, publicKey: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: ListNFTsResponse?, _ error: Error?) -> Void)) {
-        solanaGetNFTsBelongingToWalletWithRequestBuilder(network: network, publicKey: publicKey).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGetNFTsBelongingToWallet(network: String, publicKey: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: ListNFTsResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetNFTsBelongingToWalletWithRequestBuilder(network: network, publicKey: publicKey).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -426,8 +434,9 @@ open class SolanaWalletAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetTokensBelongingToWallet(network: String, publicKey: String, includeNfts: Bool? = nil, includeZeroBalanceHoldings: Bool? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [AnyCodable]?, _ error: Error?) -> Void)) {
-        solanaGetTokensBelongingToWalletWithRequestBuilder(network: network, publicKey: publicKey, includeNfts: includeNfts, includeZeroBalanceHoldings: includeZeroBalanceHoldings).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGetTokensBelongingToWallet(network: String, publicKey: String, includeNfts: Bool? = nil, includeZeroBalanceHoldings: Bool? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [AnyCodable]?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetTokensBelongingToWalletWithRequestBuilder(network: network, publicKey: publicKey, includeNfts: includeNfts, includeZeroBalanceHoldings: includeZeroBalanceHoldings).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -489,8 +498,9 @@ open class SolanaWalletAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaGetWalletTransactions(network: String, publicKey: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [String]?, _ error: Error?) -> Void)) {
-        solanaGetWalletTransactionsWithRequestBuilder(network: network, publicKey: publicKey).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaGetWalletTransactions(network: String, publicKey: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: [String]?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetWalletTransactionsWithRequestBuilder(network: network, publicKey: publicKey).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -545,8 +555,9 @@ open class SolanaWalletAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func solanaTransfer(transferRequest: TransferRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: DoubleTransferResponse?, _ error: Error?) -> Void)) {
-        solanaTransferWithRequestBuilder(transferRequest: transferRequest).execute(apiResponseQueue) { result in
+    @discardableResult
+    open class func solanaTransfer(transferRequest: TransferRequest? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: DoubleTransferResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaTransferWithRequestBuilder(transferRequest: transferRequest).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)

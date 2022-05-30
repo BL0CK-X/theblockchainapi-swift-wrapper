@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public enum DoubleTransferResponse: Codable {
+public enum DoubleTransferResponse: Codable, JSONEncodable, Hashable {
     case typeTransferResponse(TransferResponse)
     case typeTransferResponseCompiled(TransferResponseCompiled)
 

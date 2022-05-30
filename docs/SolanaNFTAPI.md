@@ -26,7 +26,7 @@ Create an NFT on Solana
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import theblockchainapi
 
-let nFTMintRequest = NFTMintRequest(wallet: Wallet(secretRecoveryPhrase: "secretRecoveryPhrase_example", derivationPath: "derivationPath_example", passphrase: "passphrase_example", privateKey: "TODO", b58PrivateKey: "b58PrivateKey_example"), nftName: "nftName_example", nftSymbol: "nftSymbol_example", nftDescription: "nftDescription_example", nftUrl: "nftUrl_example", nftMetadata: "nftMetadata_example", nftUploadMethod: "nftUploadMethod_example", isMutable: false, isMasterEdition: false, sellerFeeBasisPoints: 123, creators: ["creators_example"], share: [123], mintToPublicKey: "mintToPublicKey_example", network: "network_example") // NFTMintRequest |  (optional)
+let nFTMintRequest = NFTMintRequest(wallet: Wallet(secretRecoveryPhrase: "secretRecoveryPhrase_example", derivationPath: "derivationPath_example", passphrase: "passphrase_example", privateKey: "TODO", b58PrivateKey: "b58PrivateKey_example"), returnCompiledTransaction: false, name: "name_example", symbol: "symbol_example", description: "description_example", uploadMethod: "uploadMethod_example", uri: "uri_example", imageUrl: "imageUrl_example", uriMetadata: "TODO", isMutable: false, isMasterEdition: false, sellerFeeBasisPoints: 123, creators: ["creators_example"], share: [123], mintToPublicKey: "mintToPublicKey_example", network: "network_example") // NFTMintRequest |  (optional)
 
 // Create an NFT on Solana
 SolanaNFTAPI.solanaCreateNFT(nFTMintRequest: nFTMintRequest) { (response, error) in

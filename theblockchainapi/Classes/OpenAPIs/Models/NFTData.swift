@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct NFTData: Codable, Hashable {
+public struct NFTData: Codable, JSONEncodable, Hashable {
 
     /** The creators of the NFT  */
     public var creators: [String]?

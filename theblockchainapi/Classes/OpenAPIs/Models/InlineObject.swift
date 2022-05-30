@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct InlineObject: Codable, Hashable {
+public struct InlineObject: Codable, JSONEncodable, Hashable {
 
     public enum Platform: String, Codable, CaseIterable {
         case darwin = "Darwin"
