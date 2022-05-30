@@ -5,7 +5,7 @@ All URIs are relative to *https://api.blockchainapi.com/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getTokenMetadata**](TokenAPI.md#gettokenmetadata) | **GET** /{blockchain}/{network}/token/{token_blockchain_identifier} | Get a token&#39;s metadata
-[**listAllTokens**](TokenAPI.md#listalltokens) | **POST** /{blockchain}/{network}/all_tokens | List all tokens
+[**listAllTokens**](TokenAPI.md#listalltokens) | **GET** /{blockchain}/{network}/all_tokens | List all tokens
 
 
 # **getTokenMetadata**

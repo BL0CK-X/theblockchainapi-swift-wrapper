@@ -89,26 +89,17 @@ open class NameServiceAPI {
     }
 
     /**
-     * enum for parameter blockchainIdentifier
-     */
-    public enum BlockchainIdentifier_getNameForBlockchainIdentifier: String, CaseIterable {
-        case ethereum = "ethereum"
-        case solana = "solana"
-    }
-
-    /**
      Get the name
      
      - parameter blockchain: (path) The blockchain you want to use  
      - parameter network: (path) The network of the blockchain you selected  - Solana: &#x60;devnet&#x60;, &#x60;mainnet-beta&#x60; - Ethereum: &#x60;ropsten&#x60;, &#x60;mainnet&#x60;  Defaults when not provided (not applicable to path parameters): - Solana: &#x60;devnet&#x60; - Ethereum: &#x60;ropsten&#x60; 
-     - parameter blockchainIdentifier: (path) The identifier of the token (e.g., &#x60;mint_address&#x60; on &#x60;Solana&#x60; or &#x60;token_address&#x60; on &#x60;Ethereum&#x60;)  
      - parameter inputBlockchainIdentifier: (body)  (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func getNameForBlockchainIdentifier(blockchain: Blockchain_getNameForBlockchainIdentifier, network: String, blockchainIdentifier: BlockchainIdentifier_getNameForBlockchainIdentifier, inputBlockchainIdentifier: InputBlockchainIdentifier? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: InputName?, _ error: Error?) -> Void)) -> RequestTask {
-        return getNameForBlockchainIdentifierWithRequestBuilder(blockchain: blockchain, network: network, blockchainIdentifier: blockchainIdentifier, inputBlockchainIdentifier: inputBlockchainIdentifier).execute(apiResponseQueue) { result in
+    open class func getNameForBlockchainIdentifier(blockchain: Blockchain_getNameForBlockchainIdentifier, network: String, inputBlockchainIdentifier: InputBlockchainIdentifier? = nil, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: InputName?, _ error: Error?) -> Void)) -> RequestTask {
+        return getNameForBlockchainIdentifierWithRequestBuilder(blockchain: blockchain, network: network, inputBlockchainIdentifier: inputBlockchainIdentifier).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -130,11 +121,10 @@ open class NameServiceAPI {
        - name: APISecretKey
      - parameter blockchain: (path) The blockchain you want to use  
      - parameter network: (path) The network of the blockchain you selected  - Solana: &#x60;devnet&#x60;, &#x60;mainnet-beta&#x60; - Ethereum: &#x60;ropsten&#x60;, &#x60;mainnet&#x60;  Defaults when not provided (not applicable to path parameters): - Solana: &#x60;devnet&#x60; - Ethereum: &#x60;ropsten&#x60; 
-     - parameter blockchainIdentifier: (path) The identifier of the token (e.g., &#x60;mint_address&#x60; on &#x60;Solana&#x60; or &#x60;token_address&#x60; on &#x60;Ethereum&#x60;)  
      - parameter inputBlockchainIdentifier: (body)  (optional)
      - returns: RequestBuilder<InputName> 
      */
-    open class func getNameForBlockchainIdentifierWithRequestBuilder(blockchain: Blockchain_getNameForBlockchainIdentifier, network: String, blockchainIdentifier: BlockchainIdentifier_getNameForBlockchainIdentifier, inputBlockchainIdentifier: InputBlockchainIdentifier? = nil) -> RequestBuilder<InputName> {
+    open class func getNameForBlockchainIdentifierWithRequestBuilder(blockchain: Blockchain_getNameForBlockchainIdentifier, network: String, inputBlockchainIdentifier: InputBlockchainIdentifier? = nil) -> RequestBuilder<InputName> {
         var localVariablePath = "/{blockchain}/{network}/name_service/blockchain_identifier_to_name"
         let blockchainPreEscape = "\(blockchain.rawValue)"
         let blockchainPostEscape = blockchainPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -142,9 +132,6 @@ open class NameServiceAPI {
         let networkPreEscape = "\(APIHelper.mapValueToPathItem(network))"
         let networkPostEscape = networkPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{network}", with: networkPostEscape, options: .literal, range: nil)
-        let blockchainIdentifierPreEscape = "\(blockchainIdentifier.rawValue)"
-        let blockchainIdentifierPostEscape = blockchainIdentifierPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{blockchain_identifier}", with: blockchainIdentifierPostEscape, options: .literal, range: nil)
         let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: inputBlockchainIdentifier)
 

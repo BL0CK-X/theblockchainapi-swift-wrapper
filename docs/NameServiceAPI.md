@@ -64,7 +64,7 @@ Name | Type | Description  | Notes
 
 # **getNameForBlockchainIdentifier**
 ```swift
-    open class func getNameForBlockchainIdentifier(blockchain: Blockchain_getNameForBlockchainIdentifier, network: String, blockchainIdentifier: BlockchainIdentifier_getNameForBlockchainIdentifier, inputBlockchainIdentifier: InputBlockchainIdentifier? = nil, completion: @escaping (_ data: InputName?, _ error: Error?) -> Void)
+    open class func getNameForBlockchainIdentifier(blockchain: Blockchain_getNameForBlockchainIdentifier, network: String, inputBlockchainIdentifier: InputBlockchainIdentifier? = nil, completion: @escaping (_ data: InputName?, _ error: Error?) -> Void)
 ```
 
 Get the name
@@ -78,11 +78,10 @@ import theblockchainapi
 
 let blockchain = "blockchain_example" // String | The blockchain you want to use 
 let network = "network_example" // String | The network of the blockchain you selected  - Solana: `devnet`, `mainnet-beta` - Ethereum: `ropsten`, `mainnet`  Defaults when not provided (not applicable to path parameters): - Solana: `devnet` - Ethereum: `ropsten`
-let blockchainIdentifier = "blockchainIdentifier_example" // String | The identifier of the token (e.g., `mint_address` on `Solana` or `token_address` on `Ethereum`) 
 let inputBlockchainIdentifier = InputBlockchainIdentifier(blockchainIdentifier: "blockchainIdentifier_example") // InputBlockchainIdentifier |  (optional)
 
 // Get the name
-NameServiceAPI.getNameForBlockchainIdentifier(blockchain: blockchain, network: network, blockchainIdentifier: blockchainIdentifier, inputBlockchainIdentifier: inputBlockchainIdentifier) { (response, error) in
+NameServiceAPI.getNameForBlockchainIdentifier(blockchain: blockchain, network: network, inputBlockchainIdentifier: inputBlockchainIdentifier) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -100,7 +99,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **blockchain** | **String** | The blockchain you want to use  | 
  **network** | **String** | The network of the blockchain you selected  - Solana: &#x60;devnet&#x60;, &#x60;mainnet-beta&#x60; - Ethereum: &#x60;ropsten&#x60;, &#x60;mainnet&#x60;  Defaults when not provided (not applicable to path parameters): - Solana: &#x60;devnet&#x60; - Ethereum: &#x60;ropsten&#x60; | 
- **blockchainIdentifier** | **String** | The identifier of the token (e.g., &#x60;mint_address&#x60; on &#x60;Solana&#x60; or &#x60;token_address&#x60; on &#x60;Ethereum&#x60;)  | 
  **inputBlockchainIdentifier** | [**InputBlockchainIdentifier**](InputBlockchainIdentifier.md) |  | [optional] 
 
 ### Return type

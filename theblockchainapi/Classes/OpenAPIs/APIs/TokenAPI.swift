@@ -120,7 +120,7 @@ open class TokenAPI {
 
     /**
      List all tokens
-     - POST /{blockchain}/{network}/all_tokens
+     - GET /{blockchain}/{network}/all_tokens
      - <a href=\"https://github.com/BL0CK-X/blockchain-api\" target=\"_blank\">See examples (Python, JavaScript) [Coming Soon]</a>.      List all tokens.  `Cost: 1 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
      - API Key:
        - type: apiKey APIKeyID 
@@ -153,6 +153,6 @@ open class TokenAPI {
 
         let localVariableRequestBuilder: RequestBuilder<[TokenMetadataResponse]>.Type = theblockchainapiAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 }
