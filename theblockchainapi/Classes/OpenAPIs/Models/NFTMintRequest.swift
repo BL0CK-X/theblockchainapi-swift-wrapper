@@ -20,9 +20,9 @@ public struct NFTMintRequest: Codable, JSONEncodable, Hashable {
         case devnet = "devnet"
         case mainnetBeta = "mainnet-beta"
     }
+    /** Whether to wait for the NFT mint to be confirmed on the blockchain or simply be processed.  Processed means that our node has picked up the transaction request, but not that it was confirmed by the Solana cluster.   Confirmed means that the cluster voted on your transaction and approved it. To be completely sure that the NFT was minted, you can either set `wait_for_confirmation=True` (call takes 20 seconds with True; about 4 seconds for processed) or you can [get the metadata](/#tag/Solana-NFT/operation/solanaGetNFT) from the mint returned. Once it returns the NFT metadata, then the NFT should have been successfully minted.  */
+    public var waitForConfirmation: Bool? = true
     public var wallet: Wallet?
-    /** If `true`, the transaction to mint the NFT will not be submitted or signed. It will be returned to you in a raw form that you can then sign with a wallet (e.g., Phantom) or code. No `wallet` authentication information is required (thus, you do you have to supply a seed phrase or private key). See a Python example [here](https://github.com/BL0CK-X/blockchain-api/blob/main/third-party-api-examples/me-buy-sell.py). If `false` (the default option), then `wallet` is required. We sign and submit the transaction for you, which uses your wallet to mint the NFT. No further action is required on your part, and the NFT is minted. Read more on security [here](#section/Security).  */
-    public var returnCompiledTransaction: Bool? = false
     /** The name of the token. Limited to 32 characters. Stored on the blockchain. */
     public var name: String? = ""
     /** The symbol of the token. Limited to 10 characters. Stored on the blockchain. */
@@ -52,9 +52,9 @@ public struct NFTMintRequest: Codable, JSONEncodable, Hashable {
     /** This determines which network you choose to run the API calls on. We recommend first testing on the devnet, because minting an NFT costs a little above 0.01 SOL, which is about $1.60 at the time of this writing.  When you run on the mainnet-beta, each successful call will deduct approximately that much. When you run on the devnet, that amount is deducted from a simulated amount, so you are not paying with real SOL. To get SOL on the devnet,   airdrop SOL to this address using the CLI. Keep in mind that you can only do this every so often. If you are rate-limited, consider using a VPN and trying again, or just waiting. To get SOL on the mainnet-beta, you    must transfer real SOL to this account from another wallet (e.g., from another wallet you own, from an exchange, etc.). We hope to make this process easier in the future, and if you have any suggestions, please add them    as an issue on our <a href=\"https://github.com/BL0CK-X/the-blockchain-api\" target=\"_blank\">GitHub repository</a> for the API. To get a fee estimate, make a GET requests to the <a href=\"#tag/Solana-NFT/paths/~1solana~1nft~1mint~1fee/get\">v1/solana/nft/mint/fee endpoint</a> (details in sidebar).  */
     public var network: Network? = .devnet
 
-    public init(wallet: Wallet? = nil, returnCompiledTransaction: Bool? = false, name: String? = "", symbol: String? = "", description: String? = "", uploadMethod: UploadMethod? = .s3, uri: String? = "", imageUrl: String? = "", uriMetadata: AnyCodable? = nil, isMutable: Bool? = true, isMasterEdition: Bool? = true, sellerFeeBasisPoints: Double? = 0, creators: [String]? = nil, share: [Int]? = nil, mintToPublicKey: String? = "The public key of the wallet provided", network: Network? = .devnet) {
+    public init(waitForConfirmation: Bool? = true, wallet: Wallet? = nil, name: String? = "", symbol: String? = "", description: String? = "", uploadMethod: UploadMethod? = .s3, uri: String? = "", imageUrl: String? = "", uriMetadata: AnyCodable? = nil, isMutable: Bool? = true, isMasterEdition: Bool? = true, sellerFeeBasisPoints: Double? = 0, creators: [String]? = nil, share: [Int]? = nil, mintToPublicKey: String? = "The public key of the wallet provided", network: Network? = .devnet) {
+        self.waitForConfirmation = waitForConfirmation
         self.wallet = wallet
-        self.returnCompiledTransaction = returnCompiledTransaction
         self.name = name
         self.symbol = symbol
         self.description = description
@@ -72,8 +72,8 @@ public struct NFTMintRequest: Codable, JSONEncodable, Hashable {
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
+        case waitForConfirmation = "wait_for_confirmation"
         case wallet
-        case returnCompiledTransaction = "return_compiled_transaction"
         case name
         case symbol
         case description
@@ -94,8 +94,8 @@ public struct NFTMintRequest: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(waitForConfirmation, forKey: .waitForConfirmation)
         try container.encodeIfPresent(wallet, forKey: .wallet)
-        try container.encodeIfPresent(returnCompiledTransaction, forKey: .returnCompiledTransaction)
         try container.encodeIfPresent(name, forKey: .name)
         try container.encodeIfPresent(symbol, forKey: .symbol)
         try container.encodeIfPresent(description, forKey: .description)

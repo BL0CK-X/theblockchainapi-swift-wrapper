@@ -16,6 +16,8 @@ public struct TransferRequest: Codable, JSONEncodable, Hashable {
         case devnet = "devnet"
         case mainnetBeta = "mainnet-beta"
     }
+    /** Whether to wait for the transaction to be confirmed on the blockchain or simply be processed.  Processed means that our node has picked up the transaction request, but not that it was confirmed by the Solana cluster.  Confirmed means that the cluster voted on your transaction and approved it. To be completely sure that the transaction succeeded, you can either set `wait_for_confirmation=True` (call takes 20 seconds with True; about 4 seconds for processed) or you can [get the transaction metadata](/#tag/Solana-Transaction/operation/solanaGetTransaction) using the signature in the response returned. Once it returns the metadata, then the transaction should have succeeded.  */
+    public var waitForConfirmation: Bool? = true
     /** The public key address of the recipient to whom you want to send a token or NFT */
     public var recipientAddress: String
     public var wallet: Wallet?
@@ -30,7 +32,8 @@ public struct TransferRequest: Codable, JSONEncodable, Hashable {
     public var senderPublicKey: String? = "null"
     public var feePayerWallet: FeePayerWallet?
 
-    public init(recipientAddress: String, wallet: Wallet? = nil, tokenAddress: String? = nil, network: Network? = .devnet, amount: String? = "1", returnCompiledTransaction: Bool? = false, senderPublicKey: String? = "null", feePayerWallet: FeePayerWallet? = nil) {
+    public init(waitForConfirmation: Bool? = true, recipientAddress: String, wallet: Wallet? = nil, tokenAddress: String? = nil, network: Network? = .devnet, amount: String? = "1", returnCompiledTransaction: Bool? = false, senderPublicKey: String? = "null", feePayerWallet: FeePayerWallet? = nil) {
+        self.waitForConfirmation = waitForConfirmation
         self.recipientAddress = recipientAddress
         self.wallet = wallet
         self.tokenAddress = tokenAddress
@@ -42,6 +45,7 @@ public struct TransferRequest: Codable, JSONEncodable, Hashable {
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
+        case waitForConfirmation = "wait_for_confirmation"
         case recipientAddress = "recipient_address"
         case wallet
         case tokenAddress = "token_address"
@@ -56,6 +60,7 @@ public struct TransferRequest: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(waitForConfirmation, forKey: .waitForConfirmation)
         try container.encode(recipientAddress, forKey: .recipientAddress)
         try container.encodeIfPresent(wallet, forKey: .wallet)
         try container.encodeIfPresent(tokenAddress, forKey: .tokenAddress)

@@ -12,6 +12,8 @@ import AnyCodable
 
 public struct NFT: Codable, JSONEncodable, Hashable {
 
+    /** Whether or not the NFT mint was confirmed or simply submitted for processing. The status depends on your input for `wait_for_confirmation`. This only is returned when you are minting an NFT, not when searching or retrieving the metadata. */
+    public var confirmed: Bool?
     public var data: NFTData?
     public var isMutable: Bool?
     /** The public key address of the NFT  */
@@ -29,7 +31,8 @@ public struct NFT: Codable, JSONEncodable, Hashable {
     public var collection: NFTCollection?
     public var uses: Double?
 
-    public init(data: NFTData? = nil, isMutable: Bool? = nil, mint: String? = nil, primarySaleHappened: Bool? = nil, updateAuthority: String? = nil, sellerFeeBasisPoints: Double? = nil, mintSecretRecoveryPhrase: String? = nil, explorerUrl: String? = nil, metadataAccount: String? = nil, editionNonce: Double? = nil, tokenStandard: Double? = nil, collection: NFTCollection? = nil, uses: Double? = nil) {
+    public init(confirmed: Bool? = nil, data: NFTData? = nil, isMutable: Bool? = nil, mint: String? = nil, primarySaleHappened: Bool? = nil, updateAuthority: String? = nil, sellerFeeBasisPoints: Double? = nil, mintSecretRecoveryPhrase: String? = nil, explorerUrl: String? = nil, metadataAccount: String? = nil, editionNonce: Double? = nil, tokenStandard: Double? = nil, collection: NFTCollection? = nil, uses: Double? = nil) {
+        self.confirmed = confirmed
         self.data = data
         self.isMutable = isMutable
         self.mint = mint
@@ -46,6 +49,7 @@ public struct NFT: Codable, JSONEncodable, Hashable {
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
+        case confirmed
         case data
         case isMutable = "is_mutable"
         case mint
@@ -65,6 +69,7 @@ public struct NFT: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(confirmed, forKey: .confirmed)
         try container.encodeIfPresent(data, forKey: .data)
         try container.encodeIfPresent(isMutable, forKey: .isMutable)
         try container.encodeIfPresent(mint, forKey: .mint)

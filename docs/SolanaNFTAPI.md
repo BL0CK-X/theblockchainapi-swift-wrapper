@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**solanaGetNFT**](SolanaNFTAPI.md#solanagetnft) | **GET** /solana/nft/{network}/{mint_address} | Get an NFT&#39;s metadata
 [**solanaGetNFTMintFee**](SolanaNFTAPI.md#solanagetnftmintfee) | **GET** /solana/nft/mint/fee | Get the NFT mint fee
 [**solanaGetNFTOwner**](SolanaNFTAPI.md#solanagetnftowner) | **GET** /solana/nft/{network}/{mint_address}/owner | Get owner of an NFT
+[**solanaGetNFTOwnerAdvanced**](SolanaNFTAPI.md#solanagetnftowneradvanced) | **GET** /solana/nft/{network}/{mint_address}/owner_advanced | Get owner of an NFT (advanced)
 [**solanaGetNFTsCandyMachineId**](SolanaNFTAPI.md#solanagetnftscandymachineid) | **POST** /solana/nft/candy_machine_id | Get the ID of the candy machine of an NFT 
 [**solanaSearchNFTs**](SolanaNFTAPI.md#solanasearchnfts) | **POST** /solana/nft/search | Search NFTs on Solana
 
@@ -26,7 +27,7 @@ Create an NFT on Solana
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import theblockchainapi
 
-let nFTMintRequest = NFTMintRequest(wallet: Wallet(secretRecoveryPhrase: "secretRecoveryPhrase_example", derivationPath: "derivationPath_example", passphrase: "passphrase_example", privateKey: "TODO", b58PrivateKey: "b58PrivateKey_example"), returnCompiledTransaction: false, name: "name_example", symbol: "symbol_example", description: "description_example", uploadMethod: "uploadMethod_example", uri: "uri_example", imageUrl: "imageUrl_example", uriMetadata: "TODO", isMutable: false, isMasterEdition: false, sellerFeeBasisPoints: 123, creators: ["creators_example"], share: [123], mintToPublicKey: "mintToPublicKey_example", network: "network_example") // NFTMintRequest |  (optional)
+let nFTMintRequest = NFTMintRequest(waitForConfirmation: false, wallet: Wallet(secretRecoveryPhrase: "secretRecoveryPhrase_example", derivationPath: "derivationPath_example", passphrase: "passphrase_example", privateKey: "TODO", b58PrivateKey: "b58PrivateKey_example"), name: "name_example", symbol: "symbol_example", description: "description_example", uploadMethod: "uploadMethod_example", uri: "uri_example", imageUrl: "imageUrl_example", uriMetadata: "TODO", isMutable: false, isMasterEdition: false, sellerFeeBasisPoints: 123, creators: ["creators_example"], share: [123], mintToPublicKey: "mintToPublicKey_example", network: "network_example") // NFTMintRequest |  (optional)
 
 // Create an NFT on Solana
 SolanaNFTAPI.solanaCreateNFT(nFTMintRequest: nFTMintRequest) { (response, error) in
@@ -200,6 +201,58 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**NFTOwnerResponse**](NFTOwnerResponse.md)
+
+### Authorization
+
+[APIKeyID](../README.md#APIKeyID), [APISecretKey](../README.md#APISecretKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **solanaGetNFTOwnerAdvanced**
+```swift
+    open class func solanaGetNFTOwnerAdvanced(network: Network_solanaGetNFTOwnerAdvanced, mintAddress: String, completion: @escaping (_ data: NFTOwnerAdvancedResponse?, _ error: Error?) -> Void)
+```
+
+Get owner of an NFT (advanced)
+
+<a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-nft/get-nft-owner\" target=\"_blank\">See examples (Python, JavaScript)</a>.       Get the owner, state, listed price, and listed marketplace (if any) of an NFT.   Here's are a couple of example responses: ``` {     'contract': {         'contract_blockchain_identifier': 'M2mx93ekt1fmXSVkTrUL9xVFHkmME8HTUi5Cyc5aF7K',          'contract_id': 'magic-eden-v2',          'contract_name': 'Magic Eden v2',          'contract_type': 'marketplace'     },      'owner': '25UJMR3FiMM6noQtPEaCJ6eDU2YQ7myDhikVQXmMuSRW',      'price': 50000000,      'state': 'listing' } ```  ``` {     'contract': null,      'owner': 'C37PJiJU8WTgoUoFqmB1Maw8hkuENDZoGDQA1pm54Fdd',      'price': null,      'state': 'holding' } ```  This function will return whether the NFT is `listed`, `loaned` (Yawww NFT loans), `otc`, `staked`, `burned`, or `held`.  If listed, it will return the contract, the readable name of the contract (e.g., Magic Eden, OpenSea), the contract ID (if any; e.g., open-sea), the owner, and the listed price. From this, you can get the floor of a collection. We currently support Magic Eden (v1, v2), Exchange.Art (auction, singles), CoralCube, Solanart (v1, v2), Yawww Loans, Yawww OTC, OpenSea, Fractal, SolSea, and AlphaArt.   If loaned, it will return the loan requester as the owner, the loan amount, and the loan contract. We only support the Yawww loaning contract.  If listed on an OTC marketplace, it will return the same information as `listed`. OTC is used to distinguish between marketplaces that respect royalties (OTC) and those that don't (normal ones). The only `OTC` contract we track is Yawwww, at the moment. We do not yet track Solanart v3.  If staked, it will return the owner and the staking contract public key.  If burned, it will return the `burner` as the `owner`.  If held, it will simply return the owner.  If you want to get the literal owner, which may or may not be the same as the owner returned here, call the simplified [get NFT owner function](/#tag/Solana-NFT/operation/solanaGetNFTOwner). For example, Bob might own the NFT, but if it is listed on Magic Eden, then the NFT is held in escrow and \"owned\" by Magic Eden. The simplified function will return Magic Eden as the owner (the literal owner). This advanced function will tell you the implied owner, which would be Bob.  `Cost: 1.0 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import theblockchainapi
+
+let network = "network_example" // String | The network ID
+let mintAddress = "mintAddress_example" // String | The mint address of the NFT
+
+// Get owner of an NFT (advanced)
+SolanaNFTAPI.solanaGetNFTOwnerAdvanced(network: network, mintAddress: mintAddress) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **network** | **String** | The network ID | 
+ **mintAddress** | **String** | The mint address of the NFT | 
+
+### Return type
+
+[**NFTOwnerAdvancedResponse**](NFTOwnerAdvancedResponse.md)
 
 ### Authorization
 

@@ -243,6 +243,72 @@ open class SolanaNFTAPI {
     }
 
     /**
+     * enum for parameter network
+     */
+    public enum Network_solanaGetNFTOwnerAdvanced: String, CaseIterable {
+        case devnet = "devnet"
+        case mainnetBeta = "mainnet-beta"
+    }
+
+    /**
+     Get owner of an NFT (advanced)
+     
+     - parameter network: (path) The network ID 
+     - parameter mintAddress: (path) The mint address of the NFT 
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func solanaGetNFTOwnerAdvanced(network: Network_solanaGetNFTOwnerAdvanced, mintAddress: String, apiResponseQueue: DispatchQueue = theblockchainapiAPI.apiResponseQueue, completion: @escaping ((_ data: NFTOwnerAdvancedResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return solanaGetNFTOwnerAdvancedWithRequestBuilder(network: network, mintAddress: mintAddress).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Get owner of an NFT (advanced)
+     - GET /solana/nft/{network}/{mint_address}/owner_advanced
+     - <a href=\"https://github.com/BL0CK-X/the-blockchain-api/tree/main/examples/solana-nft/get-nft-owner\" target=\"_blank\">See examples (Python, JavaScript)</a>.       Get the owner, state, listed price, and listed marketplace (if any) of an NFT.   Here's are a couple of example responses: ``` {     'contract': {         'contract_blockchain_identifier': 'M2mx93ekt1fmXSVkTrUL9xVFHkmME8HTUi5Cyc5aF7K',          'contract_id': 'magic-eden-v2',          'contract_name': 'Magic Eden v2',          'contract_type': 'marketplace'     },      'owner': '25UJMR3FiMM6noQtPEaCJ6eDU2YQ7myDhikVQXmMuSRW',      'price': 50000000,      'state': 'listing' } ```  ``` {     'contract': null,      'owner': 'C37PJiJU8WTgoUoFqmB1Maw8hkuENDZoGDQA1pm54Fdd',      'price': null,      'state': 'holding' } ```  This function will return whether the NFT is `listed`, `loaned` (Yawww NFT loans), `otc`, `staked`, `burned`, or `held`.  If listed, it will return the contract, the readable name of the contract (e.g., Magic Eden, OpenSea), the contract ID (if any; e.g., open-sea), the owner, and the listed price. From this, you can get the floor of a collection. We currently support Magic Eden (v1, v2), Exchange.Art (auction, singles), CoralCube, Solanart (v1, v2), Yawww Loans, Yawww OTC, OpenSea, Fractal, SolSea, and AlphaArt.   If loaned, it will return the loan requester as the owner, the loan amount, and the loan contract. We only support the Yawww loaning contract.  If listed on an OTC marketplace, it will return the same information as `listed`. OTC is used to distinguish between marketplaces that respect royalties (OTC) and those that don't (normal ones). The only `OTC` contract we track is Yawwww, at the moment. We do not yet track Solanart v3.  If staked, it will return the owner and the staking contract public key.  If burned, it will return the `burner` as the `owner`.  If held, it will simply return the owner.  If you want to get the literal owner, which may or may not be the same as the owner returned here, call the simplified [get NFT owner function](/#tag/Solana-NFT/operation/solanaGetNFTOwner). For example, Bob might own the NFT, but if it is listed on Magic Eden, then the NFT is held in escrow and \"owned\" by Magic Eden. The simplified function will return Magic Eden as the owner (the literal owner). This advanced function will tell you the implied owner, which would be Bob.  `Cost: 1.0 Credit` (<a href=\"#section/Pricing\">See Pricing</a>)
+     - API Key:
+       - type: apiKey APIKeyID 
+       - name: APIKeyID
+     - API Key:
+       - type: apiKey APISecretKey 
+       - name: APISecretKey
+     - parameter network: (path) The network ID 
+     - parameter mintAddress: (path) The mint address of the NFT 
+     - returns: RequestBuilder<NFTOwnerAdvancedResponse> 
+     */
+    open class func solanaGetNFTOwnerAdvancedWithRequestBuilder(network: Network_solanaGetNFTOwnerAdvanced, mintAddress: String) -> RequestBuilder<NFTOwnerAdvancedResponse> {
+        var localVariablePath = "/solana/nft/{network}/{mint_address}/owner_advanced"
+        let networkPreEscape = "\(network.rawValue)"
+        let networkPostEscape = networkPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{network}", with: networkPostEscape, options: .literal, range: nil)
+        let mintAddressPreEscape = "\(APIHelper.mapValueToPathItem(mintAddress))"
+        let mintAddressPostEscape = mintAddressPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{mint_address}", with: mintAddressPostEscape, options: .literal, range: nil)
+        let localVariableURLString = theblockchainapiAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<NFTOwnerAdvancedResponse>.Type = theblockchainapiAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+    }
+
+    /**
      Get the ID of the candy machine of an NFT 
      
      - parameter getCandyMachineIDRequest: (body)  (optional)
